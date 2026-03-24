@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Widgy Demo Launcher</title>
+    <style>
+      :root {
+        --bg: #120e0c;
+        --panel: rgba(255, 248, 241, 0.95);
+        --text: #201712;
+        --muted: #6f635d;
+        --line: rgba(64, 44, 28, 0.12);
+        --gold: #ffc533;
+        --gold-deep: #e29f00;
+        --shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 24px;
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top, rgba(255, 197, 51, 0.16), transparent 26%),
+          radial-gradient(circle at 20% 18%, rgba(255, 110, 56, 0.14), transparent 22%),
+          linear-gradient(180deg, #0f0c0b 0%, #17110f 45%, #120d0b 100%);
+      }
+
+      .frame {
+        max-width: 1040px;
+        margin: 0 auto;
+        border-radius: 30px;
+        overflow: hidden;
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: var(--shadow);
+      }
+
+      .site {
+        padding: 28px;
+        background:
+          radial-gradient(circle at top center, rgba(255, 197, 51, 0.12), transparent 28%),
+          linear-gradient(180deg, #fffdfa 0%, #fff7ef 100%);
+      }
+
+      .masthead {
+        display: block;
+      }
+
+      .brand-copy strong {
+        display: block;
+        font-size: clamp(1.5rem, 2.3vw, 2rem);
+      }
+
+      .brand-copy span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .card {
+        border-radius: 24px;
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        box-shadow: 0 14px 28px rgba(64, 44, 28, 0.08);
+      }
+
+      .card-head {
+        display: block;
+        padding: 18px 18px 8px;
+      }
+
+      .card-head img {
+        width: auto;
+        height: 56px;
+        display: block;
+      }
+
+      .card-body {
+        padding: 0 18px 18px;
+      }
+
+      .card-body p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .launcher {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 18px;
+        padding: 16px 18px;
+        border-radius: 20px;
+        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
+        color: #553d00;
+        text-decoration: none;
+        font-weight: 900;
+        box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
+      }
+
+      .footer {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(64, 44, 28, 0.08);
+        color: #5f544d;
+        font-size: 0.84rem;
+        text-align: center;
+      }
+
+      @media (max-width: 800px) {
+        body {
+          padding: 12px;
+        }
+
+        .site {
+          padding: 18px 16px;
+        }
+
+        .masthead {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <main class="site">
+        <header class="masthead">
+          <div class="brand-copy">
+            <strong>Widgy Demo Launcher</strong>
+          </div>
+        </header>
+
+        <section class="grid" aria-label="Demo options">
+          <article class="card">
+            <div class="card-head">
+              <img src="engage-logo.svg" alt="Engage" />
+            </div>
+            <div class="card-body">
+              <p>Widgy Engage monetizes attention by rewarding real user engagement instead of interrupting it.</p>
+              <a class="launcher" href="index-engage.html" target="_blank">Open Engage Demo</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <img src="payments-logo.svg" alt="Payments" />
+            </div>
+            <div class="card-body">
+              <p>Widgy Payments increases revenue per user by delivering up to 4x perceived value at checkout.</p>
+              <a class="launcher" href="index-payments.html" target="_blank">Open Payments Demo</a>
+            </div>
+          </article>
+        </section>
+
+        <footer class="footer">
+          Widgy demo hub for Engage and Payments product flows.
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Casino Access Flow</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
+    />
+    <style>
+      :root {
+        --bg-deep: #08121f;
+        --bg-mid: #0e2034;
+        --panel: rgba(11, 22, 35, 0.9);
+        --text: #edf4ff;
+        --muted: #96a8c1;
+        --accent: #31d17d;
+        --accent-bright: #5cf3a1;
+        --gold: #ffd54c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 24px;
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top, rgba(92, 243, 161, 0.14), transparent 28%),
+          radial-gradient(circle at 80% 20%, rgba(255, 213, 76, 0.16), transparent 22%),
+          linear-gradient(180deg, #07101a 0%, #0b1727 48%, #08111d 100%);
+      }
+
+      .frame {
+        max-width: 980px;
+        margin: 0 auto;
+        border-radius: 30px;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+          linear-gradient(180deg, #0f1f32 0%, #0a1624 100%);
+        box-shadow: 0 26px 70px rgba(0, 0, 0, 0.38);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .site {
+        padding: 24px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        gap: 16px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .brand-badge {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #2ce37f, #0cab63);
+        color: #072012;
+        font-size: 1.35rem;
+      }
+
+      .brand-name {
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+      }
+
+      .chip {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 20px;
+      }
+
+      .hero-card,
+      .signup-card {
+        border-radius: 24px;
+        overflow: hidden;
+      }
+
+      .hero-card {
+        padding: 24px;
+        background:
+          radial-gradient(circle at top right, rgba(255, 213, 76, 0.18), transparent 28%),
+          linear-gradient(135deg, rgba(49, 209, 125, 0.16), rgba(14, 31, 51, 0.92));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #b9ffd8;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 16px 0 10px;
+        font-size: clamp(2rem, 3.2vw, 3.1rem);
+        line-height: 0.98;
+      }
+
+      .hero-card p {
+        margin: 0;
+        color: #c3d0e4;
+        line-height: 1.5;
+      }
+
+      .notice {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .notice strong {
+        display: block;
+        font-size: 0.96rem;
+      }
+
+      .notice span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .steps {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .step {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 12px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .step:first-child {
+        border-top: 0;
+      }
+
+      .step-index {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(255, 213, 76, 0.18);
+        color: var(--gold);
+        font-size: 0.86rem;
+        font-weight: 900;
+      }
+
+      .step strong {
+        display: block;
+        font-size: 0.94rem;
+      }
+
+      .step span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .signup-card {
+        padding: 22px;
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .signup-card h2 {
+        margin: 0 0 6px;
+        font-size: 1.55rem;
+      }
+
+      .signup-card p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field label {
+        color: #c9d7ea;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .field input {
+        width: 100%;
+        padding: 14px 14px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font: inherit;
+      }
+
+      .cta {
+        margin-top: 6px;
+        border: 0;
+        border-radius: 18px;
+        padding: 16px 18px;
+        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
+        color: #553d00;
+        font: inherit;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        margin-top: 18px;
+        padding: 16px 6px 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      @media (max-width: 760px) {
+        body {
+          padding: 12px;
+        }
+
+        .site {
+          padding: 16px;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <main class="site">
+        <header class="topbar">
+          <div class="brand" aria-label="Crypto Casino">
+            <span class="brand-badge"><i class="ri-coins-fill"></i></span>
+            <span class="brand-name">Crypto Casino</span>
+          </div>
+          <div class="chip">Stake partner flow</div>
+        </header>
+
+        <section class="hero">
+          <div class="hero-card">
+            <div class="eyebrow">
+              <i class="ri-gift-2-line"></i>
+              <span>Welcome bonus activated</span>
+            </div>
+            <h1>Deposit EUR20 and get EUR40 to play for.</h1>
+            <p>
+              Start with a simple qualifying deposit and activate a stronger balance for your first
+              sessions, with the reward applied once the account and deposit steps are complete.
+            </p>
+
+            <div class="notice">
+              <strong>Current welcome offer</strong>
+              <span>Deposit EUR20 today and receive EUR40 to play for after verification.</span>
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-index">1</div>
+                <div>
+                  <strong>Create or access your account</strong>
+                  <span>Log in or register before continuing to the cashier.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-index">2</div>
+                <div>
+                  <strong>Complete the qualifying deposit</strong>
+                  <span>Deposit EUR20 to activate the bonus and continue to the cashier.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-index">3</div>
+                <div>
+                  <strong>Receive your boosted play balance</strong>
+                  <span>Once verified, the EUR40 offer is ready to use in your account.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="signup-card" aria-label="Sign up form">
+            <h2>Create your account</h2>
+            <p>Enter your details below to continue to deposit and activate the welcome offer.</p>
+
+            <form class="form" id="claimForm">
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" value="alex.demo@cryptocasino.com" />
+              </div>
+
+              <div class="field">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" value="StartNow123!" />
+              </div>
+
+              <button class="cta" type="submit">Continue and claim bonus</button>
+            </form>
+          </section>
+        </section>
+
+        <footer class="footer">
+          <span>© 2026 Crypto Casino. All rights reserved.</span>
+          <span>Support available 24/7 • Secure registration</span>
+        </footer>
+      </main>
+    </div>
+    <script>
+      (function () {
+        var claimForm = document.getElementById("claimForm");
+
+        claimForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          window.close();
+
+          if (window.opener && !window.opener.closed) {
+            try {
+              window.opener.focus();
+              window.close();
+            } catch (error) {
+              window.opener.location.href = "index-paywall-guided.html";
+              window.opener.focus();
+            }
+          }
+
+          window.location.href = "index-paywall-guided.html";
+        });
+      })();
+    </script>
+  </body>
+</html>
