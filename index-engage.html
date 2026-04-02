@@ -12,9 +12,12 @@
       :root {
         --bg: #15110f;
         --bg-soft: #221814;
-        --panel: rgba(255, 248, 241, 0.96);
-        --text: #201712;
-        --muted: #6e625c;
+        --panel: rgba(15, 12, 11, 0.96);
+        --surface: rgba(28, 21, 18, 0.92);
+        --surface-2: rgba(20, 15, 13, 0.94);
+        --text: #f5ece4;
+        --muted: #b7a79a;
+        --line: rgba(255, 235, 220, 0.1);
         --brand: #ffae00;
         --brand-deep: #ff8a00;
         --green-a: #6aca2f;
@@ -29,7 +32,7 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
         color: var(--text);
         background:
           radial-gradient(circle at top, rgba(255, 174, 0, 0.18), transparent 28%),
@@ -45,15 +48,16 @@
         background: var(--panel);
         box-shadow: var(--shadow);
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
       }
 
       .site {
         position: relative;
         padding: 22px 24px 18px;
         background:
-          radial-gradient(circle at top center, rgba(255, 183, 0, 0.12), transparent 30%),
-          linear-gradient(180deg, #fffdfa 0%, #fff8f1 100%);
+          radial-gradient(circle at top center, rgba(255, 183, 0, 0.1), transparent 30%),
+          radial-gradient(circle at 80% 0%, rgba(255, 115, 64, 0.1), transparent 24%),
+          linear-gradient(180deg, #171110 0%, #110d0d 100%);
       }
 
       .topbar {
@@ -62,6 +66,8 @@
         align-items: center;
         gap: 24px;
         margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
       }
 
       .brand {
@@ -70,6 +76,9 @@
         font-weight: 800;
         font-size: 1.2rem;
         letter-spacing: 0.04em;
+        filter: drop-shadow(0 8px 18px rgba(255, 174, 0, 0.12));
+        color: inherit;
+        text-decoration: none;
       }
 
       .brand-word {
@@ -86,16 +95,6 @@
         font-size: clamp(1.35rem, 2.1vw, 1.85rem);
       }
 
-      .signin {
-        border: 1px solid #d6deea;
-        color: #687282;
-        background: rgba(255, 255, 255, 0.72);
-        border-radius: 14px;
-        padding: 10px 22px;
-        font-size: 0.95rem;
-        cursor: pointer;
-      }
-
       .player-shell {
         border-radius: 24px;
         overflow: hidden;
@@ -103,16 +102,18 @@
 
       .player-shell {
         background: #271a14;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
       }
 
       .player {
         position: relative;
-        aspect-ratio: 16 / 8.1;
+        aspect-ratio: 16 / 9.2;
         background:
-          linear-gradient(90deg, rgba(155, 174, 198, 0.35) 0%, rgba(74, 40, 27, 0.56) 22%, rgba(149, 103, 77, 0.62) 48%, rgba(66, 35, 25, 0.55) 76%, rgba(212, 181, 151, 0.4) 100%),
-          linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.18));
-        filter: saturate(0.92);
+          linear-gradient(180deg, rgba(9, 7, 6, 0.08), rgba(9, 7, 6, 0.36)),
+          linear-gradient(90deg, rgba(13, 10, 8, 0.42), rgba(13, 10, 8, 0.12) 38%, rgba(13, 10, 8, 0.44)),
+          url("video-thumb1.jpg") center / cover no-repeat;
+        filter: saturate(0.96);
         transition: background 0.55s ease, filter 0.55s ease;
       }
 
@@ -125,31 +126,30 @@
         content: "";
         position: absolute;
         inset: 0;
-        background:
-          radial-gradient(circle at 22% 58%, rgba(195, 149, 118, 0.55), transparent 16%),
-          radial-gradient(circle at 62% 64%, rgba(149, 95, 60, 0.38), transparent 18%),
-          radial-gradient(circle at 68% 30%, rgba(248, 218, 204, 0.52), transparent 9%);
-        filter: blur(26px);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 30%, rgba(0, 0, 0, 0.08));
       }
 
       .player[data-scene="1"] {
         background:
-          linear-gradient(90deg, rgba(108, 131, 170, 0.54) 0%, rgba(63, 79, 111, 0.5) 18%, rgba(138, 92, 64, 0.58) 46%, rgba(214, 145, 104, 0.46) 72%, rgba(237, 212, 179, 0.38) 100%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.16));
+          linear-gradient(180deg, rgba(9, 7, 6, 0.08), rgba(9, 7, 6, 0.36)),
+          linear-gradient(90deg, rgba(13, 10, 8, 0.42), rgba(13, 10, 8, 0.12) 38%, rgba(13, 10, 8, 0.44)),
+          url("video-thumb1.jpg") center / cover no-repeat;
       }
 
       .player[data-scene="2"] {
         background:
-          linear-gradient(90deg, rgba(73, 52, 108, 0.56) 0%, rgba(113, 57, 93, 0.58) 24%, rgba(189, 76, 89, 0.48) 51%, rgba(243, 143, 80, 0.45) 76%, rgba(255, 214, 148, 0.36) 100%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.22));
-        filter: saturate(1.08);
+          linear-gradient(180deg, rgba(9, 7, 6, 0.1), rgba(9, 7, 6, 0.38)),
+          linear-gradient(90deg, rgba(22, 10, 13, 0.42), rgba(22, 10, 13, 0.12) 38%, rgba(22, 10, 13, 0.44)),
+          url("video-thumb2.jpg") center / cover no-repeat;
+        filter: saturate(1.01);
       }
 
       .player[data-scene="3"] {
         background:
-          linear-gradient(90deg, rgba(31, 96, 108, 0.58) 0%, rgba(42, 138, 114, 0.5) 24%, rgba(118, 183, 88, 0.44) 50%, rgba(216, 217, 104, 0.38) 76%, rgba(255, 236, 170, 0.3) 100%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.18));
-        filter: saturate(1.06);
+          linear-gradient(180deg, rgba(9, 7, 6, 0.08), rgba(9, 7, 6, 0.36)),
+          linear-gradient(90deg, rgba(8, 16, 14, 0.42), rgba(8, 16, 14, 0.12) 38%, rgba(8, 16, 14, 0.44)),
+          url("video-thumb3.jpg") center / cover no-repeat;
+        filter: saturate(1);
       }
 
       .play-button {
@@ -249,19 +249,21 @@
       }
 
       .title-row {
-        margin: 12px 2px 0;
+        margin: 16px 2px 0;
+        padding: 18px 18px 16px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, rgba(34, 25, 22, 0.92), rgba(22, 17, 15, 0.96));
+        border: 1px solid var(--line);
+        box-shadow: 0 18px 32px rgba(0, 0, 0, 0.2);
       }
 
       .title-row h1 {
         margin: 0;
-        font-size: clamp(1.05rem, 1.8vw, 1.4rem);
-      }
-
-      .meta {
-        margin-top: 4px;
-        color: var(--muted);
-        font-size: 0.88rem;
-        min-height: 1.3em;
+        font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+        color: #fff6ef;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .ad-slot {
@@ -347,6 +349,10 @@
           transform 0.18s ease;
       }
 
+      .banner-cta-icon {
+        display: none;
+      }
+
       .banner-cta.is-exploding {
         animation: ctaExplode 0.46s cubic-bezier(0.2, 0.9, 0.24, 1) forwards;
       }
@@ -365,35 +371,12 @@
           0 10px 20px rgba(122, 90, 16, 0.18);
       }
 
-      .reward-note {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 12px 12px 4px;
-        color: #8c6e22;
-        font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-        transition: color 0.35s ease;
-        opacity: 0;
-        transform: translateY(10px);
-        pointer-events: none;
-      }
-
-      .reward-note.is-unlocked {
-        color: #25853a;
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-
-      .reward-note.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-
       .thumb-section {
-        //margin-top: 18px;
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(30, 23, 20, 0.9), rgba(18, 14, 13, 0.95));
+        border: 1px solid var(--line);
       }
 
       .thumb-head {
@@ -421,43 +404,48 @@
       }
 
       .thumb-card {
-        border: 1px solid rgba(32, 23, 18, 0.08);
+        border: 1px solid rgba(255, 235, 220, 0.08);
         border-radius: 18px;
         overflow: hidden;
-        background: #ffffff;
-        box-shadow: 0 10px 20px rgba(54, 35, 18, 0.06);
-        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        background: linear-gradient(180deg, rgba(36, 27, 24, 0.95), rgba(21, 16, 14, 0.98));
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
       }
 
       .thumb-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 14px 26px rgba(54, 35, 18, 0.1);
+        border-color: rgba(255, 174, 0, 0.24);
+        box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
       }
 
       .thumb-visual {
         position: relative;
         aspect-ratio: 16 / 10;
         background:
-          linear-gradient(90deg, rgba(108, 131, 170, 0.42) 0%, rgba(71, 43, 31, 0.56) 24%, rgba(155, 112, 78, 0.52) 52%, rgba(88, 53, 39, 0.5) 78%, rgba(212, 183, 150, 0.34) 100%),
-          linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.18));
+          linear-gradient(180deg, rgba(12, 8, 7, 0.02), rgba(12, 8, 7, 0.28)),
+          linear-gradient(90deg, rgba(12, 8, 7, 0.28), rgba(12, 8, 7, 0.04) 42%, rgba(12, 8, 7, 0.22)),
+          url("video-thumb1.jpg") center / cover no-repeat;
       }
 
       .thumb-visual.two {
         background:
-          linear-gradient(90deg, rgba(73, 52, 108, 0.5) 0%, rgba(113, 57, 93, 0.52) 24%, rgba(189, 76, 89, 0.42) 51%, rgba(243, 143, 80, 0.39) 76%, rgba(255, 214, 148, 0.28) 100%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.22));
+          linear-gradient(180deg, rgba(12, 8, 7, 0.02), rgba(12, 8, 7, 0.28)),
+          linear-gradient(90deg, rgba(26, 9, 14, 0.28), rgba(26, 9, 14, 0.04) 42%, rgba(26, 9, 14, 0.22)),
+          url("video-thumb2.jpg") center / cover no-repeat;
       }
 
       .thumb-visual.three {
         background:
-          linear-gradient(90deg, rgba(31, 96, 108, 0.52) 0%, rgba(42, 138, 114, 0.44) 24%, rgba(118, 183, 88, 0.38) 50%, rgba(216, 217, 104, 0.32) 76%, rgba(255, 236, 170, 0.24) 100%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.18));
+          linear-gradient(180deg, rgba(12, 8, 7, 0.02), rgba(12, 8, 7, 0.28)),
+          linear-gradient(90deg, rgba(8, 16, 14, 0.28), rgba(8, 16, 14, 0.04) 42%, rgba(8, 16, 14, 0.22)),
+          url("video-thumb3.jpg") center / cover no-repeat;
       }
 
       .thumb-visual.four {
         background:
-          linear-gradient(90deg, rgba(130, 66, 33, 0.56) 0%, rgba(189, 94, 42, 0.5) 26%, rgba(239, 154, 73, 0.38) 58%, rgba(255, 215, 158, 0.26) 100%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.18));
+          linear-gradient(180deg, rgba(12, 8, 7, 0.02), rgba(12, 8, 7, 0.28)),
+          linear-gradient(90deg, rgba(22, 14, 8, 0.28), rgba(22, 14, 8, 0.04) 42%, rgba(22, 14, 8, 0.22)),
+          url("video-thumb4.jpg") center / cover no-repeat;
       }
 
       .thumb-visual::before {
@@ -478,9 +466,7 @@
         position: absolute;
         inset: 0;
         background:
-          radial-gradient(circle at 26% 54%, rgba(255, 226, 202, 0.18), transparent 18%),
-          radial-gradient(circle at 66% 36%, rgba(90, 58, 41, 0.26), transparent 22%);
-        filter: blur(18px);
+          linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 30%, rgba(0, 0, 0, 0.12));
       }
 
       .thumb-visual.one::before {
@@ -507,6 +493,7 @@
         display: block;
         font-size: 0.92rem;
         line-height: 1.25;
+        color: #fff3ea;
       }
 
       .thumb-copy span {
@@ -516,20 +503,13 @@
         font-size: 0.8rem;
       }
 
-      .reward-icon {
-        width: 28px;
-        height: 28px;
-        display: grid;
-        place-items: center;
-        font-size: 1.6rem;
-        line-height: 1;
-      }
-
       .footer {
         text-align: center;
-        color: #3c3532;
+        margin-top: 18px;
+        padding: 18px 8px 0;
+        color: #938378;
         font-size: 0.82rem;
-        padding: 14px 8px 0;
+        border-top: 1px solid var(--line);
       }
 
       .pulse {
@@ -691,7 +671,7 @@
 
       @media (max-width: 760px) {
         body {
-          padding: 12px;
+          padding: 0;
         }
 
         .frame {
@@ -708,30 +688,70 @@
           margin-bottom: 20px;
         }
 
-        .signin {
-          width: 100%;
+        .player {
+          aspect-ratio: 16 / 9.8;
+        }
+
+        .play-button {
+          width: 62px;
+          height: 62px;
+          border-radius: 18px;
+          font-size: 2rem;
         }
 
         .banner {
-          grid-template-columns: 1fr;
-          text-align: center;
-          justify-items: center;
+          grid-template-columns: auto 1fr auto;
+          text-align: left;
+          justify-items: stretch;
         }
 
         .watch-toast {
-          top: calc(50% + 48px);
-          font-size: 0.78rem;
+          top: calc(0% + 20px);
+          padding: 6px 10px;
+          font-size: 0.72rem;
         }
 
         .gift {
-          width: auto;
-          height: auto;
-          font-size: 4.6rem;
+          width: 52px;
+          height: 52px;
+          font-size: 2.9rem;
+        }
+
+        .banner-copy strong {
+          font-size: 1.2rem;
+        }
+
+        .banner-copy span {
+          font-size: 0.86rem;
         }
 
         .banner-cta {
-          width: 100%;
-          text-align: center;
+          width: auto;
+          padding: 0;
+          background: transparent;
+          box-shadow: none;
+          color: #fff;
+          font-size: 0;
+          line-height: 1;
+          animation: none;
+          transform: none;
+          filter: none;
+          transition: none;
+        }
+
+        .banner-cta-label {
+          display: none;
+        }
+
+        .banner-cta-icon {
+          display: block;
+          font-size: 1.45rem;
+        }
+
+        .ad-slot.is-visible:hover .banner-cta {
+          background: transparent;
+          filter: none;
+          box-shadow: none;
         }
 
         .thumb-head {
@@ -739,13 +759,12 @@
           flex-direction: column;
         }
 
-        .thumb-strip {
-          grid-template-columns: 1fr;
+        .title-row h1 {
+          font-size: 1rem;
         }
 
-        .reward-note {
-          text-align: center;
-          line-height: 1.35;
+        .thumb-strip {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -754,11 +773,10 @@
     <div class="frame">
       <main class="site">
         <header class="topbar">
-          <div class="brand" aria-label="SXY TUBE">
+          <a class="brand" href="index.html" aria-label="Back to demo launcher">
             <span class="brand-word">SXY</span>
             <span class="brand-tag">TUBE</span>
-          </div>
-          <button class="signin" type="button">Sign in</button>
+          </a>
         </header>
 
         <section class="content">
@@ -790,7 +808,6 @@
           <div class="title-row">
             <div>
               <h1 id="videoTitle">Most Replayed Clips This Week</h1>
-              <div class="meta" id="watchStatus">Start watching to unlock the reward banner</div>
             </div>
           </div>
 
@@ -801,45 +818,41 @@
                 <strong>150 Free Spins Unlocked!</strong>
                 <span>Claim your gift from Stake.com</span>
               </div>
-              <a class="banner-cta pulse" id="claimCta" href="crypto-casino.html" target="_blank">Claim gift →</a>
+              <a class="banner-cta pulse" id="claimCta" href="crypto-casino.html" target="_blank">
+                <span class="banner-cta-label">Claim gift →</span>
+                <i class="ri-arrow-right-s-line banner-cta-icon" aria-hidden="true"></i>
+              </a>
             </div>
           </section>
 
-          <div class="reward-note" id="rewardNote">
-            <span class="reward-icon" aria-hidden="true">
-              <i class="ri-checkbox-circle-line"></i>
-            </span>
-            <span id="rewardText">Reward unlocked for watching 3 videos</span>
-          </div>
-
           <section class="thumb-section" aria-label="More videos">
             <div class="thumb-head">
-              <strong>More videos you might like</strong>
-              <span>Best Adult Content</span>
+              <strong>More videos that’ll make you throb</strong>
+              <span>Hot Right Now</span>
             </div>
 
             <div class="thumb-strip">
               <article class="thumb-card">
                 <div class="thumb-visual one"></div>
                 <div class="thumb-copy">
-                  <strong>Top fan favorites from the last 7 days</strong>
-                  <span>1.2M views • Trending now</span>
+                  <strong>Top Fan Favorites This Week</strong>
+                  <span>1.2M views • Staff’s go-to fap material</span>
                 </div>
               </article>
 
               <article class="thumb-card">
                 <div class="thumb-visual two"></div>
                 <div class="thumb-copy">
-                  <strong>Late-night creator picks users keep replaying</strong>
-                  <span>860K views • Staff pick</span>
+                  <strong>Late-Night Clips Everyone’s Rewatching</strong>
+                  <span>860K views • Staff’s go-to fap material</span>
                 </div>
               </article>
 
               <article class="thumb-card">
                 <div class="thumb-visual three"></div>
                 <div class="thumb-copy">
-                  <strong>Unlocked collection: trending edits this week</strong>
-                  <span>940K views • New drop</span>
+                  <strong>Best Cumshot Edits & Compilations</strong>
+                  <span>940K views • Fresh & messy</span>
                 </div>
               </article>
             </div>
@@ -857,23 +870,19 @@
         var unlockAt = 3;
         var clips = [
           {
-            title: "Most Replayed Clips This Week",
-            status: "1 of 3 videos watched",
+            title: "Most Fapped-To Clips This Week",
             scene: "1"
           },
           {
-            title: "Wildest Highlights - Ranked by Fans",
-            status: "2 of 3 videos watched",
+            title: "POV Creampies That Made Everyone Cum Hard",
             scene: "2"
           },
           {
-            title: "It Got Way More Intense Than Expected",
-            status: "Reward unlocked after 3 completed video views",
+            title: "She Squirt So Hard She Soaked The Bed",
             scene: "3"
           },
           {
-            title: "VIP Bonus Segment: Reward Session Unlocked",
-            status: "Reward unlocked after 3 completed video views",
+            title: "Top 10 Messiest Cumshots This Week",
             scene: "1"
           }
         ];
@@ -883,13 +892,10 @@
         var playButtonIcon = document.querySelector(".play-button i");
         var playButton = document.querySelector(".play-button");
         var videoTitle = document.getElementById("videoTitle");
-        var watchStatus = document.getElementById("watchStatus");
         var progressFill = document.querySelector(".progress-fill");
         var rewardBanner = document.getElementById("rewardBanner");
         var claimBanner = document.getElementById("claimBanner");
         var claimCta = document.getElementById("claimCta");
-        var rewardNote = document.getElementById("rewardNote");
-        var rewardText = document.getElementById("rewardText");
         var confetti = document.getElementById("confetti");
         var hasCelebrated = false;
         var isTransitioning = false;
@@ -936,14 +942,11 @@
 
           watchToast.textContent = "Watched " + cappedCount + " / " + unlockAt + " videos";
           videoTitle.textContent = clip.title;
-          watchStatus.textContent = clip.status;
           playerVisual.setAttribute("data-scene", clip.scene);
           progressFill.style.width = progressByWatchCount[cappedCount] || "30%";
 
           if (unlocked) {
-            rewardText.textContent = "Reward unlocked for watching 3 videos";
             rewardBanner.classList.add("is-visible", "unlock-flash", "banner-celebrate");
-            rewardNote.classList.add("is-unlocked", "is-visible");
 
             if (!hasCelebrated) {
               launchConfetti();

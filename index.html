@@ -24,7 +24,7 @@
         margin: 0;
         min-height: 100vh;
         padding: 24px;
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
         color: var(--text);
         background:
           radial-gradient(circle at top, rgba(255, 197, 51, 0.16), transparent 26%),
@@ -33,7 +33,7 @@
       }
 
       .frame {
-        max-width: 1040px;
+        max-width: 520px;
         margin: 0 auto;
         border-radius: 30px;
         overflow: hidden;
@@ -50,25 +50,36 @@
       }
 
       .masthead {
-        display: block;
+        display: grid;
+        gap: 10px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid rgba(64, 44, 28, 0.08);
       }
 
       .brand-copy strong {
         display: block;
-        font-size: clamp(1.5rem, 2.3vw, 2rem);
+        font-size: clamp(1.9rem, 4vw, 2.45rem);
+        line-height: 1.04;
+        letter-spacing: -0.02em;
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+      }
+
+      .brand-copy .accent {
+        color: #7d5200;
+        text-shadow: 0 8px 18px rgba(255, 197, 51, 0.14);
       }
 
       .brand-copy span {
         display: block;
         margin-top: 6px;
         color: var(--muted);
-        font-size: 1rem;
-        line-height: 1.4;
+        font-size: 0.96rem;
+        line-height: 1.5;
       }
 
       .grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
         gap: 18px;
         margin-top: 28px;
       }
@@ -117,6 +128,61 @@
         box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
       }
 
+      .variant-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .variant {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        padding: 13px 14px;
+        border-radius: 16px;
+        border: 1px solid rgba(64, 44, 28, 0.1);
+        background: #fffaf4;
+        color: var(--text);
+        text-decoration: none;
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease,
+          border-color 0.18s ease,
+          background 0.18s ease;
+      }
+
+      .variant:hover {
+        transform: translateY(-2px);
+        border-color: rgba(226, 159, 0, 0.22);
+        background: #fffdf8;
+        box-shadow: 0 12px 24px rgba(64, 44, 28, 0.08);
+      }
+
+      .variant-copy strong {
+        display: block;
+        font-size: 0.95rem;
+      }
+
+      .variant-arrow {
+        flex-shrink: 0;
+        color: #9c6c00;
+        font-size: 1.15rem;
+        font-weight: 900;
+      }
+
+      .variant.is-disabled {
+        background: #f7f1ea;
+        color: #82756e;
+      }
+
+      .variant-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
       .footer {
         margin-top: 22px;
         padding-top: 18px;
@@ -140,9 +206,6 @@
           align-items: flex-start;
         }
 
-        .grid {
-          grid-template-columns: 1fr;
-        }
       }
     </style>
   </head>
@@ -151,7 +214,8 @@
       <main class="site">
         <header class="masthead">
           <div class="brand-copy">
-            <strong>Widgy Demo Launcher</strong>
+            <strong><span class="accent">Widgy Demo Launcher</span></strong>
+            <span>Choose a product flow and jump straight into the demo.</span>
           </div>
         </header>
 
@@ -162,7 +226,16 @@
             </div>
             <div class="card-body">
               <p>Widgy Engage monetizes attention by rewarding real user engagement instead of interrupting it.</p>
-              <a class="launcher" href="index-engage.html" target="_blank">Open Engage Demo</a>
+              <div class="variant-list" aria-label="Engage demo variants">
+                <a class="variant" href="index-engage.html">
+                  <div class="variant-copy">
+                    <strong>Rewarded Playback Flow</strong>
+                  </div>
+                  <div class="variant-meta">
+                    <span class="variant-arrow" aria-hidden="true">→</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </article>
 
@@ -172,7 +245,28 @@
             </div>
             <div class="card-body">
               <p>Widgy Payments increases revenue per user by delivering up to 4x perceived value at checkout.</p>
-              <a class="launcher" href="index-payments.html" target="_blank">Open Payments Demo</a>
+              <div class="variant-list" aria-label="Payments demo variants">
+                <a class="variant" href="index-payments.html">
+                  <div class="variant-copy">
+                    <strong>Redirect Handoff</strong>
+                  </div>
+                  <div class="variant-meta">
+                    <span class="variant-arrow" aria-hidden="true">→</span>
+                  </div>
+                </a>
+
+                <div class="variant is-disabled" aria-disabled="true">
+                  <div class="variant-copy">
+                    <strong>Embedded Modal Flow</strong>
+                  </div>
+                </div>
+
+                <div class="variant is-disabled" aria-disabled="true">
+                  <div class="variant-copy">
+                    <strong>Native Checkout Embed</strong>
+                  </div>
+                </div>
+              </div>
             </div>
           </article>
         </section>
