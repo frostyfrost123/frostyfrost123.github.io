@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crypto Casino Access Flow</title>
+    <title>Casino Access Flow</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
@@ -36,6 +36,11 @@
           linear-gradient(180deg, #07101a 0%, #0b1727 48%, #08111d 100%);
       }
 
+      body.is-embedded {
+        padding: 0;
+        background: linear-gradient(180deg, #07101a 0%, #0b1727 48%, #08111d 100%);
+      }
+
       .frame {
         max-width: 980px;
         margin: 0 auto;
@@ -46,6 +51,21 @@
           linear-gradient(180deg, #0f1f32 0%, #0a1624 100%);
         box-shadow: 0 26px 70px rgba(0, 0, 0, 0.38);
         border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      body.is-embedded .frame {
+        max-width: none;
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      body.is-embedded .site {
+        padding: 18px;
+      }
+
+      body.is-embedded .footer {
+        display: none;
       }
 
       .site {
@@ -93,8 +113,9 @@
 
       .hero {
         display: grid;
-        grid-template-columns: 1.05fr 0.95fr;
+        grid-template-columns: fit-content(420px) minmax(0, 1fr);
         gap: 20px;
+        align-items: start;
       }
 
       .hero-card,
@@ -104,6 +125,8 @@
       }
 
       .hero-card {
+        width: fit-content;
+        max-width: 420px;
         padding: 24px;
         background:
           radial-gradient(circle at top right, rgba(255, 213, 76, 0.18), transparent 28%),
@@ -124,7 +147,7 @@
       }
 
       h1 {
-        margin: 16px 0 10px;
+        margin: 0 0 10px;
         font-size: clamp(2rem, 3.2vw, 3.1rem);
         line-height: 0.98;
       }
@@ -203,6 +226,11 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
       }
 
+      .signup-state.is-hidden,
+      .deposit-state {
+        display: none;
+      }
+
       .signup-card h2 {
         margin: 0 0 6px;
         font-size: 1.55rem;
@@ -240,8 +268,15 @@
         font: inherit;
       }
 
+      .field-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 120px;
+        gap: 12px;
+      }
+
       .cta {
         margin-top: 6px;
+        width: 100%;
         border: 0;
         border-radius: 18px;
         padding: 16px 18px;
@@ -251,6 +286,16 @@
         font-weight: 900;
         cursor: pointer;
         box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
+      }
+
+      .text-link {
+        display: flex;
+        margin-top: 10px;
+        justify-content: center;
+        color: #b9ffd8;
+        font-size: 0.84rem;
+        text-decoration: underline;
+        cursor: default;
       }
 
       .footer {
@@ -264,22 +309,100 @@
         font-size: 0.84rem;
       }
 
+      .deposit-state.is-visible {
+        display: grid;
+        gap: 12px;
+      }
+
+      .deposit-state strong {
+        font-size: 1rem;
+      }
+
+      .deposit-state p {
+        margin: 0;
+        color: var(--muted);
+      }
+
       @media (max-width: 760px) {
         body {
-          padding: 12px;
+          padding: 0;
+        }
+
+        .frame {
+          max-width: none;
+          border-radius: 0;
+          border: 0;
+          box-shadow: none;
         }
 
         .site {
-          padding: 16px;
+          padding: 18px 16px 16px;
         }
 
         .hero {
           grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .brand-badge {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          font-size: 1.1rem;
+        }
+
+        .brand-name {
+          font-size: 1.25rem;
+        }
+
+        .hero-card,
+        .signup-card {
+          width: 100%;
+          max-width: none;
+          padding: 16px;
+          border-radius: 0;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+          line-height: 1.02;
+        }
+
+        .hero-card p,
+        .signup-card p,
+        .deposit-state p {
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+
+        .hero-support,
+        .signup-support {
+          display: none;
+        }
+
+        .signup-card h2 {
+          font-size: 1.35rem;
+        }
+
+        .field label {
+          font-size: 0.84rem;
+        }
+
+        .field input,
+        .cta {
+          font-size: 0.95rem;
+        }
+
+        .field-row {
+          grid-template-columns: minmax(0, 1fr) 120px;
         }
 
         .footer {
+          margin-top: 16px;
+          padding: 14px 0 0;
           flex-direction: column;
           align-items: flex-start;
+          font-size: 0.78rem;
         }
       }
     </style>
@@ -288,102 +411,210 @@
     <div class="frame">
       <main class="site">
         <header class="topbar">
-          <div class="brand" aria-label="Crypto Casino">
+          <div class="brand" id="brandLabel" aria-label="Casino">
             <span class="brand-badge"><i class="ri-coins-fill"></i></span>
-            <span class="brand-name">Crypto Casino</span>
+            <span class="brand-name" id="brandName">Casino</span>
           </div>
-          <div class="chip">Stake partner flow</div>
         </header>
 
         <section class="hero">
           <div class="hero-card">
-            <div class="eyebrow">
-              <i class="ri-gift-2-line"></i>
-              <span>Welcome bonus activated</span>
-            </div>
-            <h1>Deposit EUR20 and get EUR40 to play for.</h1>
-            <p>
-              Start with a simple qualifying deposit and activate a stronger balance for your first
-              sessions, with the reward applied once the account and deposit steps are complete.
+            <h1>Deposit €20 and get €40 to play for.</h1>
+            <p class="hero-support">
+              Create your account, make a €20 deposit, and your €40 bonus will be ready to use.
             </p>
-
-            <div class="notice">
-              <strong>Current welcome offer</strong>
-              <span>Deposit EUR20 today and receive EUR40 to play for after verification.</span>
-            </div>
-
-            <div class="steps">
-              <div class="step">
-                <div class="step-index">1</div>
-                <div>
-                  <strong>Create or access your account</strong>
-                  <span>Log in or register before continuing to the cashier.</span>
-                </div>
-              </div>
-              <div class="step">
-                <div class="step-index">2</div>
-                <div>
-                  <strong>Complete the qualifying deposit</strong>
-                  <span>Deposit EUR20 to activate the bonus and continue to the cashier.</span>
-                </div>
-              </div>
-              <div class="step">
-                <div class="step-index">3</div>
-                <div>
-                  <strong>Receive your boosted play balance</strong>
-                  <span>Once verified, the EUR40 offer is ready to use in your account.</span>
-                </div>
-              </div>
-            </div>
           </div>
 
           <section class="signup-card" aria-label="Sign up form">
-            <h2>Create your account</h2>
-            <p>Enter your details below to continue to deposit and activate the welcome offer.</p>
+            <div class="signup-state" id="signupState">
+              <h2>Create your account</h2>
+              <p class="signup-support">Enter your details below to continue to deposit and activate the welcome offer.</p>
 
-            <form class="form" id="claimForm">
-              <div class="field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" value="alex.demo@cryptocasino.com" />
-              </div>
+              <form class="form" id="claimForm">
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" value="alex.demo@cryptocasino.com" />
+                </div>
 
-              <div class="field">
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" value="StartNow123!" />
-              </div>
+                <div class="field">
+                  <label for="password">Password</label>
+                  <input id="password" name="password" type="password" value="StartNow123!" />
+                </div>
 
-              <button class="cta" type="submit">Continue and claim bonus</button>
-            </form>
+                <button class="cta" type="submit">Continue and claim bonus</button>
+              </form>
+            </div>
+
+            <div class="deposit-state" id="depositState">
+              <strong>Account ready for deposit</strong>
+              <p>Make the qualifying €20 deposit to finish the unlock requirements.</p>
+              <form class="form" id="depositForm">
+                <div class="field">
+                  <label for="cardName">Name on card</label>
+                  <input id="cardName" name="card_name" type="text" value="Alex Demo" />
+                </div>
+                <div class="field">
+                  <label for="cardNumber">Card number</label>
+                  <input id="cardNumber" name="card_number" type="text" inputmode="numeric" value="4242 4242 4242 4242" />
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="cardExpiry">Expiry</label>
+                    <input id="cardExpiry" name="expiry" type="text" inputmode="numeric" value="08/29" />
+                  </div>
+                  <div class="field">
+                    <label for="cardCvc">CVC</label>
+                    <input id="cardCvc" name="cvc" type="text" inputmode="numeric" value="424" />
+                  </div>
+                </div>
+                <button class="cta" id="depositButton" type="submit">Deposit €20</button>
+                <a class="text-link" href="#" aria-disabled="true">Change deposit amount</a>
+              </form>
+            </div>
           </section>
         </section>
 
         <footer class="footer">
-          <span>© 2026 Crypto Casino. All rights reserved.</span>
+          <span id="footerBrand">© 2026 Casino. All rights reserved.</span>
           <span>Support available 24/7 • Secure registration</span>
         </footer>
       </main>
     </div>
     <script>
       (function () {
+        var FLOW_STORAGE_KEY = "demoUnlockFlow";
+        var isEmbedded = new URLSearchParams(window.location.search).get("embed") === "1";
+        var brandLabel = document.getElementById("brandLabel");
+        var brandName = document.getElementById("brandName");
+        var footerBrand = document.getElementById("footerBrand");
         var claimForm = document.getElementById("claimForm");
+        var signupState = document.getElementById("signupState");
+        var depositState = document.getElementById("depositState");
+        var depositForm = document.getElementById("depositForm");
+        var depositButton = document.getElementById("depositButton");
+        var partnerNames = {
+          stake: "Stake.com",
+          bcgame: "BC.Game",
+          roobet: "Roobet"
+        };
 
-        claimForm.addEventListener("submit", function (event) {
-          event.preventDefault();
+        function getSelectedPartner() {
+          var params = new URLSearchParams(window.location.search);
+          var partnerFromUrl = params.get("partner");
 
-          window.close();
+          if (partnerFromUrl && partnerNames[partnerFromUrl]) {
+            return partnerFromUrl;
+          }
+
+          var storedFlow = getStoredFlow();
+          if (storedFlow.partner && partnerNames[storedFlow.partner]) {
+            return storedFlow.partner;
+          }
+
+          return "stake";
+        }
+
+        function applyPartnerBranding() {
+          var partnerKey = getSelectedPartner();
+          var partnerName = partnerNames[partnerKey];
+
+          document.title = partnerName + " Access Flow";
+          brandLabel.setAttribute("aria-label", partnerName);
+          brandName.textContent = partnerName;
+          footerBrand.textContent = "© 2026 " + partnerName + ". All rights reserved.";
+        }
+
+        function notifyHost(flow) {
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage(
+              {
+                type: "embedded-flow-update",
+                flow: flow
+              },
+              "*"
+            );
+          }
+        }
+
+        function getStoredFlow() {
+          try {
+            var raw = window.localStorage.getItem(FLOW_STORAGE_KEY);
+            return raw ? JSON.parse(raw) : {};
+          } catch (error) {
+            return {};
+          }
+        }
+
+        function setStoredFlow(updates) {
+          var flow = getStoredFlow();
+          var nextFlow = Object.assign({}, flow, updates, { updatedAt: Date.now() });
+
+          try {
+            window.localStorage.setItem(FLOW_STORAGE_KEY, JSON.stringify(nextFlow));
+          } catch (error) {
+            // Ignore storage failures in the demo.
+          }
+
+          notifyHost(nextFlow);
+          return nextFlow;
+        }
+
+        function syncUi() {
+          var flow = getStoredFlow();
+          var accountCreated = !!flow.accountCreated;
+          var depositCompleted = !!flow.depositCompleted;
+
+          signupState.classList.toggle("is-hidden", accountCreated);
+          depositState.classList.toggle("is-visible", accountCreated);
+
+          if (depositCompleted) {
+            depositButton.textContent = "Deposit completed";
+            depositButton.disabled = true;
+          } else if (accountCreated) {
+            depositButton.textContent = "Deposit €20";
+            depositButton.disabled = false;
+          }
+        }
+
+        function returnToMainPage() {
+          if (isEmbedded) {
+            return;
+          }
 
           if (window.opener && !window.opener.closed) {
             try {
               window.opener.focus();
               window.close();
+              return;
             } catch (error) {
-              window.opener.location.href = "index-paywall-guided.html";
-              window.opener.focus();
+              // Fall through to local update only.
             }
           }
+        }
 
-          window.location.href = "index-paywall-guided.html";
+        claimForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          setStoredFlow({ opened: true, accountCreated: true });
+          syncUi();
         });
+
+        depositForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          setStoredFlow({ opened: true, accountCreated: true, depositCompleted: true });
+          if (isEmbedded) {
+            syncUi();
+          } else {
+            returnToMainPage();
+          }
+        });
+
+        if (isEmbedded) {
+          document.body.classList.add("is-embedded");
+        }
+
+        applyPartnerBranding();
+        setStoredFlow({ opened: true, partner: getSelectedPartner() });
+        syncUi();
       })();
     </script>
   </body>

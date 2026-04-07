@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SXY TUBE Guided Access Demo</title>
+    <title>SXY TUBE Embedded Modal Demo</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
@@ -581,13 +581,6 @@
         font-size: 1.3rem;
       }
 
-      .modal-head p {
-        margin: 8px 0 0;
-        color: var(--muted);
-        line-height: 1.45;
-        font-size: 0.92rem;
-      }
-
       .modal-close {
         border: 0;
         background: transparent;
@@ -607,7 +600,7 @@
       }
 
       .step {
-        display: grid;
+        display: none;
         grid-template-columns: 36px 1fr auto;
         gap: 12px;
         align-items: center;
@@ -615,6 +608,10 @@
         border-radius: 18px;
         background: rgba(36, 27, 24, 0.96);
         border: 1px solid rgba(255, 235, 220, 0.08);
+      }
+
+      .step.is-current-step {
+        display: grid;
       }
 
       .step.is-actionable {
@@ -689,31 +686,62 @@
         color: var(--success);
       }
 
-      .modal-actions {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
+      .iframe-shell {
+        display: none;
         margin-top: 18px;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 235, 220, 0.08);
+        background: rgba(12, 9, 8, 0.72);
       }
 
-      .modal-button {
+      .iframe-shell.is-visible {
+        display: block;
+      }
+
+      .completion-shell {
+        display: none;
+        margin-top: 18px;
+        padding: 4px 14px 0;
+      }
+
+      .completion-shell.is-visible {
+        display: block;
+      }
+
+      .completion-shell strong {
+        display: block;
+        font-size: 1rem;
+        color: #fff3ea;
+      }
+
+      .completion-shell p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      .completion-button {
+        width: 100%;
+        margin-top: 16px;
         border: 0;
         border-radius: 18px;
         padding: 15px 16px;
+        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
+        color: #553d00;
         font: inherit;
         font-weight: 900;
         cursor: pointer;
-      }
-
-      .modal-button.primary {
-        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
-        color: #553d00;
         box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
       }
 
-      .modal-button.is-loading {
-        opacity: 0.78;
-        cursor: progress;
+      .iframe-stage {
+        width: 100%;
+        height: 560px;
+        border: 0;
+        display: block;
+        background: #08111d;
       }
 
       .modal-confetti {
@@ -767,6 +795,10 @@
       }
 
       @media (max-width: 760px) {
+        .modal-backdrop {
+          padding: 0;
+        }
+
         body {
           padding: 0;
         }
@@ -809,20 +841,16 @@
 
         .modal {
           width: 100%;
-          border-radius: 22px;
+          min-height: 100vh;
+          border-radius: 0;
         }
 
         .modal-head {
           padding: 18px 16px 12px;
         }
 
-        .modal-head p {
-          font-size: 0.86rem;
-          line-height: 1.35;
-        }
-
         .modal-body {
-          padding: 16px;
+          padding: 16px 0 0;
         }
 
         .step {
@@ -837,6 +865,25 @@
         .step-copy strong,
         .step-copy span {
           max-width: 100%;
+        }
+
+        .step-list {
+          padding: 0 16px;
+        }
+
+        .iframe-shell {
+          margin-top: 16px;
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
+        }
+
+        .iframe-stage {
+          height: calc(100vh - 176px);
+          height: calc(100dvh - 176px);
+          max-height: calc(100vh - 176px);
+          max-height: calc(100dvh - 176px);
+          min-height: 0;
         }
 
       }
@@ -1062,7 +1109,6 @@
         <div class="modal-head">
           <div>
             <h3 id="flowTitle">Widgy Payments</h3>
-            <p id="flowIntro">Click the button below to open Stake.com. You can return here at any time to see how far you’ve progressed in verification and what step comes next.</p>
           </div>
           <button class="modal-close" id="closeModal" type="button" aria-label="Close">
             <i class="ri-close-line"></i>
@@ -1070,34 +1116,40 @@
         </div>
         <div class="modal-body">
           <div class="step-list">
-            <div class="step" data-step="1" data-state="pending" role="button" tabindex="0" aria-label="Open partner site">
+            <div class="step" data-step="1" data-state="pending" role="button" tabindex="0" aria-label="Continue with account step">
               <div class="step-index">1</div>
-              <div class="step-copy">
-                <strong id="modalStepOneTitle">Open Stake.com</strong>
-                <span id="modalStepOne">Launch the partner site in a new tab to begin the handoff.</span>
-              </div>
-              <div class="step-state">Pending</div>
-            </div>
-            <div class="step" data-step="2" data-state="pending" role="button" tabindex="0" aria-label="Continue with account step">
-              <div class="step-index">2</div>
               <div class="step-copy">
                 <strong>Create a new account</strong>
                 <span id="modalStepTwo">Complete the account registration step on Stake.</span>
               </div>
               <div class="step-state">Pending</div>
             </div>
-            <div class="step" data-step="3" data-state="pending" role="button" tabindex="0" aria-label="Continue with deposit step">
-              <div class="step-index">3</div>
+            <div class="step" data-step="2" data-state="pending" role="button" tabindex="0" aria-label="Continue with deposit step">
+              <div class="step-index">2</div>
               <div class="step-copy">
                 <strong>Deposit at least €20</strong>
                 <span id="modalStepThree">Finish the qualifying deposit to activate the offer.</span>
               </div>
               <div class="step-state">Pending</div>
             </div>
+            <div class="step" data-step="3" data-state="pending" role="button" tabindex="0" aria-label="Unlock confirmation step">
+              <div class="step-index">3</div>
+              <div class="step-copy">
+                <strong>Unlock premium access</strong>
+                <span>Account created and qualifying deposit confirmed.</span>
+              </div>
+              <div class="step-state">Pending</div>
+            </div>
           </div>
 
-          <div class="modal-actions">
-            <button class="modal-button primary" id="advanceStep" type="button">Open Stake.com</button>
+          <div class="iframe-shell" id="iframeShell">
+            <iframe class="iframe-stage" id="partnerFrame" title="Embedded partner checkout"></iframe>
+          </div>
+
+          <div class="completion-shell" id="completionShell">
+            <strong>Everything is ready</strong>
+            <p>Account created and qualifying deposit confirmed.</p>
+            <button class="completion-button" id="unlockButton" type="button">Start watching</button>
           </div>
         </div>
       </div>
@@ -1115,52 +1167,35 @@
         var paywallOverlay = document.getElementById("paywallOverlay");
         var paymentSidebar = document.querySelector(".sidebar");
         var unlockedSidebar = document.getElementById("unlockedSidebar");
-        var flowIntro = document.getElementById("flowIntro");
-        var modalStepOneTitle = document.getElementById("modalStepOneTitle");
-        var modalStepOne = document.getElementById("modalStepOne");
         var modalStepTwo = document.getElementById("modalStepTwo");
         var modalStepThree = document.getElementById("modalStepThree");
-        var advanceStep = document.getElementById("advanceStep");
+        var iframeShell = document.getElementById("iframeShell");
+        var partnerFrame = document.getElementById("partnerFrame");
+        var completionShell = document.getElementById("completionShell");
+        var unlockButton = document.getElementById("unlockButton");
         var steps = Array.from(document.querySelectorAll(".step"));
         var FLOW_STORAGE_KEY = "demoUnlockFlow";
         var activePartner = "stake";
         var currentStepIndex = 0;
-        var awaitingReturn = false;
-        var partnerWindow = null;
         var hasScrolledToWidgy = false;
 
         var partnerConfig = {
           stake: {
             name: "Stake.com",
-            intro: "Click the button below to open Stake.com. You can return here at any time to see how far you’ve progressed in verification and what step comes next.",
-            introShort: "Open Stake.com, finish the steps there, then come back here.",
-            stepOne: "Launch the partner site in a new tab to begin the handoff.",
             stepTwo: "Complete the account registration step on Stake.",
             stepThree: "Finish the qualifying deposit to activate the offer."
           },
           bcgame: {
             name: "BC.Game",
-            intro: "Click the button below to open BC.Game. You can return here at any time to see how far you’ve progressed in verification and what step comes next.",
-            introShort: "Open BC.Game, finish the steps there, then come back here.",
-            stepOne: "Launch the partner site in a new tab to begin the handoff.",
             stepTwo: "Complete the account registration step on BC.Game.",
             stepThree: "Finish the qualifying deposit to activate the offer."
           },
           roobet: {
             name: "Roobet",
-            intro: "Click the button below to open Roobet. You can return here at any time to see how far you’ve progressed in verification and what step comes next.",
-            introShort: "Open Roobet, finish the steps there, then come back here.",
-            stepOne: "Launch the partner site in a new tab to begin the handoff.",
             stepTwo: "Complete the account registration step on Roobet.",
             stepThree: "Finish the qualifying deposit to activate the offer."
           }
         };
-
-        function setFlowIntro(config) {
-          flowIntro.textContent = window.matchMedia("(max-width: 760px)").matches
-            ? config.introShort
-            : config.intro;
-        }
 
         function selectMethod(methodName) {
           methods.forEach(function (method) {
@@ -1196,8 +1231,10 @@
             var stepNumber = Number(step.getAttribute("data-step"));
             var isPending = step.getAttribute("data-state") === "pending";
             var isActionable = isPending && stepNumber === nextStep;
+            var isCurrent = stepNumber === (currentStepIndex >= 3 ? 3 : nextStep);
 
             step.classList.toggle("is-actionable", isActionable);
+            step.classList.toggle("is-current-step", isCurrent);
             step.tabIndex = isActionable ? 0 : -1;
             step.setAttribute("aria-disabled", isActionable ? "false" : "true");
           });
@@ -1219,7 +1256,7 @@
             stateNode.textContent = "Checking...";
             indexNode.innerHTML = '<i class="ri-loader-4-line" aria-hidden="true"></i>';
           } else {
-            stateNode.textContent = stepNumber === 1 ? "Open site" : "Continue on site";
+            stateNode.textContent = stepNumber === currentStepIndex + 1 ? "In progress" : "Pending";
             indexNode.textContent = stepNumber;
           }
 
@@ -1264,38 +1301,10 @@
           return flow;
         }
 
-        function setPrimaryActionLabel() {
-          if (currentStepIndex >= 3) {
-            advanceStep.textContent = "Start watching";
-            advanceStep.disabled = false;
-            advanceStep.classList.remove("is-loading");
-            return;
-          }
-
-          if (currentStepIndex >= 1) {
-            advanceStep.textContent = "Continue on " + partnerConfig[activePartner].name;
-          } else {
-            advanceStep.textContent = "Open " + partnerConfig[activePartner].name;
-          }
-
-          advanceStep.disabled = false;
-          advanceStep.classList.remove("is-loading");
-        }
-
-        function openPartnerSite() {
-          var url = "crypto-casino-guided.html?partner=" + encodeURIComponent(activePartner);
-
-          if (partnerWindow && !partnerWindow.closed) {
-            try {
-              partnerWindow.focus();
-              return partnerWindow;
-            } catch (error) {
-              partnerWindow = null;
-            }
-          }
-
-          partnerWindow = window.open(url, "_blank");
-          return partnerWindow;
+        function openEmbeddedPartner() {
+          iframeShell.classList.add("is-visible");
+          completionShell.classList.remove("is-visible");
+          partnerFrame.src = "crypto-casino-guided.html?partner=" + encodeURIComponent(activePartner) + "&embed=1";
         }
 
         function unlockPremiumContent() {
@@ -1308,15 +1317,16 @@
 
         function resetFlow() {
           currentStepIndex = 0;
-          awaitingReturn = false;
           steps.forEach(function (step) {
             setStepState(Number(step.getAttribute("data-step")), "pending");
           });
+          iframeShell.classList.remove("is-visible");
+          completionShell.classList.remove("is-visible");
+          partnerFrame.removeAttribute("src");
           paywallOverlay.style.display = "";
           paymentSidebar.classList.remove("is-hidden");
           unlockedSidebar.classList.remove("is-visible");
           setStoredFlow(createFlowState());
-          setPrimaryActionLabel();
         }
 
         function completeStep(stepNumber, callback) {
@@ -1337,23 +1347,21 @@
           if (flow.depositCompleted) {
             targetStep = 3;
           } else if (flow.accountCreated) {
-            targetStep = 2;
-          } else if (flow.opened) {
             targetStep = 1;
+          } else if (flow.opened) {
+            targetStep = 0;
           }
-
-          awaitingReturn = currentStepIndex >= 1 && currentStepIndex < 3;
 
           function completeNextStep() {
             if (currentStepIndex >= targetStep) {
-              setPrimaryActionLabel();
               return;
             }
 
             completeStep(currentStepIndex + 1, function () {
-              if (currentStepIndex === 3) {
+              if (currentStepIndex === 2) {
                 launchConfetti();
-                awaitingReturn = false;
+                iframeShell.classList.remove("is-visible");
+                completionShell.classList.add("is-visible");
               }
               completeNextStep();
             });
@@ -1393,9 +1401,6 @@
             item.classList.toggle("is-active", item.getAttribute("data-partner") === partnerName);
           });
 
-          setFlowIntro(config);
-          modalStepOneTitle.textContent = "Open " + config.name;
-          modalStepOne.textContent = config.stepOne;
           modalStepTwo.textContent = config.stepTwo;
           modalStepThree.textContent = config.stepThree;
           openPartner.textContent = "Continue with Widgy";
@@ -1417,6 +1422,11 @@
         openPartner.addEventListener("click", function () {
           flowModal.classList.add("is-open");
           resetFlow();
+          var flow = getOrCreateFlow();
+          flow.opened = true;
+          flow.updatedAt = Date.now();
+          setStoredFlow(flow);
+          openEmbeddedPartner();
         });
 
         closeModal.addEventListener("click", function () {
@@ -1429,30 +1439,6 @@
           }
         });
 
-        advanceStep.addEventListener("click", function () {
-          if (currentStepIndex >= 3) {
-            unlockPremiumContent();
-            return;
-          }
-
-          var flow = getOrCreateFlow();
-
-          flow.opened = true;
-          flow.updatedAt = Date.now();
-          setStoredFlow(flow);
-
-          advanceStep.textContent = "Waiting for progress...";
-          advanceStep.disabled = true;
-          advanceStep.classList.add("is-loading");
-          awaitingReturn = true;
-          if (currentStepIndex < 1) {
-            completeStep(1, function () {
-              setPrimaryActionLabel();
-            });
-          }
-          openPartnerSite();
-        });
-
         steps.forEach(function (step) {
           function handleStepClick() {
             var state = step.getAttribute("data-state");
@@ -1460,12 +1446,7 @@
               return;
             }
 
-            if (Number(step.getAttribute("data-step")) === 1 && currentStepIndex < 1) {
-              advanceStep.click();
-              return;
-            }
-
-            openPartnerSite();
+            iframeShell.scrollIntoView({ behavior: "smooth", block: "nearest" });
           }
 
           step.addEventListener("click", handleStepClick);
@@ -1485,14 +1466,18 @@
           }
         });
 
-        window.addEventListener("focus", function () {
-          if (flowModal.classList.contains("is-open") && awaitingReturn && currentStepIndex >= 1) {
+        window.addEventListener("message", function (event) {
+          if (!event.data || event.data.type !== "embedded-flow-update") {
+            return;
+          }
+
+          if (event.data.flow && event.data.flow.partner === activePartner) {
             syncFlowFromStorage();
           }
         });
 
-        window.addEventListener("resize", function () {
-          setFlowIntro(partnerConfig[activePartner]);
+        unlockButton.addEventListener("click", function () {
+          unlockPremiumContent();
         });
 
         selectMethod("credit");
