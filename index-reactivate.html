@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Widgy Reactivate Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
+    />
+    <style>
+      :root {
+        --bg: #120b0d;
+        --panel: rgba(20, 13, 15, 0.95);
+        --surface: rgba(255, 247, 244, 0.98);
+        --surface-soft: #fff5f1;
+        --text: #231518;
+        --muted: #6f5a5d;
+        --line: rgba(84, 48, 54, 0.12);
+        --accent: #a33a39;
+        --accent-deep: #872d2f;
+        --accent-soft: #f4dbd9;
+        --gold: #e2b45d;
+        --shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 22px;
+        font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+        color: #f8ece9;
+        background:
+          radial-gradient(circle at top, rgba(196, 62, 65, 0.24), transparent 26%),
+          radial-gradient(circle at 84% 16%, rgba(226, 180, 93, 0.14), transparent 20%),
+          linear-gradient(180deg, #12090b 0%, #1a1014 44%, #130c0f 100%);
+        display: grid;
+        place-items: center;
+      }
+
+      .frame {
+        width: min(100%, 1080px);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 14px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #e7cfcb;
+        text-decoration: none;
+        font-size: 0.84rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .email-shell {
+        position: relative;
+        padding: 18px;
+        border-radius: 30px;
+        background:
+          radial-gradient(circle at top center, rgba(255, 255, 255, 0.5), transparent 34%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.05));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+
+      .email-card {
+        overflow: hidden;
+        border-radius: 30px;
+        background: linear-gradient(180deg, #fffefd 0%, var(--surface-soft) 100%);
+        color: var(--text);
+        border: 1px solid rgba(104, 58, 61, 0.14);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+      }
+
+      .email-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 22px;
+        border-bottom: 1px solid rgba(104, 58, 61, 0.1);
+        background: rgba(255, 255, 255, 0.68);
+      }
+
+      .sender {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        color: var(--accent);
+        font-size: 1rem;
+      }
+
+      .sender i {
+        font-size: 1.35rem;
+      }
+
+      .subject {
+        text-align: right;
+        color: #32486a;
+        font-size: clamp(0.84rem, 1.3vw, 1rem);
+      }
+
+      .subject strong {
+        color: #1d2b44;
+      }
+
+      .email-body {
+        position: relative;
+        padding: 44px 36px 34px;
+        background:
+          radial-gradient(circle at 18% 18%, rgba(163, 58, 57, 0.07), transparent 24%),
+          radial-gradient(circle at 90% 72%, rgba(226, 180, 93, 0.12), transparent 18%),
+          linear-gradient(180deg, #fffefd 0%, #fff7f3 100%);
+      }
+
+      .email-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.9fr);
+        gap: 22px;
+        align-items: end;
+        margin-top: 8px;
+      }
+
+      .email-copy h1 {
+        margin: 0;
+        color: var(--accent);
+        font-size: clamp(2.3rem, 5vw, 5rem);
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+      }
+
+      .email-copy .lead {
+        margin: 14px 0 0;
+        font-size: clamp(1rem, 1.65vw, 1.15rem);
+        line-height: 1.5;
+        color: #2d2024;
+      }
+
+      .offer {
+        margin-top: 24px;
+        max-width: 460px;
+      }
+
+      .offer strong {
+        display: block;
+        font-size: clamp(1.75rem, 3.1vw, 3rem);
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .offer .accent-line {
+        color: var(--accent);
+      }
+
+      .offer .dark-line {
+        color: #111;
+      }
+
+      .cta-row {
+        display: flex;
+        align-items: center;
+        margin-top: 28px;
+      }
+
+      .email-cta {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 250px;
+        padding: 18px 28px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 900;
+        box-shadow: inset 0 -2px 0 rgba(67, 20, 23, 0.22);
+      }
+
+      .cta-meta {
+        margin-top: 12px;
+        color: #645659;
+        font-size: 0.98rem;
+      }
+
+      .visual {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        min-height: 320px;
+      }
+
+      .visual img {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        display: block;
+        transform: scale(1.5);
+        transform-origin: center bottom;
+      }
+
+      .email-footer {
+        padding: 16px 22px;
+        text-align: center;
+        color: #74666a;
+        font-size: 0.78rem;
+        border-top: 1px solid rgba(104, 58, 61, 0.08);
+      }
+
+      @media (max-width: 1120px) {
+        .frame {
+          width: min(100%, 980px);
+        }
+      }
+
+      @media (max-width: 820px) {
+        body {
+          padding: 12px;
+        }
+
+        .email-body {
+          padding: 28px 20px 24px;
+        }
+
+        .email-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .email-copy {
+          text-align: center;
+        }
+
+        .offer {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .visual {
+          min-height: 0;
+          margin-top: 6px;
+          display: none;
+        }
+
+        .cta-row {
+          justify-content: center;
+        }
+
+        .cta-meta {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <a class="back-link" href="index.html">
+        <i class="ri-arrow-left-line" aria-hidden="true"></i>
+        Back to dashboard
+      </a>
+      <div class="email-shell">
+        <article class="email-card" aria-label="Reactivation email demo">
+          <div class="email-meta">
+            <div class="sender">
+              <i class="ri-heart-fill" aria-hidden="true"></i>
+              SXY CHAT
+            </div>
+            <div class="subject">
+              <strong>Subject:</strong> 💝 A Valentine’s Gift: 300 Free Spins on Us
+            </div>
+          </div>
+
+          <div class="email-body">
+            <div class="email-layout">
+              <div class="email-copy">
+                <h1>A Valentine’s Gift!</h1>
+                <p class="lead">Since you’re already part of SXY CHAT, here’s a limited-time reward to bring you back.</p>
+
+                <div class="offer">
+                  <strong class="accent-line">Enjoy 300 free spins at Stake.com,</strong>
+                  <strong class="dark-line">just for being registered.</strong>
+                </div>
+
+                <div class="cta-row">
+                  <a
+                    class="email-cta"
+                    href="crypto-casino.html?source=widgy-reactivate&campaign=300-free-spins&offer=300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Claim your gift
+                  </a>
+                </div>
+
+                <div class="cta-meta">Personal offer · Limited time · Opens Stake.com in a new tab</div>
+              </div>
+
+              <div class="visual" aria-hidden="true">
+                <img src="email-image.png" alt="" />
+              </div>
+            </div>
+          </div>
+
+          <div class="email-footer">
+            © 2026 SXY CHAT Ltd. 75 Spyrou Kyprianou Ave, Office 204, Potamos Germasogeias, 4043 Limassol, Cyprus
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

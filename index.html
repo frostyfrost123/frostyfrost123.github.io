@@ -135,6 +135,61 @@
         margin-top: 18px;
       }
 
+      .variant-list.is-hidden {
+        display: none;
+      }
+
+      .mode-label {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.45;
+      }
+
+      .mode-switch {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        margin-top: 12px;
+        width: 100%;
+        padding: 6px;
+        border-radius: 18px;
+        background: #fffaf4;
+        border: 1px solid rgba(64, 44, 28, 0.1);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      }
+
+      .mode-tab {
+        border: 0;
+        background: transparent;
+        color: #776a62;
+        font: inherit;
+        font-size: 0.9rem;
+        font-weight: 800;
+        padding: 12px 14px;
+        border-radius: 14px;
+        cursor: pointer;
+        transition:
+          background 0.18s ease,
+          color 0.18s ease,
+          box-shadow 0.18s ease,
+          transform 0.18s ease,
+          border-color 0.18s ease;
+      }
+
+      .mode-tab.is-active {
+        background: linear-gradient(180deg, #ffe9a6 0%, #ffd76a 100%);
+        color: #6b4800;
+        box-shadow:
+          inset 0 -2px 0 rgba(107, 72, 0, 0.14),
+          0 8px 18px rgba(64, 44, 28, 0.08);
+      }
+
+      .mode-tab:focus-visible {
+        outline: 2px solid rgba(226, 159, 0, 0.36);
+        outline-offset: 2px;
+      }
+
       .variant {
         display: flex;
         align-items: center;
@@ -246,7 +301,13 @@
             </div>
             <div class="card-body">
               <p>Widgy Payments increases revenue per user by delivering up to 4x perceived value at checkout.</p>
-              <div class="variant-list" aria-label="Payments demo variants">
+              <div class="mode-label">Choose which site version you want to launch for the Payments flow.</div>
+              <div class="mode-switch" role="tablist" aria-label="Payments site version">
+                <button class="mode-tab is-active" type="button" data-payments-mode="subscriptions" aria-selected="true">SXY TUBE</button>
+                <button class="mode-tab" type="button" data-payments-mode="tokens" aria-selected="false">SXY CHAT</button>
+              </div>
+
+              <div class="variant-list" data-payments-panel="subscriptions" aria-label="Payments subscriptions demo variants">
                 <a class="variant" href="index-payments.html">
                   <div class="variant-copy">
                     <strong>Redirect Handoff</strong>
@@ -274,14 +335,112 @@
                   </div>
                 </a>
               </div>
+
+              <div class="variant-list is-hidden" data-payments-panel="tokens" aria-label="Payments token demo variants">
+                <a class="variant" href="index-payments-tokens.html">
+                  <div class="variant-copy">
+                    <strong>Redirect Handoff</strong>
+                  </div>
+                  <div class="variant-meta">
+                    <span class="variant-arrow" aria-hidden="true">→</span>
+                  </div>
+                </a>
+
+                <a class="variant" href="index-embedded-modal-tokens.html">
+                  <div class="variant-copy">
+                    <strong>Embedded Modal Flow</strong>
+                  </div>
+                  <div class="variant-meta">
+                    <span class="variant-arrow" aria-hidden="true">→</span>
+                  </div>
+                </a>
+
+                <a class="variant" href="index-native-checkout-tokens.html">
+                  <div class="variant-copy">
+                    <strong>Native Checkout</strong>
+                  </div>
+                  <div class="variant-meta">
+                    <span class="variant-arrow" aria-hidden="true">→</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <img src="reactivate-logo.svg" alt="Reactivate" />
+            </div>
+            <div class="card-body">
+              <p>Widgy Reactivate turns inactive users into revenue with exclusive, partner-funded bonuses via email.</p>
+              <div class="variant-list" aria-label="Reactivate demo variants">
+                <a class="variant" href="index-reactivate.html">
+                  <div class="variant-copy">
+                    <strong>Email Reactivation Flow</strong>
+                  </div>
+                  <div class="variant-meta">
+                    <span class="variant-arrow" aria-hidden="true">→</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </article>
         </section>
 
         <footer class="footer">
-          Widgy demo hub for Engage and Payments product flows.
+          Widgy demo hub for Engage, Payments, and Reactivate product flows.
         </footer>
       </main>
     </div>
+    <script>
+      (function () {
+        var PAYMENTS_MODE_KEY = "demoPaymentsMode";
+        var tabs = Array.from(document.querySelectorAll("[data-payments-mode]"));
+        var panels = Array.from(document.querySelectorAll("[data-payments-panel]"));
+
+        function updatePanels(mode) {
+          tabs.forEach(function (tab) {
+            var isActive = tab.getAttribute("data-payments-mode") === mode;
+            tab.classList.toggle("is-active", isActive);
+            tab.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          panels.forEach(function (panel) {
+            panel.classList.toggle("is-hidden", panel.getAttribute("data-payments-panel") !== mode);
+          });
+        }
+
+        function getStoredMode() {
+          try {
+            var storedMode = window.localStorage.getItem(PAYMENTS_MODE_KEY);
+            if (storedMode === "subscriptions" || storedMode === "tokens") {
+              return storedMode;
+            }
+          } catch (error) {
+            return "subscriptions";
+          }
+
+          return "subscriptions";
+        }
+
+        function setStoredMode(mode) {
+          try {
+            window.localStorage.setItem(PAYMENTS_MODE_KEY, mode);
+          } catch (error) {
+            return;
+          }
+        }
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            var mode = tab.getAttribute("data-payments-mode");
+            updatePanels(mode);
+            setStoredMode(mode);
+          });
+        });
+
+        updatePanels(getStoredMode());
+      })();
+    </script>
   </body>
 </html>

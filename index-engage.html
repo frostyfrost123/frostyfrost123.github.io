@@ -70,6 +70,21 @@
         border-bottom: 1px solid var(--line);
       }
 
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.84rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
       .brand {
         display: inline-flex;
         align-items: center;
@@ -683,9 +698,30 @@
         }
 
         .topbar {
-          align-items: flex-start;
-          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
           margin-bottom: 20px;
+        }
+
+        .brand {
+          min-width: 0;
+          font-size: 1rem;
+        }
+
+        .brand-word {
+          font-size: 1.2rem;
+        }
+
+        .brand-tag {
+          margin-left: 8px;
+          padding: 6px 10px;
+          font-size: 1.05rem;
+        }
+
+        .back-link {
+          flex-shrink: 0;
+          padding: 7px 10px;
+          font-size: 0.74rem;
         }
 
         .player {
@@ -777,6 +813,10 @@
           <a class="brand" href="index.html" aria-label="Back to demo launcher">
             <span class="brand-word">SXY</span>
             <span class="brand-tag">TUBE</span>
+          </a>
+          <a class="back-link" href="index.html">
+            <i class="ri-arrow-left-line" aria-hidden="true"></i>
+            Back to dashboard
           </a>
         </header>
 
@@ -973,6 +1013,7 @@
           }
 
           claimCta.classList.add("is-exploding");
+          rewardBanner.style.display = "none";
 
           window.setTimeout(function () {
             window.open("crypto-casino.html", "_blank");

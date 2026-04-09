@@ -61,9 +61,26 @@
       .topbar {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        gap: 16px;
         margin-bottom: 16px;
         padding-bottom: 16px;
         border-bottom: 1px solid var(--line);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.84rem;
+        font-weight: 800;
+        white-space: nowrap;
       }
 
       .brand {
@@ -346,6 +363,10 @@
         font-size: 0.88rem;
       }
 
+      .mode-switch {
+        display: none;
+      }
+
       .method-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -366,13 +387,16 @@
 
       .method.is-selected {
         border-color: #e6af1a;
-        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
         box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
       }
 
-      .method.is-selected i,
+      .method.is-selected i {
+        color: #000;
+      }
+
       .method.is-selected span {
-        color: #553d00;
+        color: #000;
       }
 
       .method i {
@@ -388,14 +412,24 @@
         height: 28px;
         margin: 0 auto 6px;
         object-fit: contain;
+        filter: brightness(0) invert(1);
       }
 
       .method.credit i {
-        color: #2f6cff;
+        color: #fff;
       }
 
       .method.paypal i {
-        color: #0a66dd;
+        color: #fff;
+      }
+
+      .method.credit.is-selected i,
+      .method.paypal.is-selected i {
+        color: #000;
+      }
+
+      .method.widgy.is-selected .method-icon {
+        filter: brightness(0);
       }
 
       .method span {
@@ -478,24 +512,32 @@
 
       .partner.is-active {
         border-color: #e6af1a;
-        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
         box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
       }
 
       .partner.is-active strong,
       .partner.is-active span {
-        color: #553d00;
+        color: #000;
       }
 
       .partner.is-active .partner-badge {
-        background: rgba(85, 61, 0, 0.12);
-        color: #553d00;
+        background-color: rgba(85, 61, 0, 0.12);
+        color: #000;
       }
 
       .partner strong {
         display: block;
         font-size: 1rem;
         color: #fff3ea;
+      }
+
+      .partner strong .partner-offer-desktop {
+        display: block;
+      }
+
+      .partner strong .partner-offer-mobile {
+        display: none;
       }
 
       .partner span {
@@ -515,6 +557,23 @@
         font-weight: 900;
         background: rgba(255, 197, 51, 0.16);
         color: #ffca56;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        text-indent: -9999px;
+        overflow: hidden;
+      }
+
+      .partner[data-partner="stake"] .partner-badge {
+        background-image: url("stake-logo.png");
+      }
+
+      .partner[data-partner="bcgame"] .partner-badge {
+        background-image: url("bc-logo.png");
+      }
+
+      .partner[data-partner="roobet"] .partner-badge {
+        background-image: url("roo-logo.png");
       }
 
       .cta-row {
@@ -536,8 +595,8 @@
       }
 
       .continue.standard {
-        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
-        color: #553d00;
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+        color: #000;
         box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
       }
 
@@ -706,8 +765,8 @@
       }
 
       .modal-button.primary {
-        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
-        color: #553d00;
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+        color: #000;
         box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
       }
 
@@ -776,7 +835,30 @@
         }
 
         .topbar {
+          align-items: center;
+          justify-content: space-between;
           margin-bottom: 14px;
+        }
+
+        .brand {
+          min-width: 0;
+          font-size: 1rem;
+        }
+
+        .brand-word {
+          font-size: 1.2rem;
+        }
+
+        .brand-tag {
+          margin-left: 8px;
+          padding: 6px 10px;
+          font-size: 1.05rem;
+        }
+
+        .back-link {
+          flex-shrink: 0;
+          padding: 7px 10px;
+          font-size: 0.74rem;
         }
 
         .paywall-overlay {
@@ -799,8 +881,12 @@
           display: none;
         }
 
-        .partner-badge {
+        .partner strong .partner-offer-desktop {
           display: none;
+        }
+
+        .partner strong .partner-offer-mobile {
+          display: block;
         }
 
         .paywall-overlay:not([style*="display: none"]) + .player-ui {
@@ -864,17 +950,21 @@
             <span class="brand-word">SXY</span>
             <span class="brand-tag">TUBE</span>
           </a>
+          <a class="back-link" href="index.html">
+            <i class="ri-arrow-left-line" aria-hidden="true"></i>
+            Back to dashboard
+          </a>
         </header>
 
         <section class="content">
           <section class="video-stage">
               <div class="player-shell">
               <div class="player" aria-label="Premium video player">
-                <div class="paywall-overlay" id="paywallOverlay">
+              <div class="paywall-overlay" id="paywallOverlay">
                   <div class="overlay-card">
                     <i class="ri-lock-2-line" aria-hidden="true"></i>
-                    <strong>Premium Access Required</strong>
-                    <span>Choose a payment route to begin the unlock flow.</span>
+                    <strong id="overlayTitle">Premium Access Required</strong>
+                    <span id="overlayCopy">Choose a payment route to begin the unlock flow.</span>
                   </div>
                 </div>
                 <div class="player-ui">
@@ -890,14 +980,19 @@
             </div>
 
             <div class="title-row">
-              <h1>The Private Collection: Volume One</h1>
-              <div class="meta">Premium content • Access unlock required before playback begins</div>
+              <h1 id="contentTitle">The Private Collection: Volume One</h1>
+              <div class="meta" id="contentMeta">Premium content • Access unlock required before playback begins</div>
             </div>
           </section>
 
           <aside class="sidebar" aria-label="Access payment options">
             <div class="sidebar-head">
-              <h2>Unlock full access</h2>
+              <h2 id="sidebarTitle">Unlock full access</h2>
+              <p id="sidebarIntro">Choose how you want to unlock this experience.</p>
+              <div class="mode-switch" role="tablist" aria-label="Payments mode">
+                <button class="mode-tab is-active" type="button" data-mode="subscriptions" aria-selected="true">Subscriptions</button>
+                <button class="mode-tab" type="button" data-mode="tokens" aria-selected="false">Tokens</button>
+              </div>
             </div>
 
             <div class="method-grid" role="tablist" aria-label="Payment methods">
@@ -917,67 +1012,76 @@
 
             <div class="panel-body">
               <section class="standard-box" data-panel="credit">
-                <h3 class="panel-title">Pay directly with card</h3>
-                <p class="panel-copy">Complete checkout and start watching right away.</p>
+                <h3 class="panel-title" id="creditTitle">Pay directly with card</h3>
+                <p class="panel-copy" id="creditCopy">Complete checkout and start watching right away.</p>
                 <div class="detail-list">
                   <div class="detail-item">
                     <i class="ri-check-line" aria-hidden="true"></i>
-                    <span>Secure one-step card checkout</span>
+                    <span id="creditDetailOne">Secure one-step card checkout</span>
                   </div>
                   <div class="detail-item">
                     <i class="ri-check-line" aria-hidden="true"></i>
-                    <span>Access starts immediately after payment</span>
+                    <span id="creditDetailTwo">Access starts immediately after payment</span>
                   </div>
                 </div>
                 <div class="cta-row">
-                  <button class="continue standard" type="button">Continue with Credit Card</button>
+                  <button class="continue standard" id="creditButton" type="button">Continue with Credit Card</button>
                 </div>
               </section>
 
               <section class="standard-box hidden" data-panel="paypal">
-                <h3 class="panel-title">Continue with PayPal</h3>
-                <p class="panel-copy">Use PayPal for a familiar express checkout flow.</p>
+                <h3 class="panel-title" id="paypalTitle">Continue with PayPal</h3>
+                <p class="panel-copy" id="paypalCopy">Use PayPal for a familiar express checkout flow.</p>
                 <div class="detail-list">
                   <div class="detail-item">
                     <i class="ri-check-line" aria-hidden="true"></i>
-                    <span>Fast authorization in a new tab</span>
+                    <span id="paypalDetailOne">Fast authorization in a new tab</span>
                   </div>
                   <div class="detail-item">
                     <i class="ri-check-line" aria-hidden="true"></i>
-                    <span>Return to SXY TUBE with access enabled</span>
+                    <span id="paypalDetailTwo">Return to SXY TUBE with access enabled</span>
                   </div>
                 </div>
                 <div class="cta-row">
-                  <button class="continue standard" type="button">Continue with PayPal</button>
+                  <button class="continue standard" id="paypalButton" type="button">Continue with PayPal</button>
                 </div>
               </section>
 
               <section class="widgy-box hidden" data-panel="widgy">
-                <h3 class="panel-title">Choose a partner brand</h3>
-                <p class="panel-copy">
+                <h3 class="panel-title" id="widgyTitle">Choose a partner brand</h3>
+                <p class="panel-copy" id="widgyCopy">
                   Make a qualifying deposit through one of the partner casinos below and get 1 year free access.
                 </p>
                 <div class="partner-list">
                   <button class="partner is-active" type="button" data-partner="stake">
                     <div>
-                      <strong>Deposit €20 → Get 1 Year Free</strong>
-                      <span>On Stake.com (+ €40 bonus)</span>
+                      <strong>
+                        <span class="partner-offer-desktop">Deposit €20 → Get 1 Year Free</span>
+                        <span class="partner-offer-mobile">Deposit €20 → 1 Year Free</span>
+                      </strong>
+                      <span class="partner-subtext">On Stake.com (+ €40 bonus)</span>
                     </div>
                     <div class="partner-badge">ST</div>
                   </button>
 
                   <button class="partner" type="button" data-partner="bcgame">
                     <div>
-                      <strong>Deposit €20 → Get 1 Year Free</strong>
-                      <span>On BC.Game (+ €40 bonus)</span>
+                      <strong>
+                        <span class="partner-offer-desktop">Deposit €20 → Get 1 Year Free</span>
+                        <span class="partner-offer-mobile">Deposit €20 → 1 Year Free</span>
+                      </strong>
+                      <span class="partner-subtext">On BC.Game (+ €40 bonus)</span>
                     </div>
                     <div class="partner-badge">BC</div>
                   </button>
 
                   <button class="partner" type="button" data-partner="roobet">
                     <div>
-                      <strong>Deposit €20 → Get 1 Year Free</strong>
-                      <span>On Roobet (+ €40 bonus)</span>
+                      <strong>
+                        <span class="partner-offer-desktop">Deposit €20 → Get 1 Year Free</span>
+                        <span class="partner-offer-mobile">Deposit €20 → 1 Year Free</span>
+                      </strong>
+                      <span class="partner-subtext">On Roobet (+ €40 bonus)</span>
                     </div>
                     <div class="partner-badge">RB</div>
                   </button>
@@ -992,13 +1096,13 @@
 
           <aside class="unlocked-sidebar" id="unlockedSidebar" aria-label="Unlocked content">
             <div class="sidebar-head">
-              <h2>Access unlocked</h2>
-              <p>Your premium access is active. Continue watching or explore more members-only content.</p>
+              <h2 id="unlockedTitle">Access unlocked</h2>
+              <p id="unlockedCopy">Your premium access is active. Continue watching or explore more members-only content.</p>
             </div>
             <div class="sidebar-body">
               <div class="unlock-badge">
                 <i class="ri-checkbox-circle-line" aria-hidden="true"></i>
-                <span>12 months free successfully unlocked</span>
+                <span id="unlockBadgeText">12 months free successfully unlocked</span>
               </div>
 
             </div>
@@ -1089,7 +1193,7 @@
             <div class="step" data-step="3" data-state="pending" role="button" tabindex="0" aria-label="Continue with deposit step">
               <div class="step-index">3</div>
               <div class="step-copy">
-                <strong>Deposit at least €20</strong>
+                <strong id="modalStepThreeTitle">Deposit at least €20</strong>
                 <span id="modalStepThree">Finish the qualifying deposit to activate the offer.</span>
               </div>
               <div class="step-state">Pending</div>
@@ -1106,8 +1210,12 @@
     <script>
       (function () {
         var methods = Array.from(document.querySelectorAll(".method"));
+        var modeTabs = Array.from(document.querySelectorAll(".mode-tab"));
         var panels = Array.from(document.querySelectorAll("[data-panel]"));
         var partners = Array.from(document.querySelectorAll(".partner"));
+        var partnerSubtexts = Array.from(document.querySelectorAll(".partner-subtext"));
+        var partnerOfferDesktop = Array.from(document.querySelectorAll(".partner-offer-desktop"));
+        var partnerOfferMobile = Array.from(document.querySelectorAll(".partner-offer-mobile"));
         var openPartner = document.getElementById("openPartner");
         var flowModal = document.getElementById("flowModal");
         var closeModal = document.getElementById("closeModal");
@@ -1115,14 +1223,37 @@
         var paywallOverlay = document.getElementById("paywallOverlay");
         var paymentSidebar = document.querySelector(".sidebar");
         var unlockedSidebar = document.getElementById("unlockedSidebar");
+        var overlayTitle = document.getElementById("overlayTitle");
+        var overlayCopy = document.getElementById("overlayCopy");
+        var contentTitle = document.getElementById("contentTitle");
+        var contentMeta = document.getElementById("contentMeta");
+        var sidebarTitle = document.getElementById("sidebarTitle");
+        var sidebarIntro = document.getElementById("sidebarIntro");
+        var creditTitle = document.getElementById("creditTitle");
+        var creditCopy = document.getElementById("creditCopy");
+        var creditDetailOne = document.getElementById("creditDetailOne");
+        var creditDetailTwo = document.getElementById("creditDetailTwo");
+        var creditButton = document.getElementById("creditButton");
+        var paypalTitle = document.getElementById("paypalTitle");
+        var paypalCopy = document.getElementById("paypalCopy");
+        var paypalDetailOne = document.getElementById("paypalDetailOne");
+        var paypalDetailTwo = document.getElementById("paypalDetailTwo");
+        var paypalButton = document.getElementById("paypalButton");
+        var widgyTitle = document.getElementById("widgyTitle");
+        var widgyCopy = document.getElementById("widgyCopy");
+        var unlockedTitle = document.getElementById("unlockedTitle");
+        var unlockedCopy = document.getElementById("unlockedCopy");
+        var unlockBadgeText = document.getElementById("unlockBadgeText");
         var flowIntro = document.getElementById("flowIntro");
         var modalStepOneTitle = document.getElementById("modalStepOneTitle");
         var modalStepOne = document.getElementById("modalStepOne");
         var modalStepTwo = document.getElementById("modalStepTwo");
+        var modalStepThreeTitle = document.getElementById("modalStepThreeTitle");
         var modalStepThree = document.getElementById("modalStepThree");
         var advanceStep = document.getElementById("advanceStep");
         var steps = Array.from(document.querySelectorAll(".step"));
         var FLOW_STORAGE_KEY = "demoUnlockFlow";
+        var activeMode = "subscriptions";
         var activePartner = "stake";
         var currentStepIndex = 0;
         var awaitingReturn = false;
@@ -1130,29 +1261,97 @@
         var hasScrolledToWidgy = false;
 
         var partnerConfig = {
-          stake: {
-            name: "Stake.com",
-            intro: "Click the button below to open Stake.com. You can return here at any time to see how far you’ve progressed in verification and what step comes next.",
-            introShort: "Open Stake.com, finish the steps there, then come back here.",
-            stepOne: "Launch the partner site in a new tab to begin the handoff.",
-            stepTwo: "Complete the account registration step on Stake.",
-            stepThree: "Finish the qualifying deposit to activate the offer."
+          stake: { name: "Stake.com" },
+          bcgame: { name: "BC.Game" },
+          roobet: { name: "Roobet" }
+        };
+
+        var modeConfig = {
+          subscriptions: {
+            overlayTitle: "Premium Access Required",
+            overlayCopy: "Choose a payment route to begin the unlock flow.",
+            contentTitle: "The Private Collection: Volume One",
+            contentMeta: "Premium content • Access unlock required before playback begins",
+            sidebarTitle: "Unlock full access",
+            sidebarIntro: "Choose how you want to unlock this experience.",
+            creditTitle: "Pay directly with card",
+            creditCopy: "Complete checkout and start watching right away.",
+            creditDetailOne: "Secure one-step card checkout",
+            creditDetailTwo: "Access starts immediately after payment",
+            creditButton: "Continue with Credit Card",
+            paypalTitle: "Continue with PayPal",
+            paypalCopy: "Use PayPal for a familiar express checkout flow.",
+            paypalDetailOne: "Fast authorization in a new tab",
+            paypalDetailTwo: "Return to SXY TUBE with access enabled",
+            paypalButton: "Continue with PayPal",
+            widgyTitle: "Choose a partner brand",
+            widgyCopy: "Make a qualifying deposit through one of the partner casinos below and get 1 year free access.",
+            partnerOfferDesktop: "Deposit €20 → Get 1 Year Free",
+            partnerOfferMobile: "Deposit €20 → 1 Year Free",
+            partnerBenefit: "(+ €40 bonus)",
+            openPartner: "Continue with Widgy",
+            unlockedTitle: "Access unlocked",
+            unlockedCopy: "Your premium access is active. Continue watching or explore more members-only content.",
+            unlockBadge: "12 months free successfully unlocked",
+            stepThreeTitle: "Deposit at least €20",
+            finalAction: "Start watching",
+            getIntro: function (partnerName, short) {
+              return short
+                ? "Open " + partnerName + ", finish the steps there, then come back here."
+                : "Click the button below to open " + partnerName + ". You can return here at any time to see how far you’ve progressed in verification and what step comes next.";
+            },
+            getStepOne: function () {
+              return "Launch the partner site in a new tab to begin the handoff.";
+            },
+            getStepTwo: function (partnerName) {
+              return "Complete the account registration step on " + partnerName.replace(".com", "") + ".";
+            },
+            getStepThree: function () {
+              return "Finish the qualifying deposit to activate the offer.";
+            }
           },
-          bcgame: {
-            name: "BC.Game",
-            intro: "Click the button below to open BC.Game. You can return here at any time to see how far you’ve progressed in verification and what step comes next.",
-            introShort: "Open BC.Game, finish the steps there, then come back here.",
-            stepOne: "Launch the partner site in a new tab to begin the handoff.",
-            stepTwo: "Complete the account registration step on BC.Game.",
-            stepThree: "Finish the qualifying deposit to activate the offer."
-          },
-          roobet: {
-            name: "Roobet",
-            intro: "Click the button below to open Roobet. You can return here at any time to see how far you’ve progressed in verification and what step comes next.",
-            introShort: "Open Roobet, finish the steps there, then come back here.",
-            stepOne: "Launch the partner site in a new tab to begin the handoff.",
-            stepTwo: "Complete the account registration step on Roobet.",
-            stepThree: "Finish the qualifying deposit to activate the offer."
+          tokens: {
+            overlayTitle: "Tokens Required",
+            overlayCopy: "Choose a payment route to unlock 100 AI girlfriend tokens and start chatting.",
+            contentTitle: "Mia is online and waiting",
+            contentMeta: "AI girlfriend chat • Unlock tokens to start messaging",
+            sidebarTitle: "Unlock chat tokens",
+            sidebarIntro: "Switch between subscription rewards and token-based chat monetization.",
+            creditTitle: "Buy tokens directly with card",
+            creditCopy: "Complete checkout and start chatting right away.",
+            creditDetailOne: "Secure one-step card checkout",
+            creditDetailTwo: "100 chat tokens are added immediately after payment",
+            creditButton: "Buy tokens with card",
+            paypalTitle: "Continue with PayPal",
+            paypalCopy: "Use PayPal for a familiar express token checkout flow.",
+            paypalDetailOne: "Fast authorization in a new tab",
+            paypalDetailTwo: "Return to SXY CHAT with token balance ready",
+            paypalButton: "Buy tokens with PayPal",
+            widgyTitle: "Choose a partner brand",
+            widgyCopy: "Make a qualifying deposit through one of the partner casinos below and get 100 AI girlfriend tokens.",
+            partnerOfferDesktop: "Deposit €20 → Get 100 Tokens",
+            partnerOfferMobile: "Deposit €20 → 100 Tokens",
+            partnerBenefit: "(+ 100 tokens)",
+            openPartner: "Get tokens with Widgy",
+            unlockedTitle: "100 tokens unlocked",
+            unlockedCopy: "Your chat balance is ready. Start messaging your AI girlfriend or save tokens for later.",
+            unlockBadge: "100 AI girlfriend tokens successfully unlocked",
+            stepThreeTitle: "Deposit at least €20",
+            finalAction: "Start chatting",
+            getIntro: function (partnerName, short) {
+              return short
+                ? "Open " + partnerName + ", activate your 100 token reward, then come back here."
+                : "Click the button below to open " + partnerName + " and activate your 100 token reward. You can return here at any time to see what step comes next.";
+            },
+            getStepOne: function () {
+              return "Launch the partner site in a new tab to begin the token handoff.";
+            },
+            getStepTwo: function (partnerName) {
+              return "Complete the account registration step on " + partnerName.replace(".com", "") + " to qualify for the 100 token reward.";
+            },
+            getStepThree: function () {
+              return "Finish the qualifying deposit to activate your 100 AI girlfriend tokens.";
+            }
           }
         };
 
@@ -1160,6 +1359,68 @@
           flowIntro.textContent = window.matchMedia("(max-width: 760px)").matches
             ? config.introShort
             : config.intro;
+        }
+
+        function getPartnerFlowConfig(partnerName) {
+          var partnerNameLabel = partnerConfig[partnerName].name;
+          var mode = modeConfig[activeMode];
+          return {
+            name: partnerNameLabel,
+            intro: mode.getIntro(partnerNameLabel, false),
+            introShort: mode.getIntro(partnerNameLabel, true),
+            stepOne: mode.getStepOne(partnerNameLabel),
+            stepTwo: mode.getStepTwo(partnerNameLabel),
+            stepThree: mode.getStepThree(partnerNameLabel)
+          };
+        }
+
+        function applyMode(modeName) {
+          var mode = modeConfig[modeName];
+          activeMode = modeName;
+
+          modeTabs.forEach(function (tab) {
+            var active = tab.getAttribute("data-mode") === modeName;
+            tab.classList.toggle("is-active", active);
+            tab.setAttribute("aria-selected", active ? "true" : "false");
+          });
+
+          overlayTitle.textContent = mode.overlayTitle;
+          overlayCopy.textContent = mode.overlayCopy;
+          contentTitle.textContent = mode.contentTitle;
+          contentMeta.textContent = mode.contentMeta;
+          sidebarTitle.textContent = mode.sidebarTitle;
+          sidebarIntro.textContent = mode.sidebarIntro;
+          creditTitle.textContent = mode.creditTitle;
+          creditCopy.textContent = mode.creditCopy;
+          creditDetailOne.textContent = mode.creditDetailOne;
+          creditDetailTwo.textContent = mode.creditDetailTwo;
+          creditButton.textContent = mode.creditButton;
+          paypalTitle.textContent = mode.paypalTitle;
+          paypalCopy.textContent = mode.paypalCopy;
+          paypalDetailOne.textContent = mode.paypalDetailOne;
+          paypalDetailTwo.textContent = mode.paypalDetailTwo;
+          paypalButton.textContent = mode.paypalButton;
+          widgyTitle.textContent = mode.widgyTitle;
+          widgyCopy.textContent = mode.widgyCopy;
+          unlockedTitle.textContent = mode.unlockedTitle;
+          unlockedCopy.textContent = mode.unlockedCopy;
+          unlockBadgeText.textContent = mode.unlockBadge;
+          modalStepThreeTitle.textContent = mode.stepThreeTitle;
+
+          partnerOfferDesktop.forEach(function (node) {
+            node.textContent = mode.partnerOfferDesktop;
+          });
+
+          partnerOfferMobile.forEach(function (node) {
+            node.textContent = mode.partnerOfferMobile;
+          });
+
+          partnerSubtexts.forEach(function (node, index) {
+            var partnerName = partners[index].getAttribute("data-partner");
+            node.textContent = "On " + partnerConfig[partnerName].name + " " + mode.partnerBenefit;
+          });
+
+          selectPartner(activePartner);
         }
 
         function selectMethod(methodName) {
@@ -1266,7 +1527,7 @@
 
         function setPrimaryActionLabel() {
           if (currentStepIndex >= 3) {
-            advanceStep.textContent = "Start watching";
+            advanceStep.textContent = modeConfig[activeMode].finalAction;
             advanceStep.disabled = false;
             advanceStep.classList.remove("is-loading");
             return;
@@ -1386,7 +1647,7 @@
         }
 
         function selectPartner(partnerName) {
-          var config = partnerConfig[partnerName];
+          var config = getPartnerFlowConfig(partnerName);
           activePartner = partnerName;
 
           partners.forEach(function (item) {
@@ -1398,9 +1659,15 @@
           modalStepOne.textContent = config.stepOne;
           modalStepTwo.textContent = config.stepTwo;
           modalStepThree.textContent = config.stepThree;
-          openPartner.textContent = "Continue with Widgy";
+          openPartner.textContent = modeConfig[activeMode].openPartner;
           resetFlow();
         }
+
+        modeTabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            applyMode(tab.getAttribute("data-mode"));
+          });
+        });
 
         methods.forEach(function (method) {
           method.addEventListener("click", function () {
@@ -1496,7 +1763,7 @@
         });
 
         selectMethod("credit");
-        selectPartner("stake");
+        applyMode("subscriptions");
       })();
     </script>
   </body>
