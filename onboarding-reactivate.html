@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Widgy Reactivate Onboarding</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #1b1d37;
+        --panel: rgba(255, 255, 255, 0.06);
+        --card: #ffffff;
+        --text: #ffffff;
+        --muted: rgba(255, 255, 255, 0.72);
+        --ink: #18233b;
+        --ink-muted: #63708a;
+        --line: rgba(255, 255, 255, 0.12);
+        --line-soft: rgba(24, 35, 59, 0.1);
+        --blue-a: #3f7df0;
+        --blue-b: #58d0ef;
+        --shadow: 0 34px 80px rgba(8, 12, 32, 0.42);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 20px;
+        font-family: Inter, "Avenir Next", "Segoe UI", sans-serif;
+        color: var(--text);
+        background: #1a1c35;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        max-width: 620px;
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 38px 30px 34px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      code {
+        padding: 2px 6px;
+        border-radius: 8px;
+        background: #eef3f8;
+        color: #24314d;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.92em;
+      }
+
+      h1 {
+        font-family: "Epilogue", Inter, sans-serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 7vw, 3rem);
+        line-height: 0.98;
+        letter-spacing: normal;
+      }
+
+      .hero p {
+        margin-top: 18px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .hero p a {
+        color: #ffffff;
+        font-weight: 600;
+        text-decoration-line: underline;
+        text-decoration-style: dotted;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        transition:
+          color 0.18s ease,
+          opacity 0.18s ease;
+      }
+
+      .hero p a:hover {
+        color: #58d0ef;
+        opacity: 0.92;
+      }
+
+      .hero-actions {
+        display: grid;
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .back-link {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--line);
+        color: #ffffff;
+      }
+
+      .sections {
+        display: block;
+        margin-top: 28px;
+      }
+
+      .section {
+        padding: 36px 30px 20px;
+        border-radius: 24px;
+        background: var(--card);
+        color: var(--ink);
+        box-shadow: 0 20px 45px rgba(5, 9, 26, 0.22);
+      }
+
+      .step + .step {
+        margin-top: 34px;
+        padding-top: 30px;
+        border-top: 1px solid rgba(24, 35, 59, 0.1);
+      }
+
+      .step h2 {
+        font-family: "Epilogue", Inter, sans-serif;
+        font-weight: 600;
+        font-size: 1.12rem;
+      }
+
+      .step p {
+        margin-top: 12px;
+        color: var(--ink-muted);
+        line-height: 1.6;
+      }
+
+      .list {
+        display: grid;
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .item {
+        padding: 14px;
+        border-radius: 18px;
+        background: #f6f9fc;
+        border: 1px solid var(--line-soft);
+      }
+
+      .item strong {
+        display: block;
+        font-family: "Epilogue", Inter, sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .item span {
+        display: block;
+        margin-top: 5px;
+        color: var(--ink-muted);
+        line-height: 1.55;
+      }
+
+      .code-block {
+        position: relative;
+        margin-top: 16px;
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: #101827;
+        color: #7df2c7;
+        border: 1px solid rgba(16, 24, 39, 0.08);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        overflow-x: auto;
+        cursor: pointer;
+        transition:
+          transform 0.18s ease,
+          border-color 0.18s ease,
+          box-shadow 0.18s ease;
+      }
+
+      .code-block:hover {
+        transform: translateY(-1px);
+        border-color: rgba(88, 208, 239, 0.24);
+        box-shadow: 0 12px 24px rgba(16, 24, 39, 0.18);
+      }
+
+      .code-block code {
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        color: inherit;
+        font-size: inherit;
+      }
+
+      .code-hint {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.18s ease;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #0b1220;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .code-block:hover .code-hint,
+      .code-block:focus-within .code-hint {
+        opacity: 1;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 12px;
+        }
+
+        .hero {
+          padding: 28px 20px 26px;
+        }
+
+        .section {
+          padding: 24px 20px 14px;
+        }
+
+        .step + .step {
+          margin-top: 36px;
+          padding-top: 24px;
+        }
+
+        .code-hint {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <h1>Reactivate Onboarding</h1>
+        <p>
+          Get up and running quickly by following the steps below. Reach support at
+          <a href="mailto:sales@widgytech.com">sales@widgytech.com</a> for further assistance.
+        </p>
+        <div class="hero-actions">
+          <a class="back-link" href="index.html">Back to hub</a>
+        </div>
+      </section>
+
+      <section class="sections">
+        <div class="section">
+
+          <div class="step">
+            <h2>1. Receive your campaign materials</h2>
+            <p>
+              The Widgy team will provide everything you need to run the campaign, including suggested
+              messaging copy and any graphical assets relevant to the promotion.
+            </p>
+            <div class="list">
+              <div class="item">
+                <strong>Campaign messaging</strong>
+                <span>Suggested copy will be shared for you to use across your placements. You are welcome to adapt the tone to fit your brand voice.</span>
+              </div>
+              <div class="item">
+                <strong>Graphical assets</strong>
+                <span>Where applicable, ready-to-use creative assets will be provided alongside the campaign materials.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <h2>2. Use the tracking URL</h2>
+            <p>
+              Each campaign comes with a unique URL that must be used for all click-outs. This link
+              ensures the customer interaction is properly tracked and that the correct deal is unlocked
+              for them.
+            </p>
+            <div class="list">
+              <div class="item">
+                <strong>Important</strong>
+                <span>Do not modify or substitute this URL. Using a different link will break tracking and prevent the offer from being delivered correctly to the customer.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <h2>3. Go live</h2>
+            <p>
+              Once your placements are in place using the provided materials and tracking URL, the
+              campaign is ready to go. The Widgy team will confirm everything looks correct before launch.
+            </p>
+          </div>
+
+          <div class="step">
+            <h2>4. Monitor performance</h2>
+            <p>
+              Once live, you will receive login details to the Widgy Dashboard where you can find
+              analytics, monitor performance, and review your data and revenue.
+            </p>
+            <div class="list">
+              <div class="item">
+                <strong>Need help?</strong>
+                <span>Reach out to <a href="mailto:sales@widgytech.com">sales@widgytech.com</a> if you need support during setup.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
