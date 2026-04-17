@@ -227,6 +227,26 @@
         font-size: 0.95rem;
       }
 
+      .variant-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .coming-soon-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(243, 167, 18, 0.14);
+        color: #9a6400;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
       .variant-copy span {
         display: block;
         margin-top: 4px;
@@ -322,7 +342,7 @@
         <h1>The Demo and Onboarding Hub</h1>
         <p>
           Use this hub to either launch a product demo or open a simple onboarding page.
-          Reach out to <a href="mailto:sales@widgytech.com">sales@widgytech.com</a> for further assistance.
+          Reach out to <a href="mailto:onboarding@widgytech.com">onboarding@widgytech.com</a> for further assistance.
         </p>
       </section>
 
@@ -368,6 +388,13 @@
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
+            <a class="variant" href="index-reactivate-messaging.html">
+              <div class="variant-copy">
+                <strong>Telegram/WhatsApp Reactivation Flow</strong>
+                <span>Messaging-first Reactivate example.</span>
+              </div>
+              <span class="variant-arrow" aria-hidden="true">→</span>
+            </a>
           </div>
         </article>
 
@@ -375,7 +402,7 @@
           <div class="card-head">
             <div class="card-top">
               <img src="payments-logo.svg" alt="Widgy Payments" />
-              <span class="doc-link is-disabled">Read onboarding</span>
+              <a class="doc-link" href="onboarding-payments.html">Read onboarding</a>
             </div>
             <p>
               Improve checkout value perception with flexible flow types for subscription and token products.
@@ -393,21 +420,24 @@
           <div class="variant-list" data-payments-panel="subscriptions" aria-label="Payments subscriptions demo variants">
             <a class="variant" href="index-payments.html">
               <div class="variant-copy">
-                <strong>Redirect Handoff</strong>
+                <strong>Redirect Handoff (new tab)</strong>
                 <span>Fast handoff-based checkout.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
             <a class="variant" href="index-embedded-modal.html">
               <div class="variant-copy">
-                <strong>Embedded Modal Flow</strong>
+                <strong>Embedded Modal Flow (iframe/Hyperbeam)</strong>
                 <span>On-site continuity with modal checkout.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
             <a class="variant" href="index-native-checkout.html">
               <div class="variant-copy">
-                <strong>Native Checkout</strong>
+                <div class="variant-title">
+                  <strong>Native Checkout (API)</strong>
+                  <span class="coming-soon-badge">Early Concept</span>
+                </div>
                 <span>Fully integrated flow.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
@@ -417,21 +447,24 @@
           <div class="variant-list is-hidden" data-payments-panel="tokens" aria-label="Payments token demo variants">
             <a class="variant" href="index-payments-tokens.html">
               <div class="variant-copy">
-                <strong>Redirect Handoff</strong>
+                <strong>Redirect Handoff (new tab)</strong>
                 <span>Token purchase via redirect.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
             <a class="variant" href="index-embedded-modal-tokens.html">
               <div class="variant-copy">
-                <strong>Embedded Modal Flow</strong>
+                <strong>Embedded Modal Flow (iframe/Hyperbeam)</strong>
                 <span>Token purchase in modal.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
             <a class="variant" href="index-native-checkout-tokens.html">
               <div class="variant-copy">
-                <strong>Native Checkout</strong>
+                <div class="variant-title">
+                  <strong>Native Checkout (API)</strong>
+                  <span class="coming-soon-badge">Early Concept</span>
+                </div>
                 <span>Integrated token checkout.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>

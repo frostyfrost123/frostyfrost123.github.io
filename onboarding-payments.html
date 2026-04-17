@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Widgy Engage Onboarding</title>
+    <title>Widgy Payments Onboarding</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -119,9 +119,6 @@
         border-radius: 18px;
         text-decoration: none;
         font-weight: 600;
-      }
-
-      .back-link {
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid var(--line);
         color: #ffffff;
@@ -431,7 +428,7 @@
   <body>
     <div class="shell">
       <section class="hero">
-        <h1>Engage Onboarding</h1>
+        <h1>Payments Onboarding</h1>
         <p>
           Get started quickly by following the few steps below. Reach support at
           <a href="mailto:onboarding@widgytech.com">onboarding@widgytech.com</a> for further assistance.
@@ -455,18 +452,28 @@
             <h2>2. Add the Widgy script</h2>
             <p>
               Add the following script tag to the HTML <code>head</code> on sites where you want to
-              show Widgy Engage.
+              show Widgy Payments.
             </p>
-            <div class="code-block" data-copy-target="engage-script" tabindex="0" role="button" aria-label="Copy Widgy script">
+            <div class="code-block" data-copy-target="payments-script" tabindex="0" role="button" aria-label="Copy Widgy script">
               <div class="code-hint">Click to copy</div>
-              <code id="engage-script">&lt;script src="https://data.widgytech.com/p/js/widgy.js" type="text/javascript"&gt;&lt;/script&gt;</code>
+              <code id="payments-script">&lt;script src="https://data.widgytech.com/p/js/widgy.js" type="text/javascript"&gt;&lt;/script&gt;</code>
             </div>
             <p>
               Then insert the iframe mount point at the exact location where the experience should appear.
             </p>
-            <div class="code-block" data-copy-target="engage-iframe" tabindex="0" role="button" aria-label="Copy Widgy iframe container">
+            <div class="code-block" data-copy-target="payments-iframe" tabindex="0" role="button" aria-label="Copy Widgy iframe container">
               <div class="code-hint">Click to copy</div>
-              <code id="engage-iframe">&lt;div id="widgy-iframe"&gt;&lt;/div&gt;</code>
+              <code id="payments-iframe">&lt;div id="widgy-iframe" data-user-id="dev" data-user-email=""&gt;&lt;/div&gt;</code>
+            </div>
+            <div class="list">
+              <div class="item">
+                <strong><code>data-user-id</code> is required</strong>
+                <span>This value should contain a stable identifier for the user. It will later be sent back to you through postback, so it should be unique per user and something you can match on your side.</span>
+              </div>
+              <div class="item">
+                <strong><code>data-user-email</code> is optional</strong>
+                <span>You can pass the user email when available, but the required field for postback matching is <code>data-user-id</code>.</span>
+              </div>
             </div>
           </div>
 
@@ -478,7 +485,7 @@
             setup together.
           </p>
           <form class="requirements-form" id="requirements-form">
-            <input id="product-name" name="product_name" type="hidden" value="Widgy Engage" />
+            <input id="product-name" name="product_name" type="hidden" value="Widgy Payments" />
             <div class="field">
               <div class="field-label">
                 <label for="company-name">Company name</label>
@@ -508,22 +515,29 @@
               <div class="field-hint">Share the domain or domains where the script will be added so the Widgy team can whitelist them for setup.</div>
               <input id="website-domain" name="website_domain" type="text" placeholder="example.com, example-2.com" required />
             </div>
-
             <div class="field">
               <div class="field-label">
-                <label for="product-layout">Product and layout requirements</label>
-                <span class="field-badge optional">Optional</span>
+                <label for="postback-url">Postback URL</label>
+                <span class="field-badge required">Required</span>
               </div>
-              <div class="field-hint">List any preferences for product type, placement, sizing, branding, or visual presentation.</div>
-              <textarea id="product-layout" name="product_layout" placeholder="Example: Use our brand color (#12345) for CTA, will be placed below our video player and should use same width"></textarea>
+              <div class="field-hint">Once a user completes a transaction through Widgy Payments and qualifies for a token or subscription purchase, Widgy will post to this URL so you can complete the transaction on your side. Please share the endpoint that should receive the returned <code>data-user-id</code> and related purchase details.</div>
+              <input id="postback-url" name="postback_url" type="url" placeholder="https://example.com/postback" required />
             </div>
             <div class="field">
               <div class="field-label">
-                <label for="reward-trigger">Reward trigger</label>
+                <label for="user-id-format">Postback requirements</label>
                 <span class="field-badge optional">Optional</span>
               </div>
-              <div class="field-hint">Describe the preferred reward trigger, such as watching 3 videos or reaching another engagement milestone.</div>
-              <textarea id="reward-trigger" name="reward_trigger" placeholder="Example: Reward after a user watches 3 videos in one session"></textarea>
+              <div class="field-hint">Share how you expect postback data to be sent on your side, such as <code>data-user-id</code>, event type, amount, and any other required fields.</div>
+              <textarea id="user-id-format" name="user_id_format" placeholder="Example: Send to https://example.com/postback?type=buyTokens&amount=10&user=userId"></textarea>
+            </div>
+            <div class="field">
+              <div class="field-label">
+                <label for="payment-layout">Payment and layout requirements</label>
+                <span class="field-badge optional">Optional</span>
+              </div>
+              <div class="field-hint">List any preferences for payment flow type, placement, sizing, branding, or visual presentation.</div>
+              <textarea id="payment-layout" name="payment_layout" placeholder="Example: Use our brand color (#12345) for CTA, place the widget below our paywall message, and keep the same content width"></textarea>
             </div>
             <div class="field">
               <div class="field-label">
@@ -553,7 +567,7 @@
           </div>
 
           <div class="step">
-          <h2>5. Acceptance testing -> Live</h2>
+          <h2>5. Acceptance testing -&gt; Live</h2>
           <p>
             The Widgy team will reach out when it is time to carry out acceptance testing. If any
             changes or tweaks are needed, they will be identified and addressed before launch.
@@ -630,16 +644,17 @@
           var contactPerson = document.getElementById("contact-person");
           var contactEmail = document.getElementById("contact-email");
           var domain = document.getElementById("website-domain");
-          var layout = document.getElementById("product-layout");
-          var reward = document.getElementById("reward-trigger");
+          var postbackUrl = document.getElementById("postback-url");
+          var paymentLayout = document.getElementById("payment-layout");
+          var userIdFormat = document.getElementById("user-id-format");
           var rules = document.getElementById("rules-restrictions");
 
-          if (!company || !contactPerson || !contactEmail || !domain) {
+          if (!company || !contactPerson || !contactEmail || !domain || !postbackUrl) {
             return null;
           }
 
           var lines = [
-            "Product: " + (product && product.value ? product.value : "Widgy Engage"),
+            "Product: " + (product && product.value ? product.value : "Widgy Payments"),
             "",
             "Company name: " + (company.value || "").trim(),
             "",
@@ -649,18 +664,20 @@
             "",
             "Website domain(s): " + (domain.value || "").trim(),
             "",
-            "Product and layout requirements:",
-            (layout && layout.value ? layout.value : "").trim() || "Not specified",
+            "Postback URL: " + (postbackUrl.value || "").trim(),
             "",
-            "Reward trigger:",
-            (reward && reward.value ? reward.value : "").trim() || "Not specified",
+            "Payment and layout requirements:",
+            (paymentLayout && paymentLayout.value ? paymentLayout.value : "").trim() || "Not specified",
+            "",
+            "Postback requirements:",
+            (userIdFormat && userIdFormat.value ? userIdFormat.value : "").trim() || "Not specified",
             "",
             "Rules and restrictions:",
             (rules && rules.value ? rules.value : "").trim() || "Not specified"
           ];
 
           return {
-            subject: "Widgy Engage setup details",
+            subject: "Widgy Payments setup details",
             body: lines.join("\n")
           };
         }
