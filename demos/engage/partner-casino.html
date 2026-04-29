@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stake</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
+    />
+    <style>
+      :root {
+        --bg-deep: #08121f;
+        --bg-mid: #0e2034;
+        --panel: rgba(11, 22, 35, 0.9);
+        --panel-soft: rgba(255, 255, 255, 0.08);
+        --text: #edf4ff;
+        --muted: #96a8c1;
+        --accent: #31d17d;
+        --accent-bright: #5cf3a1;
+        --gold: #ffd54c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top, rgba(92, 243, 161, 0.14), transparent 28%),
+          radial-gradient(circle at 80% 20%, rgba(255, 213, 76, 0.16), transparent 22%),
+          linear-gradient(180deg, #07101a 0%, #0b1727 48%, #08111d 100%);
+        padding: 24px;
+      }
+
+      .frame {
+        max-width: 920px;
+        margin: 0 auto;
+        border-radius: 30px;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+          linear-gradient(180deg, #0f1f32 0%, #0a1624 100%);
+        box-shadow: 0 26px 70px rgba(0, 0, 0, 0.38);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .site {
+        padding: 24px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        gap: 16px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .brand-badge {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #2ce37f, #0cab63);
+        color: #072012;
+        font-size: 1.35rem;
+      }
+
+      .brand-name {
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+      }
+
+      .chip {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .hero-card,
+      .signup-card {
+        border-radius: 24px;
+        overflow: hidden;
+      }
+
+      .hero-card {
+        padding: 24px;
+        background:
+          radial-gradient(circle at top right, rgba(255, 213, 76, 0.18), transparent 28%),
+          linear-gradient(135deg, rgba(49, 209, 125, 0.16), rgba(14, 31, 51, 0.92));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #b9ffd8;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
+      .hero-card h1 {
+        margin: 16px 0 10px;
+        font-size: clamp(2rem, 3.2vw, 3.2rem);
+        line-height: 0.98;
+      }
+
+      .hero-card p {
+        margin: 0;
+        color: #c3d0e4;
+        font-size: 1rem;
+        line-height: 1.5;
+        max-width: 44ch;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .stat {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.15rem;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .signup-card {
+        padding: 22px;
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .signup-card h2 {
+        margin: 0 0 6px;
+        font-size: 1.55rem;
+      }
+
+      .signup-card p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field label {
+        color: #c9d7ea;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .field input {
+        width: 100%;
+        padding: 14px 14px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font: inherit;
+      }
+
+      .field input::placeholder {
+        color: #91a4c0;
+      }
+
+      .cta {
+        margin-top: 6px;
+        border: 0;
+        border-radius: 18px;
+        padding: 16px 18px;
+        background: linear-gradient(180deg, #ffe166 0%, #ffc93b 100%);
+        color: #553d00;
+        font: inherit;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: inset 0 -2px 0 rgba(85, 61, 0, 0.16);
+      }
+
+      .benefits {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .benefit {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #d7e4f5;
+        font-size: 0.92rem;
+      }
+
+      .benefit i {
+        color: var(--accent-bright);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        margin-top: 18px;
+        padding: 16px 6px 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      @media (max-width: 760px) {
+        body {
+          padding: 12px;
+        }
+
+        .site {
+          padding: 16px;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <main class="site">
+        <header class="topbar">
+          <div class="brand" aria-label="Stake">
+            <span class="brand-badge"><i class="ri-coins-fill"></i></span>
+            <span class="brand-name">Stake</span>
+          </div>
+          <div class="chip">Fast signup • Instant access</div>
+        </header>
+
+        <section class="hero">
+          <div class="hero-card">
+            <div class="eyebrow">
+              <i class="ri-gift-2-line"></i>
+              <span>New player welcome offer</span>
+            </div>
+            <h1>Claim 150 Free Spins and activate your starter bonus.</h1>
+            <p>
+              Join Stake in just a few moments and unlock a streamlined welcome package
+              built for fast registration, smooth navigation, and premium gameplay discovery.
+            </p>
+
+            <div class="stats">
+              <div class="stat">
+                <strong>150 Spins</strong>
+                <span>Welcome reward</span>
+              </div>
+              <div class="stat">
+                <strong>Quick signup</strong>
+                <span>Simple account creation</span>
+              </div>
+              <div class="stat">
+                <strong>24/7 lobby</strong>
+                <span>Access anytime</span>
+              </div>
+            </div>
+          </div>
+
+          <section class="signup-card" aria-label="Sign up form">
+            <h2>Create your account</h2>
+            <p>Enter your details below to activate your welcome spins and continue to the lobby.</p>
+
+            <form class="form" id="claimForm">
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" value="alex.demo@cryptocasino.com" />
+              </div>
+
+              <div class="field">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" value="StartNow123!" />
+              </div>
+
+              <button class="cta" type="submit">Create account</button>
+            </form>
+
+            <div class="benefits">
+              <div class="benefit">
+                <i class="ri-checkbox-circle-fill"></i>
+                <span>Instant access to your welcome reward after registration</span>
+              </div>
+              <div class="benefit">
+                <i class="ri-checkbox-circle-fill"></i>
+                <span>Fast account creation with a clean, focused signup flow</span>
+              </div>
+              <div class="benefit">
+                <i class="ri-checkbox-circle-fill"></i>
+                <span>Designed for smooth onboarding across desktop and mobile</span>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <footer class="footer">
+          <span>© 2026 Stake. All rights reserved.</span>
+          <span>Support available 24/7 • Secure registration</span>
+        </footer>
+      </main>
+    </div>
+    <script>
+      (function () {
+        var claimForm = document.getElementById("claimForm");
+
+        claimForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          window.close();
+
+          if (window.opener && !window.opener.closed) {
+            try {
+              window.opener.focus();
+              window.close();
+            } catch (error) {
+              window.opener.location.href = "../../index.html";
+              window.opener.focus();
+            }
+          }
+
+          window.location.href = "../../index.html";
+        });
+      })();
+    </script>
+  </body>
+</html>

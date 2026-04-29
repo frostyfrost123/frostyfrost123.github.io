@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Widgy Product Hub</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -339,7 +339,7 @@
   <body>
     <div class="shell">
       <section class="hero">
-        <img class="brand-mark" src="widgy-logo.svg" alt="Widgy" />
+        <img class="brand-mark" src="assets/logos/widgy-logo.svg" alt="Widgy" />
         <h1>The Demo and Onboarding Hub</h1>
         <p>
           Use this hub to either launch a product demo or open a simple onboarding page.
@@ -351,8 +351,8 @@
         <article class="card">
           <div class="card-head">
             <div class="card-top">
-              <img src="engage-logo.svg" alt="Widgy Engage" />
-              <a class="doc-link" href="onboarding-engage.html">Read onboarding</a>
+              <img src="assets/logos/engage-logo.svg" alt="Widgy Engage" />
+              <a class="doc-link" href="demos/engage/onboarding.html">Read onboarding</a>
             </div>
             <p>
               Reward real user engagement with high-value offers that feel additive instead of interruptive.
@@ -360,7 +360,7 @@
           </div>
 
           <div class="variant-list" aria-label="Engage demo variants">
-            <a class="variant" href="index-engage.html">
+            <a class="variant" href="demos/engage/index.html">
               <div class="variant-copy">
                 <strong>Rewarded Playback Flow</strong>
                 <span>Main demo for Engage.</span>
@@ -373,8 +373,8 @@
         <article class="card">
           <div class="card-head">
             <div class="card-top">
-              <img src="reactivate-logo.svg" alt="Widgy Reactivate" />
-              <a class="doc-link" href="onboarding-reactivate.html">Read onboarding</a>
+              <img src="assets/logos/reactivate-logo.svg" alt="Widgy Reactivate" />
+              <a class="doc-link" href="demos/reactivate/onboarding.html">Read onboarding</a>
             </div>
             <p>
               Reactivate dormant users with partner-funded bonus offers built for revenue recovery.
@@ -382,14 +382,14 @@
           </div>
 
           <div class="variant-list" aria-label="Reactivate demo variants">
-            <a class="variant" href="index-reactivate.html">
+            <a class="variant" href="demos/reactivate/index.html">
               <div class="variant-copy">
                 <strong>Email Reactivation Flow</strong>
                 <span>Main demo for Reactivate.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
-            <a class="variant" href="index-reactivate-messaging.html">
+            <a class="variant" href="demos/reactivate/messaging.html">
               <div class="variant-copy">
                 <strong>Telegram/WhatsApp Reactivation Flow</strong>
                 <span>Messaging-first Reactivate example.</span>
@@ -402,8 +402,8 @@
         <article class="card">
           <div class="card-head">
             <div class="card-top">
-              <img src="payments-logo.svg" alt="Widgy Payments" />
-              <a class="doc-link" href="onboarding-payments.html">Read onboarding</a>
+              <img src="assets/logos/payments-logo.svg" alt="Widgy Payments" />
+              <a class="doc-link" href="demos/payments/onboarding.html">Read onboarding</a>
             </div>
             <p>
               Improve checkout value perception with flexible flow types for subscription and token products.
@@ -419,21 +419,21 @@
           </div>
 
           <div class="variant-list" data-payments-panel="subscriptions" aria-label="Payments subscriptions demo variants">
-            <a class="variant" href="index-payments.html">
+            <a class="variant" href="demos/payments/index.html">
               <div class="variant-copy">
                 <strong>Redirect Handoff (new tab)</strong>
                 <span>Fast handoff-based checkout.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
-            <a class="variant" href="index-embedded-modal.html">
+            <a class="variant" href="demos/payments/embedded-modal.html">
               <div class="variant-copy">
                 <strong>Embedded Modal Flow (iframe/Hyperbeam)</strong>
                 <span>On-site continuity with modal checkout.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
-            <a class="variant" href="index-native-checkout.html">
+            <a class="variant" href="demos/payments/native-checkout.html">
               <div class="variant-copy">
                 <div class="variant-title">
                   <strong>Native Checkout (API)</strong>
@@ -446,27 +446,49 @@
           </div>
 
           <div class="variant-list is-hidden" data-payments-panel="tokens" aria-label="Payments token demo variants">
-            <a class="variant" href="index-payments-tokens.html">
+            <a class="variant" href="demos/payments/tokens.html">
               <div class="variant-copy">
                 <strong>Redirect Handoff (new tab)</strong>
                 <span>Token purchase via redirect.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
-            <a class="variant" href="index-embedded-modal-tokens.html">
+            <a class="variant" href="demos/payments/embedded-modal-tokens.html">
               <div class="variant-copy">
                 <strong>Embedded Modal Flow (iframe/Hyperbeam)</strong>
                 <span>Token purchase in modal.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
-            <a class="variant" href="index-native-checkout-tokens.html">
+            <a class="variant" href="demos/payments/native-checkout-tokens.html">
               <div class="variant-copy">
                 <div class="variant-title">
                   <strong>Native Checkout (API)</strong>
                   <span class="coming-soon-badge">Early Concept</span>
                 </div>
                 <span>Integrated token checkout.</span>
+              </div>
+              <span class="variant-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="card-top">
+              <img src="assets/logos/exchange-logo.svg" alt="Widgy Exchange" />
+              <a class="doc-link" href="demos/exchange/onboarding.html">Read onboarding</a>
+            </div>
+            <p>
+              Exchange qualified traffic between subscription and dating brands through reciprocal partner offers.
+            </p>
+          </div>
+
+          <div class="variant-list" aria-label="Exchange demo variants">
+            <a class="variant" href="demos/exchange/index.html">
+              <div class="variant-copy">
+                <strong>Partner Subscription Handoff</strong>
+                <span>SXY TUBE unlock via SXY partner brands.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>

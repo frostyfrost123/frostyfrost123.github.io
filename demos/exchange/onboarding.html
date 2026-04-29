@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Widgy Exchange Onboarding</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #eef8fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #607080;
+        --line: #d8e7ee;
+        --accent: #3872d5;
+        --accent-2: #51c3d3;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 28px;
+        font-family: Inter, system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 20% 0%, rgba(81, 195, 211, 0.22), transparent 26%),
+          linear-gradient(180deg, #f7fcfe 0%, var(--bg) 100%);
+      }
+
+      .shell {
+        width: min(960px, 100%);
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .logo {
+        height: 34px;
+      }
+
+      .back-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .hero,
+      .section {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 18px;
+        box-shadow: 0 24px 60px rgba(34, 74, 105, 0.1);
+      }
+
+      .hero {
+        padding: 34px;
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+        font-family: Epilogue, Inter, sans-serif;
+      }
+
+      h1 {
+        max-width: 760px;
+        font-size: clamp(2rem, 5vw, 4.2rem);
+        line-height: 0.95;
+      }
+
+      .lead {
+        max-width: 720px;
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.65;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .section {
+        padding: 24px;
+      }
+
+      .section p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .badge {
+        display: inline-flex;
+        width: 34px;
+        height: 34px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: white;
+        font-weight: 800;
+        margin-bottom: 14px;
+      }
+
+      .wide {
+        margin-top: 16px;
+      }
+
+      @media (max-width: 760px) {
+        body {
+          padding: 16px;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .hero {
+          padding: 24px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="topbar" aria-label="Page navigation">
+        <img class="logo" src="../../assets/logos/exchange-logo.svg" alt="Widgy Exchange" />
+        <a class="back-link" href="../../index.html">Back to hub</a>
+      </nav>
+
+      <section class="hero">
+        <h1>Exchange qualified traffic with brands that can convert it.</h1>
+        <p class="lead">
+          Widgy Exchange lets subscription and dating brands unlock value from users who are not ready to pay directly.
+          A customer can get access by subscribing to a partner brand, while your brand also participates as a destination
+          for traffic from the network.
+        </p>
+      </section>
+
+      <section class="grid" aria-label="Exchange onboarding steps">
+        <article class="section">
+          <span class="badge">1</span>
+          <h2>Send traffic</h2>
+          <p>Offer Widgy Exchange at moments where users are blocked by payment, access, or subscription friction.</p>
+        </article>
+
+        <article class="section">
+          <span class="badge">2</span>
+          <h2>Accept traffic</h2>
+          <p>Your brand must also be able to receive qualified users from other participating Exchange partners.</p>
+        </article>
+
+        <article class="section">
+          <span class="badge">3</span>
+          <h2>Reward access</h2>
+          <p>When the user completes the partner subscription, the original brand grants the promised access period.</p>
+        </article>
+      </section>
+
+      <section class="section wide">
+        <h2>What to prepare</h2>
+        <p>
+          Provide the partner brands you want to send traffic to, the access reward you want to offer, and the destination
+          experience where your own brand can accept inbound Exchange traffic.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

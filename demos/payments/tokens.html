@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SXY CHAT Native Checkout Demo</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <title>SXY CHAT Guided Access Demo</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon.png" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
@@ -623,15 +623,15 @@
       }
 
       .partner[data-partner="stake"] .partner-badge {
-        background-image: url("stake-logo.png");
+        background-image: url("../../assets/logos/stake-logo.png");
       }
 
       .partner[data-partner="bcgame"] .partner-badge {
-        background-image: url("bc-logo.png");
+        background-image: url("../../assets/logos/bc-logo.png");
       }
 
       .partner[data-partner="roobet"] .partner-badge {
-        background-image: url("roo-logo.png");
+        background-image: url("../../assets/logos/roo-logo.png");
       }
 
       .cta-row {
@@ -693,6 +693,18 @@
         border-bottom: 1px solid var(--line);
       }
 
+      .modal-head h3 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+
+      .modal-head p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.45;
+        font-size: 0.92rem;
+      }
+
       .modal-close {
         border: 0;
         background: transparent;
@@ -706,111 +718,119 @@
         padding: 18px 20px 20px;
       }
 
-      .native-flow {
-        padding: 16px;
+      .step-list {
+        display: grid;
+        gap: 12px;
       }
 
-      .stage-header {
-        padding: 0 16px 8px;
-      }
-
-      .flow-title {
-        margin: 0;
-        font-size: 1.3rem;
-        color: #fff3ea;
-      }
-
-      .stage-label {
-        display: inline-flex;
+      .step {
+        display: grid;
+        grid-template-columns: 36px 1fr auto;
+        gap: 12px;
         align-items: center;
-        gap: 8px;
-        padding: 8px 10px;
-        border-radius: 999px;
-        background: rgba(255, 132, 168, 0.16);
-        color: #ffd7e4;
-        font-size: 0.78rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-
-      .native-stage {
-        display: none;
-      }
-
-      .native-stage.is-visible {
-        display: block;
-      }
-
-      .native-stage h4 {
-        margin: 0;
-        font-size: 1rem;
-        color: #fff3ea;
-      }
-
-      .native-stage p {
-        margin: 8px 0 0;
-        color: var(--muted);
-        font-size: 0.9rem;
-        line-height: 1.45;
-      }
-
-      .native-form {
-        display: grid;
-        gap: 12px;
-        margin-top: 16px;
-      }
-
-      .native-field {
-        display: grid;
-        gap: 8px;
-      }
-
-      .native-field label {
-        color: #fff3ea;
-        font-size: 0.88rem;
-        font-weight: 700;
-      }
-
-      .native-field input {
-        width: 100%;
         padding: 14px 14px;
-        border-radius: 14px;
-        border: 1px solid rgba(255, 196, 214, 0.12);
-        background: rgba(255, 221, 232, 0.05);
-        color: var(--text);
-        font: inherit;
+        border-radius: 18px;
+        background: rgba(45, 22, 35, 0.96);
+        border: 1px solid rgba(255, 196, 214, 0.08);
       }
 
-      .native-field-row {
+      .step.is-actionable {
+        cursor: pointer;
+        transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+      }
+
+      .step.is-actionable:hover {
+        transform: translateY(-1px);
+        border-color: rgba(255, 129, 161, 0.28);
+        background: rgba(57, 28, 43, 0.98);
+      }
+
+      .step.is-actionable:focus-visible {
+        outline: 2px solid rgba(255, 129, 161, 0.72);
+        outline-offset: 2px;
+      }
+
+      .step-index {
+        width: 36px;
+        height: 36px;
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 120px;
-        gap: 12px;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(255, 196, 214, 0.1);
+        color: #f3d5de;
+        font-size: 0.92rem;
+        font-weight: 900;
       }
 
-      .native-button {
-        width: 100%;
-        margin-top: 14px;
+      .step-copy strong {
+        display: block;
+        font-size: 0.96rem;
+        color: #fff3ea;
+      }
+
+      .step-copy span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .step-state {
+        min-width: 112px;
+        text-align: right;
+        font-size: 0.84rem;
+        font-weight: 800;
+        color: #d5aebc;
+      }
+
+      .step[data-state="loading"] {
+        border-color: rgba(255, 129, 161, 0.42);
+        background: rgba(86, 28, 54, 0.34);
+      }
+
+      .step[data-state="loading"] .step-state {
+        color: #ff9dbd;
+      }
+
+      .step[data-state="completed"] {
+        border-color: rgba(255, 143, 176, 0.26);
+        background: rgba(94, 31, 59, 0.46);
+      }
+
+      .step[data-state="completed"] .step-index {
+        background: #ffd6e3;
+        color: #9d3459;
+      }
+
+      .step[data-state="completed"] .step-state {
+        color: #ffc4d7;
+      }
+
+      .modal-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .modal-button {
         border: 0;
         border-radius: 18px;
         padding: 15px 16px;
-        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
-        color: #fff;
         font: inherit;
         font-weight: 900;
         cursor: pointer;
+      }
+
+      .modal-button.primary {
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+        color: #fff;
         box-shadow: inset 0 -2px 0 rgba(84, 21, 43, 0.18);
       }
 
-      .success-note {
-        margin-top: 16px;
-        padding: 14px 16px;
-        border-radius: 18px;
-        background: rgba(94, 31, 59, 0.46);
-        border: 1px solid rgba(255, 143, 176, 0.26);
-        color: #ffd3df;
-        font-size: 0.88rem;
-        line-height: 1.45;
+      .modal-button.is-loading {
+        opacity: 0.78;
+        cursor: progress;
       }
 
       .modal-confetti {
@@ -941,12 +961,27 @@
           padding: 18px 16px 12px;
         }
 
+        .modal-head p {
+          font-size: 0.86rem;
+          line-height: 1.35;
+        }
+
         .modal-body {
           padding: 16px;
         }
 
-        .stage-header {
-          padding: 0 16px 4px;
+        .step {
+          grid-template-columns: 36px 1fr;
+          align-items: start;
+        }
+
+        .step-state {
+          display: none;
+        }
+
+        .step-copy strong,
+        .step-copy span {
+          max-width: 100%;
         }
 
       }
@@ -970,11 +1005,11 @@
     <div class="frame">
       <main class="site">
         <header class="topbar">
-          <a class="brand" href="index.html" aria-label="Back to demo launcher">
+          <a class="brand" href="../../index.html" aria-label="Back to demo launcher">
             <span class="brand-heart"><i class="ri-heart-fill" aria-hidden="true"></i></span>
             <span class="brand-name">SXY CHAT</span>
           </a>
-          <a class="back-link" href="index.html">
+          <a class="back-link" href="../../index.html">
             <i class="ri-arrow-left-line" aria-hidden="true"></i>
             Back to dashboard
           </a>
@@ -1013,7 +1048,7 @@
                   </div>
                   <div class="chat-send"><i class="ri-send-plane-fill" aria-hidden="true"></i></div>
                 </div>
-                <div class="paywall-overlay" id="paywallOverlay">
+              <div class="paywall-overlay" id="paywallOverlay">
                   <div class="overlay-card">
                     <i class="ri-lock-2-line" aria-hidden="true"></i>
                     <strong id="overlayTitle">Premium Access Required</strong>
@@ -1045,7 +1080,7 @@
                 <span>PayPal</span>
               </button>
               <button class="method widgy" type="button" data-method="widgy" role="tab" aria-selected="false">
-                <img class="method-icon" src="widgy-icon.svg" alt="" aria-hidden="true" />
+                <img class="method-icon" src="../../assets/logos/widgy-icon.svg" alt="" aria-hidden="true" />
                 <span>Widgy</span>
               </button>
             </div>
@@ -1157,66 +1192,47 @@
     </div>
 
     <div class="modal-backdrop" id="flowModal">
-      <div class="modal" role="dialog" aria-modal="true" aria-label="Native checkout">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="flowTitle">
         <div class="modal-confetti" id="modalConfetti" aria-hidden="true"></div>
         <div class="modal-head">
-          <h2 class="flow-title">Widgy Payments</h2>
+          <div>
+            <h3 id="flowTitle">Widgy Payments</h3>
+            <p id="flowIntro">Click the button below to open Stake.com. You can return here at any time to see how far you’ve progressed in verification and what step comes next.</p>
+          </div>
           <button class="modal-close" id="closeModal" type="button" aria-label="Close">
             <i class="ri-close-line"></i>
           </button>
         </div>
         <div class="modal-body">
-          <div class="stage-header">
-            <div class="stage-label" id="stageLabel">Step 1 of 3</div>
+          <div class="step-list">
+            <div class="step" data-step="1" data-state="pending" role="button" tabindex="0" aria-label="Open partner site">
+              <div class="step-index">1</div>
+              <div class="step-copy">
+                <strong id="modalStepOneTitle">Open Stake.com</strong>
+                <span id="modalStepOne">Launch the partner site in a new tab to begin the handoff.</span>
+              </div>
+              <div class="step-state">Pending</div>
+            </div>
+            <div class="step" data-step="2" data-state="pending" role="button" tabindex="0" aria-label="Continue with account step">
+              <div class="step-index">2</div>
+              <div class="step-copy">
+                <strong>Create a new account</strong>
+                <span id="modalStepTwo">Complete the account registration step on Stake.</span>
+              </div>
+              <div class="step-state">Pending</div>
+            </div>
+            <div class="step" data-step="3" data-state="pending" role="button" tabindex="0" aria-label="Continue with deposit step">
+              <div class="step-index">3</div>
+              <div class="step-copy">
+                <strong id="modalStepThreeTitle">Deposit at least €20</strong>
+                <span id="modalStepThree">Finish the qualifying deposit to activate the offer.</span>
+              </div>
+              <div class="step-state">Pending</div>
+            </div>
           </div>
-          <div class="native-flow">
-            <section class="native-stage is-visible" id="stageOne">
-              <h4 id="stageOneTitle">Register with <span id="stageOnePartner">Stake.com</span></h4>
-              <p id="stageOneCopy">Enter your details to continue to the deposit step.</p>
-              <form class="native-form" id="accountForm">
-                <div class="native-field">
-                  <label for="nativeEmail">Email</label>
-                  <input id="nativeEmail" name="email" type="email" value="alex.demo@sxytube.com" />
-                </div>
-                <div class="native-field">
-                  <label for="nativePassword">Password</label>
-                  <input id="nativePassword" name="password" type="password" value="StartNow123!" />
-                </div>
-                <button class="native-button" type="submit">Create account</button>
-              </form>
-            </section>
 
-            <section class="native-stage" id="stageTwo">
-              <h4 id="stageTwoTitle">Deposit to activate your reward</h4>
-              <form class="native-form" id="depositForm">
-                <div class="native-field">
-                  <label for="cardName">Name on card</label>
-                  <input id="cardName" name="card_name" type="text" value="Alex Demo" />
-                </div>
-                <div class="native-field">
-                  <label for="cardNumber">Card number</label>
-                  <input id="cardNumber" name="card_number" type="text" inputmode="numeric" value="4242 4242 4242 4242" />
-                </div>
-                <div class="native-field-row">
-                  <div class="native-field">
-                    <label for="cardExpiry">Expiry</label>
-                    <input id="cardExpiry" name="expiry" type="text" inputmode="numeric" value="08/29" />
-                  </div>
-                  <div class="native-field">
-                    <label for="cardCvc">CVC</label>
-                    <input id="cardCvc" name="cvc" type="text" inputmode="numeric" value="424" />
-                  </div>
-                </div>
-                <button class="native-button" id="depositButton" type="submit">Deposit €20</button>
-              </form>
-            </section>
-
-            <section class="native-stage" id="stageThree">
-              <h4 id="stageThreeTitle">Everything is ready</h4>
-              <p id="stageThreeCopy">Your checkout is complete and premium access is ready to unlock.</p>
-              <div class="success-note" id="successNote">Account created and qualifying deposit confirmed.</div>
-              <button class="native-button" id="unlockButton" type="button">Unlock premium access</button>
-            </section>
+          <div class="modal-actions">
+            <button class="modal-button primary" id="advanceStep" type="button">Open Stake.com</button>
           </div>
         </div>
       </div>
@@ -1260,24 +1276,20 @@
         var unlockedTitle = document.getElementById("unlockedTitle");
         var unlockedCopy = document.getElementById("unlockedCopy");
         var unlockBadgeText = document.getElementById("unlockBadgeText");
-        var stageLabel = document.getElementById("stageLabel");
-        var stageOnePartner = document.getElementById("stageOnePartner");
-        var stageOneCopy = document.getElementById("stageOneCopy");
-        var stageTwoTitle = document.getElementById("stageTwoTitle");
-        var depositButton = document.getElementById("depositButton");
-        var stageThreeTitle = document.getElementById("stageThreeTitle");
-        var stageThreeCopy = document.getElementById("stageThreeCopy");
-        var successNote = document.getElementById("successNote");
-        var accountForm = document.getElementById("accountForm");
-        var depositForm = document.getElementById("depositForm");
-        var unlockButton = document.getElementById("unlockButton");
-        var stages = {
-          1: document.getElementById("stageOne"),
-          2: document.getElementById("stageTwo"),
-          3: document.getElementById("stageThree")
-        };
+        var flowIntro = document.getElementById("flowIntro");
+        var modalStepOneTitle = document.getElementById("modalStepOneTitle");
+        var modalStepOne = document.getElementById("modalStepOne");
+        var modalStepTwo = document.getElementById("modalStepTwo");
+        var modalStepThreeTitle = document.getElementById("modalStepThreeTitle");
+        var modalStepThree = document.getElementById("modalStepThree");
+        var advanceStep = document.getElementById("advanceStep");
+        var steps = Array.from(document.querySelectorAll(".step"));
+        var FLOW_STORAGE_KEY = "demoUnlockFlow";
         var activeMode = "subscriptions";
         var activePartner = "stake";
+        var currentStepIndex = 0;
+        var awaitingReturn = false;
+        var partnerWindow = null;
         var hasScrolledToWidgy = false;
         var lockedChatMarkup = chatMessages.innerHTML;
 
@@ -1312,12 +1324,22 @@
             unlockedTitle: "Access unlocked",
             unlockedCopy: "Your premium access is active. Continue watching or explore more members-only content.",
             unlockBadge: "12 months free successfully unlocked",
-            stageOneCopy: "Enter your details to continue to the deposit step.",
-            stageTwoTitle: "Deposit to activate your reward",
-            stageThreeTitle: "Everything is ready",
-            stageThreeCopy: "Your checkout is complete and premium access is ready to unlock.",
-            successNote: "Account created and qualifying deposit confirmed.",
-            finalAction: "Start watching"
+            stepThreeTitle: "Deposit at least €20",
+            finalAction: "Start watching",
+            getIntro: function (partnerName, short) {
+              return short
+                ? "Open " + partnerName + ", finish the steps there, then come back here."
+                : "Click the button below to open " + partnerName + ". You can return here at any time to see how far you’ve progressed in verification and what step comes next.";
+            },
+            getStepOne: function () {
+              return "Launch the partner site in a new tab to begin the handoff.";
+            },
+            getStepTwo: function (partnerName) {
+              return "Complete the account registration step on " + partnerName.replace(".com", "") + ".";
+            },
+            getStepThree: function () {
+              return "Finish the qualifying deposit to activate the offer.";
+            }
           },
           tokens: {
             overlayTitle: "Tokens Required",
@@ -1343,14 +1365,43 @@
             unlockedTitle: "100 tokens unlocked",
             unlockedCopy: "Your chat balance is ready. Start messaging your AI girlfriend or save tokens for later.",
             unlockBadge: "100 tokens successfully unlocked",
-            stageOneCopy: "Enter your details to continue to the token activation step.",
-            stageTwoTitle: "Deposit to activate your 100 tokens",
-            stageThreeTitle: "100 tokens ready",
-            stageThreeCopy: "Your checkout is complete and your chat balance is ready to unlock.",
-            successNote: "Account created and qualifying deposit confirmed.",
-            finalAction: "Start chatting"
+            stepThreeTitle: "Deposit at least €20",
+            finalAction: "Start chatting",
+            getIntro: function (partnerName, short) {
+              return short
+                ? "Open " + partnerName + ", activate your 100 token reward, then come back here."
+                : "Click the button below to open " + partnerName + " and activate your 100 token reward. You can return here at any time to see what step comes next.";
+            },
+            getStepOne: function () {
+              return "Launch the partner site in a new tab to begin the token handoff.";
+            },
+            getStepTwo: function (partnerName) {
+              return "Complete the account registration step on " + partnerName.replace(".com", "") + " to qualify for the 100 token reward.";
+            },
+            getStepThree: function () {
+              return "Finish the qualifying deposit to activate your 100 tokens.";
+            }
           }
         };
+
+        function setFlowIntro(config) {
+          flowIntro.textContent = window.matchMedia("(max-width: 760px)").matches
+            ? config.introShort
+            : config.intro;
+        }
+
+        function getPartnerFlowConfig(partnerName) {
+          var partnerNameLabel = partnerConfig[partnerName].name;
+          var mode = modeConfig[activeMode];
+          return {
+            name: partnerNameLabel,
+            intro: mode.getIntro(partnerNameLabel, false),
+            introShort: mode.getIntro(partnerNameLabel, true),
+            stepOne: mode.getStepOne(partnerNameLabel),
+            stepTwo: mode.getStepTwo(partnerNameLabel),
+            stepThree: mode.getStepThree(partnerNameLabel)
+          };
+        }
 
         function applyMode(modeName) {
           var mode = modeConfig[modeName];
@@ -1381,13 +1432,7 @@
           unlockedTitle.textContent = mode.unlockedTitle;
           unlockedCopy.textContent = mode.unlockedCopy;
           unlockBadgeText.textContent = mode.unlockBadge;
-          stageOneCopy.textContent = mode.stageOneCopy;
-          stageTwoTitle.textContent = mode.stageTwoTitle;
-          depositButton.textContent = "Deposit €20";
-          stageThreeTitle.textContent = mode.stageThreeTitle;
-          stageThreeCopy.textContent = mode.stageThreeCopy;
-          successNote.textContent = mode.successNote;
-          unlockButton.textContent = mode.finalAction;
+          modalStepThreeTitle.textContent = mode.stepThreeTitle;
 
           partnerOfferDesktop.forEach(function (node) {
             node.textContent = mode.partnerOfferDesktop;
@@ -1403,10 +1448,6 @@
           });
 
           selectPartner(activePartner);
-        }
-
-        function updateStageHeader(stepNumber) {
-          stageLabel.textContent = "Step " + stepNumber + " of 3";
         }
 
         function selectMethod(methodName) {
@@ -1436,11 +1477,113 @@
           }
         }
 
-        function showStage(stepNumber) {
-          Object.keys(stages).forEach(function (key) {
-            stages[key].classList.toggle("is-visible", Number(key) === stepNumber);
+        function refreshStepActionability() {
+          var nextStep = Math.min(currentStepIndex + 1, 3);
+
+          steps.forEach(function (step) {
+            var stepNumber = Number(step.getAttribute("data-step"));
+            var isPending = step.getAttribute("data-state") === "pending";
+            var isActionable = isPending && stepNumber === nextStep;
+
+            step.classList.toggle("is-actionable", isActionable);
+            step.tabIndex = isActionable ? 0 : -1;
+            step.setAttribute("aria-disabled", isActionable ? "false" : "true");
           });
-          updateStageHeader(stepNumber);
+        }
+
+        function setStepState(stepNumber, state) {
+          var step = steps.find(function (item) {
+            return item.getAttribute("data-step") === String(stepNumber);
+          });
+          var stateNode = step.querySelector(".step-state");
+          var indexNode = step.querySelector(".step-index");
+
+          step.setAttribute("data-state", state);
+
+          if (state === "completed") {
+            stateNode.textContent = "Completed";
+            indexNode.innerHTML = '<i class="ri-check-line" aria-hidden="true"></i>';
+          } else if (state === "loading") {
+            stateNode.textContent = "Checking...";
+            indexNode.innerHTML = '<i class="ri-loader-4-line" aria-hidden="true"></i>';
+          } else {
+            stateNode.textContent = stepNumber === 1 ? "Open site" : "Continue on site";
+            indexNode.textContent = stepNumber;
+          }
+
+          refreshStepActionability();
+        }
+
+        function getStoredFlow() {
+          try {
+            var raw = window.localStorage.getItem(FLOW_STORAGE_KEY);
+            return raw ? JSON.parse(raw) : null;
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function setStoredFlow(flow) {
+          try {
+            window.localStorage.setItem(FLOW_STORAGE_KEY, JSON.stringify(flow));
+          } catch (error) {
+            // Ignore storage failures in the demo.
+          }
+        }
+
+        function createFlowState() {
+          return {
+            partner: activePartner,
+            opened: false,
+            accountCreated: false,
+            depositCompleted: false,
+            updatedAt: Date.now()
+          };
+        }
+
+        function getOrCreateFlow() {
+          var flow = getStoredFlow();
+
+          if (!flow || flow.partner !== activePartner) {
+            flow = createFlowState();
+            setStoredFlow(flow);
+          }
+
+          return flow;
+        }
+
+        function setPrimaryActionLabel() {
+          if (currentStepIndex >= 3) {
+            advanceStep.textContent = modeConfig[activeMode].finalAction;
+            advanceStep.disabled = false;
+            advanceStep.classList.remove("is-loading");
+            return;
+          }
+
+          if (currentStepIndex >= 1) {
+            advanceStep.textContent = "Continue on " + partnerConfig[activePartner].name;
+          } else {
+            advanceStep.textContent = "Open " + partnerConfig[activePartner].name;
+          }
+
+          advanceStep.disabled = false;
+          advanceStep.classList.remove("is-loading");
+        }
+
+        function openPartnerSite() {
+          var url = "partner-casino-guided.html?partner=" + encodeURIComponent(activePartner);
+
+          if (partnerWindow && !partnerWindow.closed) {
+            try {
+              partnerWindow.focus();
+              return partnerWindow;
+            } catch (error) {
+              partnerWindow = null;
+            }
+          }
+
+          partnerWindow = window.open(url, "_blank");
+          return partnerWindow;
         }
 
         function unlockPremiumContent() {
@@ -1458,24 +1601,62 @@
         }
 
         function resetFlow() {
-          showStage(1);
+          currentStepIndex = 0;
+          awaitingReturn = false;
+          steps.forEach(function (step) {
+            setStepState(Number(step.getAttribute("data-step")), "pending");
+          });
           paywallOverlay.style.display = "";
           chatNote.style.display = "";
           chatBalance.textContent = "0 tokens";
           chatMessages.innerHTML = lockedChatMarkup;
           paymentSidebar.classList.remove("is-hidden");
           unlockedSidebar.classList.remove("is-visible");
+          setStoredFlow(createFlowState());
+          setPrimaryActionLabel();
         }
 
-        function completeStep(nextStage, callback) {
+        function completeStep(stepNumber, callback) {
+          setStepState(stepNumber, "loading");
           window.setTimeout(function () {
-            if (nextStage) {
-              showStage(nextStage);
-            }
+            currentStepIndex = stepNumber;
+            setStepState(stepNumber, "completed");
             if (callback) {
               callback();
             }
           }, 700);
+        }
+
+        function syncFlowFromStorage() {
+          var flow = getOrCreateFlow();
+          var targetStep = 0;
+
+          if (flow.depositCompleted) {
+            targetStep = 3;
+          } else if (flow.accountCreated) {
+            targetStep = 2;
+          } else if (flow.opened) {
+            targetStep = 1;
+          }
+
+          awaitingReturn = currentStepIndex >= 1 && currentStepIndex < 3;
+
+          function completeNextStep() {
+            if (currentStepIndex >= targetStep) {
+              setPrimaryActionLabel();
+              return;
+            }
+
+            completeStep(currentStepIndex + 1, function () {
+              if (currentStepIndex === 3) {
+                launchConfetti();
+                awaitingReturn = false;
+              }
+              completeNextStep();
+            });
+          }
+
+          completeNextStep();
         }
 
         function launchConfetti() {
@@ -1502,14 +1683,18 @@
         }
 
         function selectPartner(partnerName) {
-          var config = partnerConfig[partnerName];
+          var config = getPartnerFlowConfig(partnerName);
           activePartner = partnerName;
 
           partners.forEach(function (item) {
             item.classList.toggle("is-active", item.getAttribute("data-partner") === partnerName);
           });
 
-          stageOnePartner.textContent = config.name;
+          setFlowIntro(config);
+          modalStepOneTitle.textContent = "Open " + config.name;
+          modalStepOne.textContent = config.stepOne;
+          modalStepTwo.textContent = config.stepTwo;
+          modalStepThree.textContent = config.stepThree;
           openPartner.textContent = modeConfig[activeMode].openPartner;
           resetFlow();
         }
@@ -1547,18 +1732,70 @@
           }
         });
 
-        accountForm.addEventListener("submit", function (event) {
-          event.preventDefault();
-          completeStep(2);
+        advanceStep.addEventListener("click", function () {
+          if (currentStepIndex >= 3) {
+            unlockPremiumContent();
+            return;
+          }
+
+          var flow = getOrCreateFlow();
+
+          flow.opened = true;
+          flow.updatedAt = Date.now();
+          setStoredFlow(flow);
+
+          advanceStep.textContent = "Waiting for progress...";
+          advanceStep.disabled = true;
+          advanceStep.classList.add("is-loading");
+          awaitingReturn = true;
+          if (currentStepIndex < 1) {
+            completeStep(1, function () {
+              setPrimaryActionLabel();
+            });
+          }
+          openPartnerSite();
         });
 
-        depositForm.addEventListener("submit", function (event) {
-          event.preventDefault();
-          completeStep(3, launchConfetti);
+        steps.forEach(function (step) {
+          function handleStepClick() {
+            var state = step.getAttribute("data-state");
+            if (!step.classList.contains("is-actionable") || state === "loading" || state === "completed") {
+              return;
+            }
+
+            if (Number(step.getAttribute("data-step")) === 1 && currentStepIndex < 1) {
+              advanceStep.click();
+              return;
+            }
+
+            openPartnerSite();
+          }
+
+          step.addEventListener("click", handleStepClick);
+          step.addEventListener("keydown", function (event) {
+            if (event.key !== "Enter" && event.key !== " ") {
+              return;
+            }
+
+            event.preventDefault();
+            handleStepClick();
+          });
         });
 
-        unlockButton.addEventListener("click", function () {
-          unlockPremiumContent();
+        window.addEventListener("storage", function (event) {
+          if (event.key === FLOW_STORAGE_KEY) {
+            syncFlowFromStorage();
+          }
+        });
+
+        window.addEventListener("focus", function () {
+          if (flowModal.classList.contains("is-open") && awaitingReturn && currentStepIndex >= 1) {
+            syncFlowFromStorage();
+          }
+        });
+
+        window.addEventListener("resize", function () {
+          setFlowIntro(partnerConfig[activePartner]);
         });
 
         selectMethod("credit");
