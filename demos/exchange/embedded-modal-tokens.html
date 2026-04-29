@@ -1,0 +1,1591 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SXY CHAT Embedded Modal Exchange Tokens Demo</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
+    />
+    <style>
+      :root {
+        --text: #f9edf0;
+        --muted: #cbb6bd;
+        --brand: #ff7f8d;
+        --brand-deep: #a33a39;
+        --panel: rgba(22, 11, 16, 0.97);
+        --shadow: 0 28px 70px rgba(0, 0, 0, 0.38);
+        --gold: #ffb3bc;
+        --surface: rgba(43, 18, 28, 0.94);
+        --surface-2: rgba(28, 13, 21, 0.96);
+        --line: rgba(255, 225, 232, 0.1);
+        --success: #ff8ca0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 20px;
+        font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top, rgba(255, 127, 141, 0.2), transparent 28%),
+          radial-gradient(circle at 18% 18%, rgba(214, 69, 96, 0.16), transparent 22%),
+          linear-gradient(180deg, #12080d 0%, #1d0d14 45%, #14090f 100%);
+      }
+
+      .frame {
+        max-width: 1220px;
+        margin: 0 auto;
+        border-radius: 28px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+
+      .site {
+        position: relative;
+        padding: 22px 24px 18px;
+        background:
+          radial-gradient(circle at top center, rgba(255, 127, 141, 0.14), transparent 30%),
+          radial-gradient(circle at 80% 0%, rgba(204, 68, 99, 0.12), transparent 24%),
+          linear-gradient(180deg, #1b0f16 0%, #130a10 100%);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.84rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 1.2rem;
+        letter-spacing: 0.04em;
+        filter: drop-shadow(0 8px 18px rgba(255, 78, 112, 0.14));
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .brand-heart {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #ff7f8d, #a33a39);
+        color: #fff;
+        font-size: 1.2rem;
+      }
+
+      .brand-name {
+        color: #ffdbe0;
+        font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+        letter-spacing: -0.02em;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 460px;
+        grid-template-areas: "chat sidebar";
+        gap: 20px;
+        align-items: start;
+      }
+
+      .chat-stage {
+        grid-area: chat;
+      }
+
+      .sidebar {
+        grid-area: sidebar;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+        overflow: hidden;
+      }
+
+      .sidebar.is-hidden {
+        display: none;
+      }
+
+      .unlocked-sidebar {
+        grid-area: sidebar;
+        display: none;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+        overflow: hidden;
+      }
+
+      .unlocked-sidebar.is-visible {
+        display: block;
+      }
+
+      .chat-shell {
+        border-radius: 24px;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(53, 22, 33, 0.96), rgba(28, 12, 20, 0.98));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+
+      .chat-preview {
+        position: relative;
+        min-height: 560px;
+        display: flex;
+        flex-direction: column;
+        background:
+          radial-gradient(circle at top right, rgba(255, 127, 141, 0.14), transparent 24%),
+          linear-gradient(180deg, rgba(42, 16, 27, 0.98), rgba(24, 10, 17, 0.98));
+      }
+
+      .chat-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 18px 14px;
+        border-bottom: 1px solid rgba(255, 225, 232, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .chat-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .chat-avatar {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #ff7f8d, #a33a39);
+        color: #fff;
+        font-size: 1.2rem;
+      }
+
+      .chat-profile strong {
+        display: block;
+        font-size: 1rem;
+      }
+
+      .chat-profile span {
+        display: block;
+        margin-top: 3px;
+        color: #d8b6c0;
+        font-size: 0.82rem;
+      }
+
+      .chat-balance {
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffdbe0;
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      .paywall-overlay {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 24px;
+        background: linear-gradient(180deg, rgba(16, 10, 14, 0.18), rgba(16, 10, 14, 0.68));
+        color: #fff;
+        z-index: 2;
+      }
+
+      .overlay-card {
+        width: min(100%, 280px);
+        padding: 18px 22px;
+        border-radius: 22px;
+        background: rgba(22, 12, 18, 0.78);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.26);
+        max-width: 280px;
+      }
+
+      .overlay-card i {
+        font-size: 2.1rem;
+        color: var(--gold);
+      }
+
+      .overlay-card strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 1.25rem;
+      }
+
+      .overlay-card span {
+        display: block;
+        margin-top: 6px;
+        color: rgba(255, 255, 255, 0.84);
+        font-size: 0.94rem;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+      }
+
+      .chat-messages {
+        display: grid;
+        gap: 12px;
+        padding: 18px;
+        flex: 1;
+        align-content: start;
+      }
+
+      .chat-day {
+        justify-self: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #d8b6c0;
+        font-size: 0.74rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .chat-row {
+        display: flex;
+      }
+
+      .chat-row.outgoing {
+        justify-content: flex-end;
+      }
+
+      .chat-bubble {
+        max-width: 78%;
+        padding: 14px 16px;
+        border-radius: 18px;
+        font-size: 0.94rem;
+        line-height: 1.45;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+      }
+
+      .chat-bubble.incoming {
+        background: rgba(255, 255, 255, 0.07);
+        color: #fff1f4;
+        border-top-left-radius: 8px;
+      }
+
+      .chat-bubble.outgoing {
+        background: linear-gradient(180deg, rgba(255, 127, 141, 0.9), rgba(163, 58, 57, 0.92));
+        color: #fff;
+        border-top-right-radius: 8px;
+      }
+
+      .chat-media-bubble {
+        width: min(260px, 78vw);
+        padding: 10px;
+        border-radius: 20px;
+        border-top-left-radius: 8px;
+        background: rgba(255, 255, 255, 0.07);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+      }
+
+      .chat-media-frame {
+        height: 210px;
+        border-radius: 14px;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(255, 183, 197, 0.75), transparent 32%),
+          radial-gradient(circle at 78% 22%, rgba(255, 125, 153, 0.6), transparent 28%),
+          linear-gradient(135deg, rgba(255, 132, 150, 0.42), rgba(118, 24, 46, 0.78));
+        filter: blur(12px) saturate(1.15);
+      }
+
+      .chat-input {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px 18px;
+      }
+
+      .chat-input-box {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 225, 232, 0.08);
+        color: #bda2aa;
+        font-size: 0.92rem;
+      }
+
+      .chat-send {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #ff7f8d, #a33a39);
+        color: #fff;
+        font-size: 1.1rem;
+      }
+
+      .sidebar-head {
+        padding: 18px 18px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .sidebar-body {
+        padding: 18px;
+      }
+
+      .sidebar-head h2 {
+        margin: 0;
+        font-size: 1.18rem;
+      }
+
+      .sidebar-head p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.4;
+        font-size: 0.88rem;
+      }
+
+      .method-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding: 14px 18px 0;
+      }
+
+      .method {
+        border: 1px solid rgba(255, 196, 214, 0.1);
+        background: rgba(45, 22, 35, 0.95);
+        border-radius: 18px;
+        padding: 11px 8px;
+        text-align: center;
+        cursor: pointer;
+        font: inherit;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+      }
+
+      .method.is-selected {
+        border-color: rgba(255, 255, 255, 0.08);
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+        box-shadow: inset 0 -2px 0 rgba(84, 21, 43, 0.18);
+      }
+
+      .method.is-selected i {
+        color: #fff;
+      }
+
+      .method.is-selected span {
+        color: #fff;
+      }
+
+      .method i {
+        display: block;
+        font-size: 1.4rem;
+        margin-bottom: 6px;
+        color: #d8c9bc;
+      }
+
+      .method-icon {
+        display: block;
+        width: 28px;
+        height: 28px;
+        margin: 0 auto 6px;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+      }
+
+      .method.credit i {
+        color: #fff;
+      }
+
+      .method.paypal i {
+        color: #fff;
+      }
+
+      .method.credit.is-selected i,
+      .method.paypal.is-selected i {
+        color: #fff;
+      }
+
+      .method.widgy.is-selected .method-icon {
+        filter: brightness(0) invert(1);
+      }
+
+      .method span {
+        display: block;
+        font-weight: 800;
+        font-size: 0.84rem;
+        color: #f2e7df;
+      }
+
+      .panel-body {
+        padding: 16px 18px 18px;
+      }
+
+      .standard-box,
+      .widgy-box {
+        padding: 2px 0 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .panel-title {
+        margin: 0;
+        font-size: 1.15rem;
+      }
+
+      .panel-copy {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.45;
+        font-size: 0.92rem;
+      }
+
+      .detail-list {
+        display: grid;
+        gap: 10px;
+        margin: 16px 0 0;
+      }
+
+      .detail-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.92rem;
+      }
+
+      .detail-item i {
+        color: var(--gold);
+        margin-top: 1px;
+      }
+
+      .partner-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .partner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        padding: 14px 14px;
+        border-radius: 18px;
+        background: rgba(49, 24, 38, 0.94);
+        border: 1px solid rgba(255, 196, 214, 0.08);
+        text-align: left;
+        cursor: pointer;
+        font: inherit;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      }
+
+      .partner:hover {
+        transform: translateY(-1px);
+        border-color: rgba(255, 129, 161, 0.22);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+      }
+
+      .partner.is-active {
+        border-color: rgba(255, 255, 255, 0.08);
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+        box-shadow: inset 0 -2px 0 rgba(84, 21, 43, 0.18);
+      }
+
+      .partner.is-active strong,
+      .partner.is-active span {
+        color: #fff;
+      }
+
+      .partner.is-active .partner-badge {
+        background: rgba(84, 21, 43, 0.24) !important;
+        color: #fff;
+      }
+
+      .partner strong {
+        display: block;
+        font-size: 1rem;
+        color: #fff3ea;
+      }
+
+      .partner strong .partner-offer-desktop,
+      .partner strong .partner-offer-mobile {
+        display: block;
+      }
+
+      .partner span {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .partner-badge {
+        min-width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        font-size: 0.9rem;
+        font-weight: 900;
+        color: #ffffff;
+      }
+
+      .partner[data-partner="girlfriend"] .partner-badge {
+        background: linear-gradient(135deg, #3872d5, #51c3d3);
+      }
+
+      .partner[data-partner="chat"] .partner-badge {
+        background: linear-gradient(135deg, #7c3aed, #51c3d3);
+      }
+
+      .partner[data-partner="dating"] .partner-badge {
+        background: linear-gradient(135deg, #ec4899, #3872d5);
+      }
+
+      .cta-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .continue {
+        width: 100%;
+        border: 0;
+        border-radius: 22px;
+        padding: 18px 18px;
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .continue.standard {
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+        color: #fff;
+        box-shadow: inset 0 -2px 0 rgba(84, 21, 43, 0.18);
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(16, 11, 9, 0.58);
+        backdrop-filter: blur(8px);
+        z-index: 100;
+      }
+
+      .modal-backdrop.is-open {
+        display: flex;
+      }
+
+      .modal {
+        width: min(100%, 620px);
+        border-radius: 26px;
+        background: linear-gradient(180deg, rgba(37, 18, 28, 0.98) 0%, rgba(21, 11, 19, 0.99) 100%);
+        border: 1px solid rgba(255, 196, 214, 0.1);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .modal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px 20px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .modal-head h3 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+
+      .modal-close {
+        border: 0;
+        background: transparent;
+        color: #b7a79a;
+        font-size: 1.4rem;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      .modal-body {
+        padding: 18px 20px 20px;
+      }
+
+      .step-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .step {
+        display: none;
+        grid-template-columns: 36px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 14px;
+        border-radius: 18px;
+        background: rgba(45, 22, 35, 0.96);
+        border: 1px solid rgba(255, 196, 214, 0.08);
+      }
+
+      .step.is-current-step {
+        display: grid;
+      }
+
+      .step.is-actionable {
+        cursor: pointer;
+        transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+      }
+
+      .step.is-actionable:hover {
+        transform: translateY(-1px);
+        border-color: rgba(255, 129, 161, 0.28);
+        background: rgba(57, 28, 43, 0.98);
+      }
+
+      .step.is-actionable:focus-visible {
+        outline: 2px solid rgba(255, 129, 161, 0.72);
+        outline-offset: 2px;
+      }
+
+      .step-index {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(255, 196, 214, 0.1);
+        color: #f3d5de;
+        font-size: 0.92rem;
+        font-weight: 900;
+      }
+
+      .step-copy strong {
+        display: block;
+        font-size: 0.96rem;
+        color: #fff3ea;
+      }
+
+      .step-copy span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .step-state {
+        min-width: 112px;
+        text-align: right;
+        font-size: 0.84rem;
+        font-weight: 800;
+        color: #d5aebc;
+      }
+
+      .step[data-state="loading"] {
+        border-color: rgba(255, 129, 161, 0.42);
+        background: rgba(86, 28, 54, 0.34);
+      }
+
+      .step[data-state="loading"] .step-state {
+        color: #ff9dbd;
+      }
+
+      .step[data-state="completed"] {
+        border-color: rgba(255, 143, 176, 0.26);
+        background: rgba(94, 31, 59, 0.46);
+      }
+
+      .step[data-state="completed"] .step-index {
+        background: #ffd6e3;
+        color: #9d3459;
+      }
+
+      .step[data-state="completed"] .step-state {
+        color: #ffc4d7;
+      }
+
+      /* ── Iframe shell ── */
+
+      .iframe-shell {
+        display: none;
+        margin-top: 18px;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 196, 214, 0.1);
+        background: rgba(16, 8, 14, 0.72);
+      }
+
+      .iframe-shell.is-visible {
+        display: block;
+      }
+
+      .iframe-stage {
+        width: 100%;
+        height: 560px;
+        border: 0;
+        display: block;
+        background: #100810;
+      }
+
+      /* ── Completion shell ── */
+
+      .completion-shell {
+        display: none;
+        margin-top: 18px;
+        padding: 4px 14px 0;
+      }
+
+      .completion-shell.is-visible {
+        display: block;
+      }
+
+      .completion-shell strong {
+        display: block;
+        font-size: 1rem;
+        color: #fff3ea;
+      }
+
+      .completion-shell p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      .completion-button {
+        width: 100%;
+        margin-top: 16px;
+        border: 0;
+        border-radius: 18px;
+        padding: 15px 16px;
+        background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+        color: #fff;
+        font: inherit;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: inset 0 -2px 0 rgba(84, 21, 43, 0.18);
+      }
+
+      .modal-confetti {
+        position: absolute;
+        inset: 0;
+        overflow: visible;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .confetti-piece {
+        position: absolute;
+        left: var(--origin-x);
+        top: var(--origin-y);
+        width: 10px;
+        height: 18px;
+        border-radius: 4px;
+        opacity: 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 18px;
+        padding: 18px 8px 0;
+        color: #938378;
+        font-size: 0.82rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .unlock-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(94, 31, 59, 0.46);
+        color: #ffd3df;
+        font-size: 0.86rem;
+        font-weight: 800;
+      }
+
+      @media (max-width: 1040px) {
+        .content {
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "chat"
+            "sidebar";
+        }
+      }
+
+      @media (max-width: 760px) {
+        .modal-backdrop {
+          padding: 0;
+        }
+
+        body {
+          padding: 0;
+        }
+
+        .site {
+          padding: 18px 16px 16px;
+        }
+
+        .topbar {
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+        }
+
+        .brand {
+          min-width: 0;
+          font-size: 1rem;
+        }
+
+        .brand-heart {
+          width: 36px;
+          height: 36px;
+          border-radius: 12px;
+          font-size: 1.05rem;
+        }
+
+        .brand-name {
+          font-size: 1.15rem;
+        }
+
+        .back-link {
+          flex-shrink: 0;
+          padding: 7px 10px;
+          font-size: 0.74rem;
+        }
+
+        .paywall-overlay {
+          place-items: end center;
+        }
+
+        .overlay-card {
+          width: 100%;
+          height: 100%;
+          display: grid;
+          place-content: center;
+          padding: 24px 20px;
+        }
+
+        .overlay-card span {
+          font-size: 0.8rem;
+        }
+
+        .partner strong .partner-offer-desktop,
+        .partner strong .partner-offer-mobile {
+          display: block;
+        }
+
+        .chat-preview {
+          min-height: 460px;
+        }
+
+        .chat-bubble {
+          max-width: 100%;
+        }
+
+        .modal {
+          width: 100%;
+          min-height: 100vh;
+          border-radius: 0;
+        }
+
+        .modal-head {
+          padding: 18px 16px 12px;
+        }
+
+        .modal-body {
+          padding: 16px 0 0;
+        }
+
+        .step {
+          grid-template-columns: 36px 1fr;
+          align-items: start;
+        }
+
+        .step-state {
+          display: none;
+        }
+
+        .step-copy strong,
+        .step-copy span {
+          max-width: 100%;
+        }
+
+        .step-list {
+          padding: 0 16px;
+        }
+
+        .iframe-shell {
+          margin-top: 16px;
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
+        }
+
+        .iframe-stage {
+          height: calc(100vh - 176px);
+          height: calc(100dvh - 176px);
+          max-height: calc(100vh - 176px);
+          max-height: calc(100dvh - 176px);
+          min-height: 0;
+        }
+      }
+
+      @keyframes modalConfetti {
+        0% {
+          opacity: 0;
+          transform: translate3d(0, 0, 0) scale(0.72) rotate(0deg);
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate3d(var(--drift-x), var(--drift-y), 0) scale(1.04) rotate(var(--spin));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <main class="site">
+        <header class="topbar">
+          <a class="brand" href="../../index.html" aria-label="Back to demo launcher">
+            <span class="brand-heart"><i class="ri-heart-fill" aria-hidden="true"></i></span>
+            <span class="brand-name">SXY CHAT</span>
+          </a>
+          <a class="back-link" href="../../index.html">
+            <i class="ri-arrow-left-line" aria-hidden="true"></i>
+            Back to dashboard
+          </a>
+        </header>
+
+        <section class="content">
+          <section class="chat-stage">
+            <div class="chat-shell">
+              <div class="chat-preview" aria-label="Locked AI girlfriend chat preview">
+                <div class="chat-topbar">
+                  <div class="chat-profile">
+                    <div class="chat-avatar">
+                      <i class="ri-heart-fill" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                      <strong>Mia</strong>
+                      <span>Online now &bull; AI girlfriend</span>
+                    </div>
+                  </div>
+                  <div class="chat-balance" id="chatBalance">0 tokens</div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                  <div class="chat-day">Tonight</div>
+                  <div class="chat-row">
+                    <div class="chat-bubble incoming">I was waiting for you. Want me to tell you what I was just thinking about?</div>
+                  </div>
+                  <div class="chat-row outgoing">
+                    <div class="chat-bubble outgoing">Only if you promise not to make me blush.</div>
+                  </div>
+                  <div class="chat-row">
+                    <div class="chat-bubble incoming">Too late. Unlock 100 tokens and I&rsquo;ll stay up with you all night.</div>
+                  </div>
+                </div>
+                <div class="paywall-overlay" id="paywallOverlay">
+                  <div class="overlay-card">
+                    <i class="ri-lock-2-line" aria-hidden="true"></i>
+                    <strong>Tokens Required</strong>
+                    <span>Choose an access route to unlock 100 chat tokens.</span>
+                  </div>
+                </div>
+                <div class="chat-input">
+                  <div class="chat-input-box">
+                    <span>Send a message to Mia&hellip;</span>
+                    <i class="ri-lock-2-line" aria-hidden="true"></i>
+                  </div>
+                  <div class="chat-send"><i class="ri-send-plane-fill" aria-hidden="true"></i></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="sidebar" aria-label="Access options">
+            <div class="sidebar-head">
+              <h2>Unlock chat tokens</h2>
+              <p>Choose how you want to unlock this experience.</p>
+            </div>
+
+            <div class="method-grid" role="tablist" aria-label="Access methods">
+              <button class="method credit is-selected" type="button" data-method="credit" role="tab" aria-selected="true">
+                <i class="ri-bank-card-fill" aria-hidden="true"></i>
+                <span>Credit Card</span>
+              </button>
+              <button class="method paypal" type="button" data-method="paypal" role="tab" aria-selected="false">
+                <i class="ri-paypal-fill" aria-hidden="true"></i>
+                <span>PayPal</span>
+              </button>
+              <button class="method widgy" type="button" data-method="widgy" role="tab" aria-selected="false">
+                <img class="method-icon" src="../../assets/logos/widgy-icon.svg" alt="" aria-hidden="true" />
+                <span>Widgy</span>
+              </button>
+            </div>
+
+            <div class="panel-body">
+              <section class="standard-box" data-panel="credit">
+                <h3 class="panel-title">Buy tokens with Card</h3>
+                <p class="panel-copy">Buy 100 tokens directly and start chatting right away.</p>
+                <div class="detail-list">
+                  <div class="detail-item">
+                    <i class="ri-check-line" aria-hidden="true"></i>
+                    <span>Secure one-step card checkout</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="ri-check-line" aria-hidden="true"></i>
+                    <span>100 tokens added immediately after payment</span>
+                  </div>
+                </div>
+                <div class="cta-row">
+                  <button class="continue standard" type="button">Buy tokens with Card</button>
+                </div>
+              </section>
+
+              <section class="standard-box hidden" data-panel="paypal">
+                <h3 class="panel-title">Buy tokens with PayPal</h3>
+                <p class="panel-copy">Use PayPal for a familiar express token checkout flow.</p>
+                <div class="detail-list">
+                  <div class="detail-item">
+                    <i class="ri-check-line" aria-hidden="true"></i>
+                    <span>Fast authorization in a new tab</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="ri-check-line" aria-hidden="true"></i>
+                    <span>Return to SXY CHAT with token balance ready</span>
+                  </div>
+                </div>
+                <div class="cta-row">
+                  <button class="continue standard" type="button">Buy tokens with PayPal</button>
+                </div>
+              </section>
+
+              <section class="widgy-box hidden" data-panel="widgy">
+                <h3 class="panel-title">Choose where to subscribe</h3>
+                <p class="panel-copy">
+                  Subscribe to one partner brand below. When that subscription is complete, SXY CHAT unlocks 100 tokens.
+                </p>
+                <div class="partner-list">
+                  <button class="partner is-active" type="button" data-partner="girlfriend">
+                    <div>
+                      <strong>
+                        <span class="partner-offer-desktop">Subscribe to SXY Girlfriend</span>
+                        <span class="partner-offer-mobile">Get 100 SXY CHAT tokens</span>
+                      </strong>
+                    </div>
+                    <div class="partner-badge">GF</div>
+                  </button>
+
+                  <button class="partner" type="button" data-partner="chat">
+                    <div>
+                      <strong>
+                        <span class="partner-offer-desktop">Subscribe to SXY Chat</span>
+                        <span class="partner-offer-mobile">Get 100 SXY CHAT tokens</span>
+                      </strong>
+                    </div>
+                    <div class="partner-badge">CH</div>
+                  </button>
+
+                  <button class="partner" type="button" data-partner="dating">
+                    <div>
+                      <strong>
+                        <span class="partner-offer-desktop">Subscribe to SXY Dating</span>
+                        <span class="partner-offer-mobile">Get 100 SXY CHAT tokens</span>
+                      </strong>
+                    </div>
+                    <div class="partner-badge">DT</div>
+                  </button>
+                </div>
+
+                <div class="cta-row">
+                  <button class="continue standard" id="openPartner" type="button">Continue with Widgy</button>
+                </div>
+              </section>
+            </div>
+          </aside>
+
+          <aside class="unlocked-sidebar" id="unlockedSidebar" aria-label="Unlocked content">
+            <div class="sidebar-head">
+              <h2>Tokens unlocked</h2>
+              <p>Your chat balance is ready. Start messaging or save tokens for later.</p>
+            </div>
+            <div class="sidebar-body">
+              <div class="unlock-badge">
+                <i class="ri-checkbox-circle-line" aria-hidden="true"></i>
+                <span>100 chat tokens successfully unlocked</span>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <footer class="footer">
+          &copy; 2026 SXY CHAT Ltd. 75 Spyrou Kyprianou Ave, Office 204. Potamos Germasogeias, 4043 Limassol, Cyprus
+        </footer>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="flowModal">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="flowTitle">
+        <div class="modal-confetti" id="modalConfetti" aria-hidden="true"></div>
+        <div class="modal-head">
+          <div>
+            <h3 id="flowTitle">Widgy Exchange</h3>
+          </div>
+          <button class="modal-close" id="closeModal" type="button" aria-label="Close">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="step-list">
+            <div class="step" data-step="1" data-state="pending" role="button" tabindex="0" aria-label="Create account step">
+              <div class="step-index">1</div>
+              <div class="step-copy">
+                <strong>Create a new account</strong>
+                <span id="modalStepOne">Create account and subscribe on SXY Girlfriend.</span>
+              </div>
+              <div class="step-state">In progress</div>
+            </div>
+            <div class="step" data-step="2" data-state="pending" role="button" tabindex="-1" aria-label="Complete partner subscription step">
+              <div class="step-index">2</div>
+              <div class="step-copy">
+                <strong>Complete partner subscription</strong>
+                <span id="modalStepTwo">Finish the partner subscription to unlock your SXY CHAT tokens.</span>
+              </div>
+              <div class="step-state">Pending</div>
+            </div>
+            <div class="step" data-step="3" data-state="pending" role="button" tabindex="-1" aria-label="Unlock chat tokens step">
+              <div class="step-index">3</div>
+              <div class="step-copy">
+                <strong>Unlock chat tokens</strong>
+                <span>Account created and subscription confirmed. 100 tokens incoming.</span>
+              </div>
+              <div class="step-state">Pending</div>
+            </div>
+          </div>
+
+          <div class="iframe-shell" id="iframeShell">
+            <iframe class="iframe-stage" id="partnerFrame" title="Embedded partner subscription"></iframe>
+          </div>
+
+          <div class="completion-shell" id="completionShell">
+            <strong>100 tokens ready</strong>
+            <p>Account created and subscription confirmed. Your 100 SXY CHAT tokens are now active.</p>
+            <button class="completion-button" id="unlockButton" type="button">Start chatting</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var methods = Array.from(document.querySelectorAll(".method"));
+        var panels = Array.from(document.querySelectorAll("[data-panel]"));
+        var partners = Array.from(document.querySelectorAll(".partner"));
+        var openPartner = document.getElementById("openPartner");
+        var flowModal = document.getElementById("flowModal");
+        var closeModal = document.getElementById("closeModal");
+        var modalConfetti = document.getElementById("modalConfetti");
+        var paywallOverlay = document.getElementById("paywallOverlay");
+        var accessSidebar = document.querySelector(".sidebar");
+        var unlockedSidebar = document.getElementById("unlockedSidebar");
+        var chatBalance = document.getElementById("chatBalance");
+        var chatMessages = document.getElementById("chatMessages");
+        var iframeShell = document.getElementById("iframeShell");
+        var partnerFrame = document.getElementById("partnerFrame");
+        var completionShell = document.getElementById("completionShell");
+        var unlockButton = document.getElementById("unlockButton");
+        var modalStepOne = document.getElementById("modalStepOne");
+        var modalStepTwo = document.getElementById("modalStepTwo");
+        var steps = Array.from(document.querySelectorAll(".step"));
+        var FLOW_STORAGE_KEY = "exchangeTokensEmbedUnlockFlow";
+        var activePartner = "girlfriend";
+        var currentStepIndex = 0;
+        var hasScrolledToWidgy = false;
+        var lockedChatMarkup = chatMessages.innerHTML;
+
+        var partnerConfig = {
+          girlfriend: { name: "SXY Girlfriend" },
+          chat: { name: "SXY Chat" },
+          dating: { name: "SXY Dating" }
+        };
+
+        // ── Step visibility ────────────────────────────────────────────────
+
+        function refreshStepVisibility() {
+          var nextPending = Math.min(currentStepIndex + 1, 3);
+
+          steps.forEach(function (step) {
+            var stepNumber = Number(step.getAttribute("data-step"));
+            var state = step.getAttribute("data-state");
+            var isCompleted = state === "completed";
+            var isCurrent = stepNumber === nextPending;
+
+            step.classList.toggle("is-current-step", isCompleted || isCurrent);
+            step.classList.toggle("is-actionable", isCurrent && state === "pending");
+            step.tabIndex = (isCurrent && state === "pending") ? 0 : -1;
+            step.setAttribute("aria-disabled", (isCurrent && state === "pending") ? "false" : "true");
+          });
+        }
+
+        function setStepState(stepNumber, state) {
+          var step = steps.find(function (item) {
+            return item.getAttribute("data-step") === String(stepNumber);
+          });
+          var stateNode = step.querySelector(".step-state");
+          var indexNode = step.querySelector(".step-index");
+
+          step.setAttribute("data-state", state);
+
+          if (state === "completed") {
+            stateNode.textContent = "Completed";
+            indexNode.innerHTML = '<i class="ri-check-line" aria-hidden="true"></i>';
+          } else if (state === "loading") {
+            stateNode.textContent = "Checking\u2026";
+            indexNode.innerHTML = '<i class="ri-loader-4-line" aria-hidden="true"></i>';
+          } else {
+            stateNode.textContent = stepNumber === currentStepIndex + 1 ? "In progress" : "Pending";
+            indexNode.textContent = stepNumber;
+          }
+
+          refreshStepVisibility();
+        }
+
+        // ── Storage helpers ────────────────────────────────────────────────
+
+        function getStoredFlow() {
+          try {
+            var raw = window.localStorage.getItem(FLOW_STORAGE_KEY);
+            return raw ? JSON.parse(raw) : null;
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function setStoredFlow(flow) {
+          try {
+            window.localStorage.setItem(FLOW_STORAGE_KEY, JSON.stringify(flow));
+          } catch (error) {
+            // Ignore storage failures in the demo.
+          }
+        }
+
+        function createFlowState() {
+          return {
+            partner: activePartner,
+            accountCreated: false,
+            subscriptionCompleted: false,
+            updatedAt: Date.now()
+          };
+        }
+
+        function getOrCreateFlow() {
+          var flow = getStoredFlow();
+          if (!flow || flow.partner !== activePartner) {
+            flow = createFlowState();
+            setStoredFlow(flow);
+          }
+          return flow;
+        }
+
+        // ── Confetti ───────────────────────────────────────────────────────
+
+        function launchConfetti() {
+          var colors = ["#ff7f8d", "#ffffff", "#ffd6e3", "#ff4d72", "#ffc4d7"];
+
+          for (var i = 0; i < 32; i += 1) {
+            var piece = document.createElement("span");
+            piece.className = "confetti-piece";
+            piece.style.background = colors[i % colors.length];
+            piece.style.setProperty("--origin-x", 30 + Math.random() * 70 + "%");
+            piece.style.setProperty("--origin-y", 52 + Math.random() * 12 + "%");
+            piece.style.setProperty("--drift-x", Math.round((Math.random() - 0.5) * 420) + "px");
+            piece.style.setProperty("--drift-y", Math.round(-100 - Math.random() * 220) + "px");
+            piece.style.setProperty("--spin", Math.round((Math.random() - 0.5) * 720) + "deg");
+            piece.style.animation =
+              "modalConfetti " + (1 + Math.random() * 0.9) + "s cubic-bezier(0.2, 0.8, 0.2, 1) forwards";
+            piece.style.animationDelay = Math.random() * 0.14 + "s";
+            modalConfetti.appendChild(piece);
+
+            piece.addEventListener("animationend", function () {
+              this.remove();
+            });
+          }
+        }
+
+        // ── Step completion ────────────────────────────────────────────────
+
+        function completeStep(stepNumber, callback) {
+          setStepState(stepNumber, "loading");
+          window.setTimeout(function () {
+            currentStepIndex = stepNumber;
+            setStepState(stepNumber, "completed");
+            if (callback) {
+              callback();
+            }
+          }, 700);
+        }
+
+        // ── Sync from storage / postMessage ────────────────────────────────
+
+        function syncFlowFromStorage() {
+          var flow = getOrCreateFlow();
+          var targetStep = 0;
+
+          if (flow.subscriptionCompleted) {
+            targetStep = 3;
+          } else if (flow.accountCreated) {
+            targetStep = 1;
+          }
+
+          function completeNextStep() {
+            if (currentStepIndex >= targetStep) {
+              return;
+            }
+
+            completeStep(currentStepIndex + 1, function () {
+              if (currentStepIndex === 3) {
+                launchConfetti();
+                iframeShell.classList.remove("is-visible");
+                completionShell.classList.add("is-visible");
+              }
+              completeNextStep();
+            });
+          }
+
+          completeNextStep();
+        }
+
+        // ── Unlock / reset ─────────────────────────────────────────────────
+
+        function unlockPremiumContent() {
+          paywallOverlay.style.display = "none";
+          chatBalance.textContent = "100 tokens";
+          chatMessages.innerHTML =
+            '<div class="chat-day">Tonight</div>' +
+            '<div class="chat-row"><div class="chat-bubble incoming">Welcome back. Your tokens are live now, and I saved something just for you.</div></div>' +
+            '<div class="chat-row"><div class="chat-media-bubble"><div class="chat-media-frame" aria-hidden="true"></div></div></div>';
+          accessSidebar.classList.add("is-hidden");
+          unlockedSidebar.classList.add("is-visible");
+          flowModal.classList.remove("is-open");
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }
+
+        function resetFlow() {
+          currentStepIndex = 0;
+          steps.forEach(function (step) {
+            setStepState(Number(step.getAttribute("data-step")), "pending");
+          });
+          iframeShell.classList.remove("is-visible");
+          completionShell.classList.remove("is-visible");
+          partnerFrame.removeAttribute("src");
+          paywallOverlay.style.display = "";
+          chatBalance.textContent = "0 tokens";
+          chatMessages.innerHTML = lockedChatMarkup;
+          accessSidebar.classList.remove("is-hidden");
+          unlockedSidebar.classList.remove("is-visible");
+          setStoredFlow(createFlowState());
+        }
+
+        // ── Open embedded partner ──────────────────────────────────────────
+
+        function openEmbeddedPartner() {
+          iframeShell.classList.add("is-visible");
+          completionShell.classList.remove("is-visible");
+          partnerFrame.src =
+            "partner-dating.html?partner=" + encodeURIComponent(activePartner) + "&embed=1&key=exchangeTokensEmbedUnlockFlow";
+        }
+
+        // ── Partner selection ──────────────────────────────────────────────
+
+        function selectPartner(partnerName) {
+          activePartner = partnerName;
+
+          partners.forEach(function (item) {
+            item.classList.toggle("is-active", item.getAttribute("data-partner") === partnerName);
+          });
+
+          var partnerLabel = partnerConfig[partnerName].name;
+          modalStepOne.textContent = "Create account and subscribe on " + partnerLabel + ".";
+          modalStepTwo.textContent = "Finish the partner subscription to unlock your SXY CHAT tokens.";
+
+          resetFlow();
+        }
+
+        // ── Method tab switching ───────────────────────────────────────────
+
+        function selectMethod(methodName) {
+          methods.forEach(function (method) {
+            var active = method.getAttribute("data-method") === methodName;
+            method.classList.toggle("is-selected", active);
+            method.setAttribute("aria-selected", active ? "true" : "false");
+          });
+
+          panels.forEach(function (panel) {
+            panel.classList.toggle("hidden", panel.getAttribute("data-panel") !== methodName);
+          });
+
+          if (methodName === "widgy" && !hasScrolledToWidgy) {
+            var widgyPanel = panels.find(function (panel) {
+              return panel.getAttribute("data-panel") === "widgy";
+            });
+
+            if (widgyPanel) {
+              var sidebarTop = accessSidebar.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({
+                top: Math.max(0, sidebarTop - 24),
+                behavior: "smooth"
+              });
+              hasScrolledToWidgy = true;
+            }
+          }
+        }
+
+        // ── Event listeners ────────────────────────────────────────────────
+
+        methods.forEach(function (method) {
+          method.addEventListener("click", function () {
+            selectMethod(method.getAttribute("data-method"));
+          });
+        });
+
+        partners.forEach(function (partner) {
+          partner.addEventListener("click", function () {
+            selectPartner(partner.getAttribute("data-partner"));
+          });
+        });
+
+        openPartner.addEventListener("click", function () {
+          flowModal.classList.add("is-open");
+          resetFlow();
+          var flow = getOrCreateFlow();
+          flow.updatedAt = Date.now();
+          setStoredFlow(flow);
+          openEmbeddedPartner();
+        });
+
+        closeModal.addEventListener("click", function () {
+          flowModal.classList.remove("is-open");
+        });
+
+        flowModal.addEventListener("click", function (event) {
+          if (event.target === flowModal) {
+            flowModal.classList.remove("is-open");
+          }
+        });
+
+        unlockButton.addEventListener("click", function () {
+          unlockPremiumContent();
+        });
+
+        steps.forEach(function (step) {
+          function handleStepClick() {
+            var state = step.getAttribute("data-state");
+            if (!step.classList.contains("is-actionable") || state === "loading" || state === "completed") {
+              return;
+            }
+            iframeShell.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+
+          step.addEventListener("click", handleStepClick);
+          step.addEventListener("keydown", function (event) {
+            if (event.key !== "Enter" && event.key !== " ") {
+              return;
+            }
+            event.preventDefault();
+            handleStepClick();
+          });
+        });
+
+        // Listen for postMessage from embedded partner iframe
+        window.addEventListener("message", function (event) {
+          if (!event.data || event.data.type !== "embedded-flow-update") {
+            return;
+          }
+
+          var flow = event.data.flow;
+          if (!flow) {
+            return;
+          }
+
+          var stored = getOrCreateFlow();
+
+          if (flow.accountCreated) {
+            stored.accountCreated = true;
+          }
+
+          if (flow.subscriptionCompleted) {
+            stored.subscriptionCompleted = true;
+          }
+
+          stored.updatedAt = Date.now();
+          setStoredFlow(stored);
+          syncFlowFromStorage();
+        });
+
+        // Also listen for cross-tab storage writes
+        window.addEventListener("storage", function (event) {
+          if (event.key === FLOW_STORAGE_KEY) {
+            syncFlowFromStorage();
+          }
+        });
+
+        // ── Init ───────────────────────────────────────────────────────────
+
+        selectMethod("credit");
+        selectPartner("girlfriend");
+      })();
+    </script>
+  </body>
+</html>

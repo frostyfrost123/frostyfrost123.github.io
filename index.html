@@ -484,11 +484,43 @@
             </p>
           </div>
 
-          <div class="variant-list" aria-label="Exchange demo variants">
+          <div class="mode-group">
+            <div class="mode-label">Choose the site context, then pick the flow you want to launch.</div>
+            <div class="mode-switch" role="tablist" aria-label="Exchange site version">
+              <button class="mode-tab is-active" type="button" data-exchange-mode="subscriptions" aria-selected="true">SXY TUBE</button>
+              <button class="mode-tab" type="button" data-exchange-mode="tokens" aria-selected="false">SXY CHAT</button>
+            </div>
+          </div>
+
+          <div class="variant-list" data-exchange-panel="subscriptions" aria-label="Exchange subscriptions demo variants">
             <a class="variant" href="demos/exchange/index.html">
               <div class="variant-copy">
-                <strong>Partner Subscription Handoff</strong>
+                <strong>Redirect Handoff (new tab)</strong>
                 <span>SXY TUBE unlock via SXY partner brands.</span>
+              </div>
+              <span class="variant-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="variant" href="demos/exchange/embedded-modal.html">
+              <div class="variant-copy">
+                <strong>Embedded Modal (iframe/Hyperbeam)</strong>
+                <span>On-site continuity with modal checkout.</span>
+              </div>
+              <span class="variant-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="variant-list is-hidden" data-exchange-panel="tokens" aria-label="Exchange tokens demo variants">
+            <a class="variant" href="demos/exchange/tokens.html">
+              <div class="variant-copy">
+                <strong>Redirect Handoff (new tab)</strong>
+                <span>SXY CHAT unlock via SXY partner brands.</span>
+              </div>
+              <span class="variant-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="variant" href="demos/exchange/embedded-modal-tokens.html">
+              <div class="variant-copy">
+                <strong>Embedded Modal (iframe/Hyperbeam)</strong>
+                <span>On-site continuity with modal checkout.</span>
               </div>
               <span class="variant-arrow" aria-hidden="true">→</span>
             </a>
@@ -541,6 +573,56 @@
         tabs.forEach(function (tab) {
           tab.addEventListener("click", function () {
             var mode = tab.getAttribute("data-payments-mode");
+            updatePanels(mode);
+            setStoredMode(mode);
+          });
+
+        });
+
+        updatePanels(getStoredMode());
+      })();
+
+      (function () {
+        var EXCHANGE_MODE_KEY = "demoExchangeMode";
+        var tabs = Array.from(document.querySelectorAll("[data-exchange-mode]"));
+        var panels = Array.from(document.querySelectorAll("[data-exchange-panel]"));
+
+        function updatePanels(mode) {
+          tabs.forEach(function (tab) {
+            var isActive = tab.getAttribute("data-exchange-mode") === mode;
+            tab.classList.toggle("is-active", isActive);
+            tab.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          panels.forEach(function (panel) {
+            panel.classList.toggle("is-hidden", panel.getAttribute("data-exchange-panel") !== mode);
+          });
+        }
+
+        function getStoredMode() {
+          try {
+            var storedMode = window.localStorage.getItem(EXCHANGE_MODE_KEY);
+            if (storedMode === "subscriptions" || storedMode === "tokens") {
+              return storedMode;
+            }
+          } catch (error) {
+            return "subscriptions";
+          }
+
+          return "subscriptions";
+        }
+
+        function setStoredMode(mode) {
+          try {
+            window.localStorage.setItem(EXCHANGE_MODE_KEY, mode);
+          } catch (error) {
+            return;
+          }
+        }
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            var mode = tab.getAttribute("data-exchange-mode");
             updatePanels(mode);
             setStoredMode(mode);
           });

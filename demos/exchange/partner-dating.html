@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Partner Dating Access Flow</title>
+    <title>Partner Access Flow</title>
     <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon.png" />
     <link
       rel="stylesheet"
@@ -11,15 +11,24 @@
     />
     <style>
       :root {
-        --bg: #111114;
-        --panel: #17171b;
-        --panel-2: #202026;
-        --line: #2d2d34;
-        --text: #ffffff;
-        --muted: #a7a7af;
         --accent: #f66f86;
         --accent-2: #48a8ff;
-        --success: #f6c64c;
+        --bg: #0e0d11;
+        --panel: rgba(22, 20, 28, 0.96);
+        --text: #f4f0ff;
+        --muted: #9d97ae;
+        --line: rgba(255, 255, 255, 0.1);
+        --success: #4ade80;
+      }
+
+      [data-partner="chat"] {
+        --accent: #8b5cf6;
+        --accent-2: #51c3d3;
+      }
+
+      [data-partner="dating"] {
+        --accent: #ec4899;
+        --accent-2: #f59e0b;
       }
 
       * {
@@ -30,48 +39,38 @@
         margin: 0;
         min-height: 100vh;
         padding: 24px;
-        font-family: "Avenir Next", "Inter", "Segoe UI", sans-serif;
+        font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
         color: var(--text);
         background:
-          radial-gradient(circle at 18% 18%, rgba(72, 168, 255, 0.18), transparent 26%),
-          radial-gradient(circle at 82% 12%, rgba(246, 111, 134, 0.2), transparent 28%),
-          linear-gradient(180deg, #0e0e11 0%, var(--bg) 100%);
-      }
-
-      body[data-partner="chat"] {
-        --accent: #8b5cf6;
-        --accent-2: #51c3d3;
-      }
-
-      body[data-partner="dating"] {
-        --accent: #ec4899;
-        --accent-2: #f59e0b;
+          radial-gradient(circle at top, color-mix(in srgb, var(--accent) 22%, transparent), transparent 28%),
+          radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 24%),
+          linear-gradient(180deg, #0c0b10 0%, #0e0d14 100%);
       }
 
       body.is-embedded {
         padding: 0;
-        background: var(--bg);
+        background: #0e0d14;
       }
 
       .frame {
-        width: min(1180px, 100%);
+        max-width: 900px;
         margin: 0 auto;
-        border: 1px solid var(--line);
-        border-radius: 22px;
+        border-radius: 26px;
         overflow: hidden;
-        background: rgba(19, 19, 23, 0.96);
-        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+        background: var(--panel);
+        box-shadow: 0 26px 70px rgba(0, 0, 0, 0.42);
+        border: 1px solid var(--line);
       }
 
       body.is-embedded .frame {
-        width: 100%;
-        border: 0;
+        max-width: none;
         border-radius: 0;
+        border: 0;
         box-shadow: none;
       }
 
       .site {
-        padding: 28px;
+        padding: 24px;
       }
 
       body.is-embedded .site {
@@ -83,191 +82,147 @@
         align-items: center;
         justify-content: space-between;
         gap: 14px;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         font-weight: 900;
       }
 
       .brand-badge {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
         display: grid;
         place-items: center;
-        border-radius: 14px;
-        color: #fff;
+        border-radius: 13px;
         background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #fff;
+        font-size: 1.15rem;
       }
 
       .brand-name {
-        font-size: clamp(1.25rem, 2vw, 1.8rem);
+        font-size: clamp(1.25rem, 2vw, 1.7rem);
       }
 
-      .secure-note {
+      .secure-chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
         color: var(--muted);
-        font-size: 0.9rem;
+        font-size: 0.84rem;
       }
 
       .layout {
         display: grid;
-        grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1.05fr) minmax(260px, 0.75fr);
-        gap: 28px;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
         align-items: start;
       }
 
-      .headline {
-        min-height: 600px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+      .hero-card {
+        padding: 22px;
+        border-radius: 20px;
+        background:
+          radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 18%, transparent), transparent 36%),
+          rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
       }
 
-      .headline h1 {
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--accent) 16%, transparent);
+        color: var(--accent);
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+
+      .hero-card h2 {
+        margin: 0 0 10px;
+        font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+        line-height: 1.08;
+      }
+
+      .hero-card p {
         margin: 0;
-        font-size: clamp(2.6rem, 6vw, 4.8rem);
-        line-height: 0.95;
-        letter-spacing: 0;
-      }
-
-      .headline h1 span {
-        display: block;
-        color: var(--accent-2);
-      }
-
-      .headline p {
-        margin: 24px 0 0;
         color: var(--muted);
-        font-size: 1.08rem;
+        font-size: 0.94rem;
         line-height: 1.55;
       }
 
-      .avatar-card {
-        width: min(280px, 100%);
-        aspect-ratio: 3 / 4;
+      .steps {
         display: grid;
-        place-items: end center;
-        align-self: center;
-        border-radius: 999px 999px 28px 28px;
-        background:
-          radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.16), transparent 26%),
-          linear-gradient(180deg, color-mix(in srgb, var(--accent) 28%, transparent), rgba(255, 255, 255, 0.04));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        overflow: hidden;
+        gap: 0;
+        margin-top: 20px;
       }
 
-      .avatar {
-        width: 70%;
-        aspect-ratio: 1;
-        margin-bottom: 28px;
+      .step {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+      }
+
+      .step:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .step-num {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
         display: grid;
         place-items: center;
         border-radius: 50%;
-        color: #fff;
-        font-size: 4rem;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-      }
-
-      .checkout {
-        display: grid;
-        gap: 18px;
-      }
-
-      .plan {
-        position: relative;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 18px;
-        align-items: center;
-        min-height: 138px;
-        padding: 24px;
-        border: 2px solid var(--line);
-        border-radius: 18px;
-        background: #151519;
-      }
-
-      .plan.is-selected {
-        border-color: var(--accent);
-        background:
-          linear-gradient(135deg, color-mix(in srgb, var(--accent) 22%, transparent), transparent),
-          #1b171c;
-      }
-
-      .choice {
-        position: absolute;
-        top: -16px;
-        left: 34px;
-        padding: 8px 16px;
-        border-radius: 9px;
-        background: var(--accent);
-        color: #fff;
-        font-weight: 900;
-        font-size: 0.8rem;
-      }
-
-      .plan strong {
-        display: block;
-        font-size: 1.25rem;
-      }
-
-      .discount {
-        display: block;
-        margin-top: 8px;
+        background: color-mix(in srgb, var(--accent) 18%, transparent);
         color: var(--accent);
-        font-weight: 800;
-      }
-
-      .price {
-        text-align: right;
+        font-size: 0.82rem;
         font-weight: 900;
       }
 
-      .price .old {
+      .step strong {
         display: block;
-        color: var(--muted);
-        text-decoration: line-through;
-        font-size: 1.1rem;
+        font-size: 0.9rem;
+        line-height: 1.3;
       }
 
-      .price .new {
+      .step span {
         display: block;
-        font-size: clamp(2.5rem, 6vw, 4rem);
-        line-height: 0.9;
-      }
-
-      .price small {
+        margin-top: 3px;
         color: var(--muted);
-        font-size: 1rem;
+        font-size: 0.82rem;
+        line-height: 1.4;
       }
 
-      .trust {
-        display: grid;
-        gap: 10px;
-        color: var(--muted);
-        font-weight: 700;
-      }
-
-      .trust span {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .trust i,
-      .benefits i {
-        color: var(--success);
-        font-size: 1.25rem;
-      }
-
-      .signup-card {
+      .form-card {
         padding: 22px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.04);
         border: 1px solid var(--line);
-        border-radius: 18px;
-        background: var(--panel);
+      }
+
+      .form-card h2 {
+        margin: 0 0 6px;
+        font-size: 1.35rem;
+      }
+
+      .form-card > p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.45;
       }
 
       .signup-state.is-hidden,
@@ -276,21 +231,7 @@
       }
 
       .subscription-state.is-visible {
-        display: grid;
-        gap: 12px;
-      }
-
-      .signup-card h2,
-      .benefits h2 {
-        margin: 0 0 10px;
-        font-size: 1.35rem;
-      }
-
-      .signup-card p,
-      .subscription-state p {
-        margin: 0 0 16px;
-        color: var(--muted);
-        line-height: 1.45;
+        display: block;
       }
 
       .form {
@@ -300,23 +241,29 @@
 
       .field {
         display: grid;
-        gap: 8px;
+        gap: 7px;
       }
 
       .field label {
-        color: #d7d7de;
-        font-size: 0.88rem;
+        font-size: 0.86rem;
         font-weight: 800;
+        color: rgba(255, 255, 255, 0.78);
       }
 
       .field input {
         width: 100%;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: var(--panel-2);
+        padding: 13px 14px;
+        border-radius: 13px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
         color: var(--text);
         font: inherit;
+        font-size: 0.95rem;
+      }
+
+      .field input:focus {
+        outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+        outline-offset: 1px;
       }
 
       .field-row {
@@ -326,16 +273,23 @@
       }
 
       .cta {
-        width: 100%;
         margin-top: 4px;
-        padding: 16px 18px;
+        width: 100%;
         border: 0;
         border-radius: 14px;
-        background: var(--accent);
-        color: white;
+        padding: 15px 18px;
+        background: linear-gradient(180deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 72%, #000) 100%);
+        color: #fff;
         font: inherit;
+        font-size: 0.98rem;
         font-weight: 900;
         cursor: pointer;
+        box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 28%, transparent);
+      }
+
+      .cta:disabled {
+        opacity: 0.64;
+        cursor: default;
       }
 
       .text-link {
@@ -343,49 +297,45 @@
         justify-content: center;
         margin-top: 10px;
         color: var(--muted);
-        font-size: 0.86rem;
+        font-size: 0.84rem;
+        text-decoration: none;
         cursor: default;
       }
 
-      .benefits {
-        display: grid;
-        gap: 18px;
-      }
-
-      .benefits h2 {
-        color: var(--muted);
-      }
-
-      .benefit-list {
-        display: grid;
-        gap: 18px;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        font-size: 1.05rem;
-        font-weight: 800;
-      }
-
-      .benefit-list li {
+      .trust-row {
         display: flex;
-        gap: 12px;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .trust-row span {
+        display: inline-flex;
         align-items: center;
+        gap: 6px;
+      }
+
+      .trust-row i {
+        color: var(--success);
       }
 
       .footer {
         display: flex;
         justify-content: space-between;
-        gap: 16px;
-        margin-top: 24px;
-        padding-top: 18px;
-        border-top: 1px solid var(--line);
+        gap: 14px;
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
         color: var(--muted);
-        font-size: 0.84rem;
+        font-size: 0.82rem;
       }
 
-      body.is-embedded .footer,
-      body.is-embedded .headline,
-      body.is-embedded .benefits {
+      body.is-embedded .hero-card,
+      body.is-embedded .footer {
         display: none;
       }
 
@@ -393,51 +343,33 @@
         grid-template-columns: 1fr;
       }
 
-      @media (max-width: 980px) {
-        .layout {
-          grid-template-columns: 1fr;
-        }
-
-        .headline {
-          min-height: auto;
-          gap: 22px;
-        }
-
-        .avatar-card {
-          display: none;
-        }
-      }
-
-      @media (max-width: 640px) {
+      @media (max-width: 720px) {
         body {
           padding: 0;
         }
 
         .frame {
-          border: 0;
+          max-width: none;
           border-radius: 0;
+          border: 0;
+          box-shadow: none;
         }
 
         .site {
-          padding: 18px 14px;
+          padding: 18px 16px;
         }
 
-        .topbar,
-        .footer {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-
-        .plan {
+        .layout {
           grid-template-columns: 1fr;
         }
 
-        .price {
-          text-align: left;
+        .hero-card {
+          display: none;
         }
 
-        .field-row {
-          grid-template-columns: 1fr 100px;
+        .footer {
+          flex-direction: column;
+          gap: 8px;
         }
       }
     </style>
@@ -447,115 +379,95 @@
       <main class="site">
         <header class="topbar">
           <div class="brand" id="brandLabel" aria-label="Partner">
-            <span class="brand-badge"><i class="ri-heart-3-fill"></i></span>
+            <span class="brand-badge"><i id="brandIcon" class="ri-heart-3-fill" aria-hidden="true"></i></span>
             <span class="brand-name" id="brandName">Partner</span>
           </div>
-          <span class="secure-note">Private subscription checkout</span>
+          <span class="secure-chip">Private subscription checkout</span>
         </header>
 
         <section class="layout">
-          <div class="headline">
-            <div>
-              <h1><span id="saleAccent">Spring Sale</span> for new users</h1>
-              <p id="saleCopy">
-                Subscribe to unlock premium access here, then return to SXY TUBE with 1 year free.
-              </p>
+          <div class="hero-card">
+            <div class="hero-eyebrow">
+              <i class="ri-gift-line" aria-hidden="true"></i>
+              <span id="eyebrowText">Exchange Offer</span>
             </div>
-            <div class="avatar-card" aria-hidden="true">
-              <div class="avatar"><i id="avatarIcon" class="ri-user-heart-fill"></i></div>
+            <h2 id="heroTitle">Subscribe and get 12 months SXY TUBE free</h2>
+            <p id="heroCopy">Subscribe to unlock premium access here, then return to SXY TUBE with 1 year free.</p>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div>
+                  <strong>Create an account</strong>
+                  <span>Enter your email and password to get started.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div>
+                  <strong>Start a subscription</strong>
+                  <span>Complete the qualifying subscription to activate the offer.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div>
+                  <strong>Return to SXY TUBE</strong>
+                  <span>Your 12 months free access will be waiting for you.</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <section class="checkout" aria-label="Partner subscription checkout">
-            <article class="plan is-selected">
-              <span class="choice">BEST CHOICE</span>
-              <div>
-                <strong>12 months</strong>
-                <span class="discount">70% off</span>
-              </div>
-              <div class="price">
-                <span class="old">$13.99</span>
-                <span class="new">$3.99</span>
-                <small>/ month</small>
-              </div>
-            </article>
-
-            <article class="plan">
-              <div>
-                <strong>3 months</strong>
-                <span class="discount">35% off</span>
-              </div>
-              <div class="price">
-                <span class="old">$13.99</span>
-                <span class="new">$8.99</span>
-                <small>/ month</small>
-              </div>
-            </article>
-
-            <article class="signup-card" aria-label="Sign up form">
-              <div class="signup-state" id="signupState">
-                <h2>Create your account</h2>
-                <p>Enter your details below to continue to subscription and activate the exchange offer.</p>
-
-                <form class="form" id="claimForm">
-                  <div class="field">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" value="alex.demo@sxytube.com" />
-                  </div>
-
-                  <div class="field">
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="password" value="StartNow123!" />
-                  </div>
-
-                  <button class="cta" type="submit">Continue to subscription</button>
-                </form>
-              </div>
-
-              <div class="subscription-state" id="subscriptionState">
-                <h2>Finish subscription</h2>
-                <p>Start the qualifying partner subscription to finish the unlock requirements.</p>
-                <form class="form" id="subscriptionForm">
-                  <div class="field">
-                    <label for="cardName">Name on card</label>
-                    <input id="cardName" name="card_name" type="text" value="Alex Demo" />
-                  </div>
-                  <div class="field">
-                    <label for="cardNumber">Card number</label>
-                    <input id="cardNumber" name="card_number" type="text" inputmode="numeric" value="4242 4242 4242 4242" />
-                  </div>
-                  <div class="field-row">
-                    <div class="field">
-                      <label for="cardExpiry">Expiry</label>
-                      <input id="cardExpiry" name="expiry" type="text" inputmode="numeric" value="08/29" />
-                    </div>
-                    <div class="field">
-                      <label for="cardCvc">CVC</label>
-                      <input id="cardCvc" name="cvc" type="text" inputmode="numeric" value="424" />
-                    </div>
-                  </div>
-                  <button class="cta" id="subscriptionButton" type="submit">Subscribe</button>
-                  <a class="text-link" href="#" aria-disabled="true">No hidden fees. Cancel any time.</a>
-                </form>
-              </div>
-            </article>
-
-            <div class="trust">
-              <span><i class="ri-shield-check-fill"></i> No hidden fees</span>
-              <span><i class="ri-refresh-line"></i> Cancel subscription any time</span>
+          <div class="form-card">
+            <div class="signup-state" id="signupState">
+              <h2>Create your account</h2>
+              <p>Enter your details to continue to subscription and activate the exchange offer.</p>
+              <form class="form" id="claimForm">
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" value="alex.demo@sxytube.com" />
+                </div>
+                <div class="field">
+                  <label for="password">Password</label>
+                  <input id="password" name="password" type="password" value="StartNow123!" />
+                </div>
+                <button class="cta" type="submit">Continue to subscription</button>
+              </form>
             </div>
-          </section>
 
-          <aside class="benefits" aria-label="Premium benefits">
-            <h2>Premium Benefits</h2>
-            <ul class="benefit-list">
-              <li><i class="ri-checkbox-circle-fill"></i> Create your own AI companion</li>
-              <li><i class="ri-checkbox-circle-fill"></i> Unlimited text messages</li>
-              <li><i class="ri-checkbox-circle-fill"></i> Bonus tokens every month</li>
-              <li><i class="ri-checkbox-circle-fill"></i> Generate images</li>
-              <li><i class="ri-checkbox-circle-fill"></i> Priority response time</li>
-            </ul>
-          </aside>
+            <div class="subscription-state" id="subscriptionState">
+              <h2>Start your subscription</h2>
+              <p>Complete the qualifying subscription to activate your 12 months free on SXY TUBE.</p>
+              <form class="form" id="subscriptionForm">
+                <div class="field">
+                  <label for="cardName">Name on card</label>
+                  <input id="cardName" name="card_name" type="text" value="Alex Demo" />
+                </div>
+                <div class="field">
+                  <label for="cardNumber">Card number</label>
+                  <input id="cardNumber" name="card_number" type="text" inputmode="numeric" value="4242 4242 4242 4242" />
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="cardExpiry">Expiry</label>
+                    <input id="cardExpiry" name="expiry" type="text" inputmode="numeric" value="08/29" />
+                  </div>
+                  <div class="field">
+                    <label for="cardCvc">CVC</label>
+                    <input id="cardCvc" name="cvc" type="text" inputmode="numeric" value="424" />
+                  </div>
+                </div>
+                <button class="cta" id="subscriptionButton" type="submit">Subscribe — $3.99/month</button>
+                <a class="text-link" href="#" aria-disabled="true">No hidden fees. Cancel any time.</a>
+              </form>
+
+              <div class="trust-row">
+                <span><i class="ri-shield-check-fill" aria-hidden="true"></i> Secure checkout</span>
+                <span><i class="ri-refresh-line" aria-hidden="true"></i> Cancel any time</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         <footer class="footer">
@@ -567,14 +479,17 @@
 
     <script>
       (function () {
-        var FLOW_STORAGE_KEY = "exchangeUnlockFlow";
-        var isEmbedded = new URLSearchParams(window.location.search).get("embed") === "1";
+        var params = new URLSearchParams(window.location.search);
+        var isEmbedded = params.get("embed") === "1";
+        var FLOW_STORAGE_KEY = params.get("key") || "exchangeUnlockFlow";
+
         var brandLabel = document.getElementById("brandLabel");
         var brandName = document.getElementById("brandName");
+        var brandIcon = document.getElementById("brandIcon");
         var footerBrand = document.getElementById("footerBrand");
-        var saleAccent = document.getElementById("saleAccent");
-        var saleCopy = document.getElementById("saleCopy");
-        var avatarIcon = document.getElementById("avatarIcon");
+        var eyebrowText = document.getElementById("eyebrowText");
+        var heroTitle = document.getElementById("heroTitle");
+        var heroCopy = document.getElementById("heroCopy");
         var claimForm = document.getElementById("claimForm");
         var signupState = document.getElementById("signupState");
         var subscriptionState = document.getElementById("subscriptionState");
@@ -584,23 +499,38 @@
         var partnerConfig = {
           girlfriend: {
             name: "SXY Girlfriend",
-            accent: "AI Girlfriend Sale",
-            copy: "Create your own AI companion, subscribe today, and return to SXY TUBE with 1 year free.",
-            icon: "ri-user-heart-fill"
+            icon: "ri-user-heart-fill",
+            eyebrow: "AI Girlfriend Offer",
+            title: "Subscribe and get 12 months SXY TUBE free",
+            copy: "Create your own AI companion, subscribe today, and return to SXY TUBE with 1 year free."
           },
           chat: {
             name: "SXY Chat",
-            accent: "Chat Plus Sale",
-            copy: "Unlock premium conversations on SXY Chat, then return to SXY TUBE with 1 year free.",
-            icon: "ri-chat-heart-fill"
+            icon: "ri-chat-heart-fill",
+            eyebrow: "Chat Plus Offer",
+            title: "Subscribe and get 12 months SXY TUBE free",
+            copy: "Unlock premium conversations on SXY Chat, subscribe, then return to SXY TUBE with 1 year free."
           },
           dating: {
             name: "SXY Dating",
-            accent: "Dating Upgrade",
-            copy: "Subscribe to meet premium matches on SXY Dating, then return to SXY TUBE with 1 year free.",
-            icon: "ri-hearts-fill"
+            icon: "ri-hearts-fill",
+            eyebrow: "Dating Premium Offer",
+            title: "Subscribe and get 12 months SXY TUBE free",
+            copy: "Subscribe to meet premium matches on SXY Dating, then return to SXY TUBE with 1 year free."
           }
         };
+
+        function getSelectedPartner() {
+          var partnerFromUrl = params.get("partner");
+          if (partnerFromUrl && partnerConfig[partnerFromUrl]) {
+            return partnerFromUrl;
+          }
+          var storedFlow = getStoredFlow();
+          if (storedFlow.partner && partnerConfig[storedFlow.partner]) {
+            return storedFlow.partner;
+          }
+          return "girlfriend";
+        }
 
         function getStoredFlow() {
           try {
@@ -609,22 +539,6 @@
           } catch (error) {
             return {};
           }
-        }
-
-        function getSelectedPartner() {
-          var params = new URLSearchParams(window.location.search);
-          var partnerFromUrl = params.get("partner");
-
-          if (partnerFromUrl && partnerConfig[partnerFromUrl]) {
-            return partnerFromUrl;
-          }
-
-          var storedFlow = getStoredFlow();
-          if (storedFlow.partner && partnerConfig[storedFlow.partner]) {
-            return storedFlow.partner;
-          }
-
-          return "girlfriend";
         }
 
         function notifyHost(flow) {
@@ -636,13 +550,11 @@
         function setStoredFlow(updates) {
           var flow = getStoredFlow();
           var nextFlow = Object.assign({}, flow, updates, { updatedAt: Date.now() });
-
           try {
             window.localStorage.setItem(FLOW_STORAGE_KEY, JSON.stringify(nextFlow));
           } catch (error) {
-            // Ignore storage failures in the demo.
+            // Ignore storage failures.
           }
-
           notifyHost(nextFlow);
           return nextFlow;
         }
@@ -650,15 +562,15 @@
         function applyPartnerBranding() {
           var partnerKey = getSelectedPartner();
           var partner = partnerConfig[partnerKey];
-
           document.body.setAttribute("data-partner", partnerKey);
           document.title = partner.name + " Access Flow";
           brandLabel.setAttribute("aria-label", partner.name);
           brandName.textContent = partner.name;
+          brandIcon.className = partner.icon;
           footerBrand.textContent = "© 2026 " + partner.name + ". All rights reserved.";
-          saleAccent.textContent = partner.accent;
-          saleCopy.textContent = partner.copy;
-          avatarIcon.className = partner.icon;
+          eyebrowText.textContent = partner.eyebrow;
+          heroTitle.textContent = partner.title;
+          heroCopy.textContent = partner.copy;
         }
 
         function syncUi() {
@@ -670,26 +582,8 @@
           subscriptionState.classList.toggle("is-visible", accountCreated);
 
           if (subscriptionCompleted) {
-            subscriptionButton.textContent = "Subscription completed";
+            subscriptionButton.textContent = "Subscription activated";
             subscriptionButton.disabled = true;
-          } else if (accountCreated) {
-            subscriptionButton.textContent = "Subscribe";
-            subscriptionButton.disabled = false;
-          }
-        }
-
-        function returnToMainPage() {
-          if (isEmbedded) {
-            return;
-          }
-
-          if (window.opener && !window.opener.closed) {
-            try {
-              window.opener.focus();
-              window.close();
-            } catch (error) {
-              // Keep the completed state visible if the window cannot close.
-            }
           }
         }
 
@@ -703,7 +597,14 @@
           event.preventDefault();
           setStoredFlow({ opened: true, accountCreated: true, subscriptionCompleted: true });
           syncUi();
-          returnToMainPage();
+          if (!isEmbedded && window.opener && !window.opener.closed) {
+            try {
+              window.opener.focus();
+              window.close();
+            } catch (error) {
+              // Keep completed state visible if window cannot close.
+            }
+          }
         });
 
         if (isEmbedded) {
