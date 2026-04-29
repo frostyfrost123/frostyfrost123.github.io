@@ -533,12 +533,9 @@
         color: #fff3ea;
       }
 
-      .partner strong .partner-offer-desktop {
-        display: block;
-      }
-
+      .partner strong .partner-offer-desktop,
       .partner strong .partner-offer-mobile {
-        display: none;
+        display: block;
       }
 
       .partner span {
@@ -880,10 +877,7 @@
           display: none;
         }
 
-        .partner strong .partner-offer-desktop {
-          display: none;
-        }
-
+        .partner strong .partner-offer-desktop,
         .partner strong .partner-offer-mobile {
           display: block;
         }
@@ -1054,7 +1048,6 @@
                         <span class="partner-offer-desktop">Subscribe to SXY Girlfriend</span>
                         <span class="partner-offer-mobile">Get 12 months SXY TUBE free</span>
                       </strong>
-                      <span class="partner-subtext">SXY Girlfriend</span>
                     </div>
                     <div class="partner-badge">GF</div>
                   </button>
@@ -1065,7 +1058,6 @@
                         <span class="partner-offer-desktop">Subscribe to SXY Chat</span>
                         <span class="partner-offer-mobile">Get 12 months SXY TUBE free</span>
                       </strong>
-                      <span class="partner-subtext">SXY Chat</span>
                     </div>
                     <div class="partner-badge">CH</div>
                   </button>
@@ -1076,7 +1068,6 @@
                         <span class="partner-offer-desktop">Subscribe to SXY Dating</span>
                         <span class="partner-offer-mobile">Get 12 months SXY TUBE free</span>
                       </strong>
-                      <span class="partner-subtext">SXY Dating</span>
                     </div>
                     <div class="partner-badge">DT</div>
                   </button>
@@ -1207,7 +1198,6 @@
         var methods = Array.from(document.querySelectorAll(".method"));
         var panels = Array.from(document.querySelectorAll("[data-panel]"));
         var partners = Array.from(document.querySelectorAll(".partner"));
-        var partnerSubtexts = Array.from(document.querySelectorAll(".partner-subtext"));
         var partnerOfferDesktop = Array.from(document.querySelectorAll(".partner-offer-desktop"));
         var partnerOfferMobile = Array.from(document.querySelectorAll(".partner-offer-mobile"));
         var openPartner = document.getElementById("openPartner");
@@ -1280,8 +1270,8 @@
             paypalButton: "Continue with PayPal",
             widgyTitle: "Choose where to subscribe",
             widgyCopy: "Subscribe to one partner brand below. When that subscription is complete, SXY TUBE unlocks 1 year free access.",
-            partnerOfferDesktop: "Subscribe to {partner} → get 12 months SXY TUBE free",
-            partnerOfferMobile: "Get 12 months free",
+            partnerOfferDesktop: "Subscribe to {partner}",
+            partnerOfferMobile: "Get 12 months SXY TUBE free",
             openPartner: "Continue with Widgy",
             unlockedTitle: "Access unlocked",
             unlockedCopy: "Your premium access is active. Continue watching or explore more members-only content.",
@@ -1360,7 +1350,7 @@
             var partnerLabel = partnerConfig[partnerName].name;
 
             partnerOfferDesktop[index].textContent = mode.partnerOfferDesktop.replace("{partner}", partnerLabel);
-            partnerSubtexts[index].textContent = partnerLabel + " subscription";
+            partnerOfferMobile[index].textContent = mode.partnerOfferMobile;
           });
 
           selectPartner(activePartner);
