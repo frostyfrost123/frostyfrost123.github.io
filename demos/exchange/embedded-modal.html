@@ -1275,20 +1275,18 @@
         // ─── Step visibility ───────────────────────────────────────────────
 
         function refreshStepVisibility() {
-          // The current actionable step is shown, along with any completed steps.
-          // Step 1 is always visible once the modal opens.
           var nextPending = Math.min(currentStepIndex + 1, 3);
 
           steps.forEach(function (step) {
             var stepNumber = Number(step.getAttribute("data-step"));
-            var state = step.getAttribute("data-state");
-            var isCompleted = state === "completed";
-            var isCurrent = stepNumber === nextPending;
+            var isPending = step.getAttribute("data-state") === "pending";
+            var isActionable = isPending && stepNumber === nextPending;
+            var isCurrent = stepNumber === (currentStepIndex >= 3 ? 3 : nextPending);
 
-            step.classList.toggle("is-current-step", isCompleted || isCurrent);
-            step.classList.toggle("is-actionable", isCurrent && state === "pending");
-            step.tabIndex = (isCurrent && state === "pending") ? 0 : -1;
-            step.setAttribute("aria-disabled", (isCurrent && state === "pending") ? "false" : "true");
+            step.classList.toggle("is-current-step", isCurrent);
+            step.classList.toggle("is-actionable", isActionable);
+            step.tabIndex = isActionable ? 0 : -1;
+            step.setAttribute("aria-disabled", isActionable ? "false" : "true");
           });
         }
 

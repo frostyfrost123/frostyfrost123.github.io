@@ -480,18 +480,11 @@
               <!-- <a class="doc-link" href="demos/exchange/onboarding.html">Read onboarding</a> -->
             </div>
             <p>
-              Exchange qualified traffic between subscription and dating brands through reciprocal partner offers.
+              Exchange qualified traffic across partner brands through shared subscription offers.
             </p>
           </div>
 
-          <div class="mode-group">
-            <div class="mode-label">Choose the site context, then pick the flow you want to launch.</div>
-            <div class="mode-switch" role="tablist" aria-label="Exchange site version">
-              <button class="mode-tab is-active" type="button" data-exchange-mode="subscriptions" aria-selected="true">SXY TUBE</button>
-            </div>
-          </div>
-
-          <div class="variant-list" data-exchange-panel="subscriptions" aria-label="Exchange subscriptions demo variants">
+          <div class="variant-list" aria-label="Exchange subscriptions demo variants">
             <a class="variant" href="demos/exchange/index.html">
               <div class="variant-copy">
                 <strong>Redirect Handoff (new tab)</strong>
@@ -559,55 +552,6 @@
             setStoredMode(mode);
           });
 
-        });
-
-        updatePanels(getStoredMode());
-      })();
-
-      (function () {
-        var EXCHANGE_MODE_KEY = "demoExchangeMode";
-        var tabs = Array.from(document.querySelectorAll("[data-exchange-mode]"));
-        var panels = Array.from(document.querySelectorAll("[data-exchange-panel]"));
-
-        function updatePanels(mode) {
-          tabs.forEach(function (tab) {
-            var isActive = tab.getAttribute("data-exchange-mode") === mode;
-            tab.classList.toggle("is-active", isActive);
-            tab.setAttribute("aria-selected", isActive ? "true" : "false");
-          });
-
-          panels.forEach(function (panel) {
-            panel.classList.toggle("is-hidden", panel.getAttribute("data-exchange-panel") !== mode);
-          });
-        }
-
-        function getStoredMode() {
-          try {
-            var storedMode = window.localStorage.getItem(EXCHANGE_MODE_KEY);
-            if (storedMode === "subscriptions" || storedMode === "tokens") {
-              return storedMode;
-            }
-          } catch (error) {
-            return "subscriptions";
-          }
-
-          return "subscriptions";
-        }
-
-        function setStoredMode(mode) {
-          try {
-            window.localStorage.setItem(EXCHANGE_MODE_KEY, mode);
-          } catch (error) {
-            return;
-          }
-        }
-
-        tabs.forEach(function (tab) {
-          tab.addEventListener("click", function () {
-            var mode = tab.getAttribute("data-exchange-mode");
-            updatePanels(mode);
-            setStoredMode(mode);
-          });
         });
 
         updatePanels(getStoredMode());
