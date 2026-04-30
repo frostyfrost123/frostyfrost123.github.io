@@ -557,18 +557,18 @@
         color: #ffca56;
       }
 
-      .partner[data-partner="girlfriend"] .partner-badge {
-        background: linear-gradient(135deg, #3872d5, #51c3d3);
+      .partner[data-partner="candy"] .partner-badge {
+        background: linear-gradient(135deg, #ed6b79, #ff9aaa);
         color: #ffffff;
       }
 
-      .partner[data-partner="chat"] .partner-badge {
-        background: linear-gradient(135deg, #7c3aed, #51c3d3);
+      .partner[data-partner="qkkie"] .partner-badge {
+        background: linear-gradient(135deg, #ff4c00, #ff8040);
         color: #ffffff;
       }
 
-      .partner[data-partner="dating"] .partner-badge {
-        background: linear-gradient(135deg, #ec4899, #3872d5);
+      .partner[data-partner="secrets"] .partner-badge {
+        background: linear-gradient(135deg, #a864f0, #2a0a49);
         color: #ffffff;
       }
 
@@ -1088,34 +1088,34 @@
                   Subscribe to one partner brand below. When that subscription is complete, SXY TUBE unlocks 1 year free access.
                 </p>
                 <div class="partner-list">
-                  <button class="partner is-active" type="button" data-partner="girlfriend">
+                  <button class="partner is-active" type="button" data-partner="candy">
                     <div>
                       <strong>
-                        <span class="partner-offer-desktop">Subscribe to SXY Girlfriend</span>
+                        <span class="partner-offer-desktop">Subscribe to Candy.ai</span>
                         <span class="partner-offer-mobile">Get 12 months SXY TUBE free</span>
                       </strong>
                     </div>
-                    <div class="partner-badge">GF</div>
+                    <div class="partner-badge"><img src="../../assets/logos/candy-logo.png" alt="Candy" style="width:54px;height:54px;object-fit:cover;border-radius:50%;display:block;" /></div>
                   </button>
 
-                  <button class="partner" type="button" data-partner="chat">
+                  <button class="partner" type="button" data-partner="qkkie">
                     <div>
                       <strong>
-                        <span class="partner-offer-desktop">Subscribe to SXY Chat</span>
+                        <span class="partner-offer-desktop">Subscribe to Qkkie.com</span>
                         <span class="partner-offer-mobile">Get 12 months SXY TUBE free</span>
                       </strong>
                     </div>
-                    <div class="partner-badge">CH</div>
+                    <div class="partner-badge"><img src="../../assets/logos/qkkie-logo.png" alt="Qkkie" style="width:54px;height:54px;object-fit:cover;border-radius:50%;display:block;" /></div>
                   </button>
 
-                  <button class="partner" type="button" data-partner="dating">
+                  <button class="partner" type="button" data-partner="secrets">
                     <div>
                       <strong>
-                        <span class="partner-offer-desktop">Subscribe to SXY Dating</span>
+                        <span class="partner-offer-desktop">Subscribe to Secrets</span>
                         <span class="partner-offer-mobile">Get 12 months SXY TUBE free</span>
                       </strong>
                     </div>
-                    <div class="partner-badge">DT</div>
+                    <div class="partner-badge"><img src="../../assets/logos/secrets-logo.png" alt="Secrets" style="width:54px;height:54px;object-fit:cover;border-radius:50%;display:block;" /></div>
                   </button>
                 </div>
 
@@ -1262,14 +1262,14 @@
         var modalStepOne = document.getElementById("modalStepOne");
         var steps = Array.from(document.querySelectorAll(".step"));
         var FLOW_STORAGE_KEY = "exchangeEmbedUnlockFlow";
-        var activePartner = "girlfriend";
+        var activePartner = "candy";
         var currentStepIndex = 0;
         var hasScrolledToWidgy = false;
 
         var partnerConfig = {
-          girlfriend: { name: "SXY Girlfriend" },
-          chat: { name: "SXY Chat" },
-          dating: { name: "SXY Dating" }
+          candy:   { name: "Candy.ai" },
+          qkkie:   { name: "Qkkie.com" },
+          secrets: { name: "Secrets" }
         };
 
         // ─── Step visibility ───────────────────────────────────────────────
@@ -1589,7 +1589,7 @@
         // ─── Init ──────────────────────────────────────────────────────────
 
         selectMethod("credit");
-        selectPartner("girlfriend");
+        selectPartner("candy");
       })();
     </script>
   </body>

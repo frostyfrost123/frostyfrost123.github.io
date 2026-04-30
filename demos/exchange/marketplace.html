@@ -432,7 +432,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.06);
         overflow: hidden;
       }
 
@@ -440,7 +439,6 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        padding: 5px;
       }
 
       .offer-logo.logo-purple { background: rgba(139, 92, 246, 0.18); }
@@ -865,24 +863,24 @@
           { id: "sxy-tube-12m", title: "12 months SXY TUBE",      desc: "Full premium access to SXY TUBE",          value: "€60 value",  color: "amber",  badge: "12 months"  },
           { id: "flirtpal-3m",  title: "3 months FlirtPal Gold",   desc: "Premium AI dating companion experience",   value: "€45 value",  color: "rose",   badge: "3 months"   },
           { id: "sxy-chat-500", title: "500 SXY Chat tokens",      desc: "Token pack for your SXY Chat account",     value: "€25 value",  color: "purple", badge: "500 tokens" },
-          { id: "stake-50",     title: "€50 Stake.com credit",     desc: "Casino welcome bonus delivered instantly", value: "€50 value",  color: "green",  badge: "€50 credit" }
+          { id: "sxy-vids",     title: "6 months SXY Vids",      desc: "Full premium access to SXY Vids",          value: "€45 value",  color: "green",  badge: "6 months" }
         ];
 
         var offers = {
           stake:  { id: "stake",  name: "Stake.com",      action: "Register and deposit €20",    detail: "~5 min", logoImg: "stake-logo.png" },
           bc:     { id: "bc",     name: "BC.game",         action: "Register and deposit €15",    detail: "~5 min", logoImg: "bc-logo.png"    },
           roo:    { id: "roo",    name: "Roo Casino",      action: "Register and deposit €10",    detail: "~5 min", logoImg: "roo-logo.png"   },
-          qkkie:  { id: "qkkie",  name: "Qkkie.com",       action: "Subscribe to a 1-month plan", detail: "~3 min", logoText: "QK", logoColor: "logo-purple" },
-          sxy_gf: { id: "sxy_gf", name: "SXY Girlfriend",  action: "Subscribe to a 1-month plan", detail: "~3 min", logoText: "GF", logoColor: "logo-pink"   }
+          qkkie:  { id: "qkkie",  name: "Qkkie.com",       action: "Subscribe to a 1-month plan", detail: "~3 min", logoImg: "qkkie-logo.png" },
+          candy:  { id: "candy",  name: "Candy.ai",        action: "Subscribe to a 1-month plan", detail: "~3 min", logoImg: "candy-logo.png" },
         };
 
         var rewardOffers = {
-          "candy-12m":    ["stake", "bc", "roo"],
-          "qkkie-1000":   ["stake", "bc"],
-          "sxy-tube-12m": ["stake", "roo", "sxy_gf"],
+          "candy-12m":    [ "qkkie", "bc", "roo"],
+          "qkkie-1000":   ["stake", "bc", "candy"],
+          "sxy-tube-12m": ["stake", "roo", "qkkie"],
           "flirtpal-3m":  ["bc", "stake"],
           "sxy-chat-500": ["roo", "qkkie"],
-          "stake-50":     ["qkkie", "sxy_gf", "bc"]
+          "sxy-vids":     ["stake", "candy", "qkkie"],
         };
 
         var selectedRewardId = null;
