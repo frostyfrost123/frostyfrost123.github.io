@@ -31,6 +31,31 @@
         --accent-2: #f59e0b;
       }
 
+      [data-partner="stake"] {
+        --accent: #00b45a;
+        --accent-2: #0be870;
+      }
+
+      [data-partner="bc"] {
+        --accent: #3b82f6;
+        --accent-2: #60d8f7;
+      }
+
+      [data-partner="roo"] {
+        --accent: #f97316;
+        --accent-2: #fbbf24;
+      }
+
+      [data-partner="qkkie"] {
+        --accent: #8b5cf6;
+        --accent-2: #c084fc;
+      }
+
+      [data-partner="sxy_gf"] {
+        --accent: #f66f86;
+        --accent-2: #48a8ff;
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -437,8 +462,8 @@
             </div>
 
             <div class="subscription-state" id="subscriptionState">
-              <h2>Start your subscription</h2>
-              <p>Complete the qualifying subscription to activate your 12 months free on SXY TUBE.</p>
+              <h2 id="subscriptionTitle">Start your subscription</h2>
+              <p id="subscriptionCopy">Complete the qualifying subscription to activate your reward.</p>
               <form class="form" id="subscriptionForm">
                 <div class="field">
                   <label for="cardName">Name on card</label>
@@ -493,6 +518,8 @@
         var claimForm = document.getElementById("claimForm");
         var signupState = document.getElementById("signupState");
         var subscriptionState = document.getElementById("subscriptionState");
+        var subscriptionTitle = document.getElementById("subscriptionTitle");
+        var subscriptionCopy = document.getElementById("subscriptionCopy");
         var subscriptionForm = document.getElementById("subscriptionForm");
         var subscriptionButton = document.getElementById("subscriptionButton");
 
@@ -502,21 +529,80 @@
             icon: "ri-user-heart-fill",
             eyebrow: "AI Girlfriend Offer",
             title: "Subscribe and get 12 months SXY TUBE free",
-            copy: "Create your own AI companion, subscribe today, and return to SXY TUBE with 1 year free."
+            copy: "Create your own AI companion, subscribe today, and return to SXY TUBE with 1 year free.",
+            subscriptionTitle: "Start your subscription",
+            subscriptionCopy: "Complete the qualifying subscription to activate your reward.",
+            ctaText: "Subscribe — $3.99/month"
           },
           chat: {
             name: "SXY Chat",
             icon: "ri-chat-heart-fill",
             eyebrow: "Chat Plus Offer",
             title: "Subscribe and get 12 months SXY TUBE free",
-            copy: "Unlock premium conversations on SXY Chat, subscribe, then return to SXY TUBE with 1 year free."
+            copy: "Unlock premium conversations on SXY Chat, subscribe, then return to SXY TUBE with 1 year free.",
+            subscriptionTitle: "Start your subscription",
+            subscriptionCopy: "Complete the qualifying subscription to activate your reward.",
+            ctaText: "Subscribe — $3.99/month"
           },
           dating: {
             name: "SXY Dating",
             icon: "ri-hearts-fill",
             eyebrow: "Dating Premium Offer",
             title: "Subscribe and get 12 months SXY TUBE free",
-            copy: "Subscribe to meet premium matches on SXY Dating, then return to SXY TUBE with 1 year free."
+            copy: "Subscribe to meet premium matches on SXY Dating, then return to SXY TUBE with 1 year free.",
+            subscriptionTitle: "Start your subscription",
+            subscriptionCopy: "Complete the qualifying subscription to activate your reward.",
+            ctaText: "Subscribe — $3.99/month"
+          },
+          stake: {
+            name: "Stake.com",
+            icon: "ri-coin-fill",
+            eyebrow: "Casino Deposit Offer",
+            title: "Register and deposit €20 to earn your reward",
+            copy: "Create your Stake.com account and make a €20 deposit. Your reward will be confirmed instantly once the deposit is processed.",
+            subscriptionTitle: "Make your deposit",
+            subscriptionCopy: "Enter your payment details to complete the €20 deposit and unlock your reward.",
+            ctaText: "Deposit €20"
+          },
+          bc: {
+            name: "BC.game",
+            icon: "ri-gamepad-fill",
+            eyebrow: "Casino Deposit Offer",
+            title: "Register and deposit €15 to earn your reward",
+            copy: "Create your BC.game account and make a €15 deposit. Your reward will be unlocked as soon as the deposit clears.",
+            subscriptionTitle: "Make your deposit",
+            subscriptionCopy: "Enter your payment details to complete the €15 deposit and unlock your reward.",
+            ctaText: "Deposit €15"
+          },
+          roo: {
+            name: "Roo Casino",
+            icon: "ri-medal-fill",
+            eyebrow: "Casino Deposit Offer",
+            title: "Register and deposit €10 to earn your reward",
+            copy: "Create your Roo Casino account and make a €10 deposit. Your reward will be waiting for you the moment it confirms.",
+            subscriptionTitle: "Make your deposit",
+            subscriptionCopy: "Enter your payment details to complete the €10 deposit and unlock your reward.",
+            ctaText: "Deposit €10"
+          },
+          qkkie: {
+            name: "Qkkie.com",
+            icon: "ri-chat-3-fill",
+            eyebrow: "Token Subscription Offer",
+            title: "Subscribe to Qkkie.com to earn your reward",
+            copy: "Pick a 1-month Qkkie.com plan, complete checkout, and your reward will be delivered automatically.",
+            subscriptionTitle: "Start your subscription",
+            subscriptionCopy: "Complete your Qkkie.com subscription to activate your reward.",
+            ctaText: "Subscribe — from €9.99/month"
+          },
+          sxy_gf: {
+            name: "SXY Girlfriend",
+            icon: "ri-user-heart-fill",
+            eyebrow: "AI Girlfriend Offer",
+            title: "Subscribe to SXY Girlfriend to earn your reward",
+            copy: "Subscribe to SXY Girlfriend for 1 month and your reward will be unlocked automatically.",
+            subscriptionTitle: "Start your subscription",
+            subscriptionCopy: "Complete the 1-month subscription to activate your reward.",
+            ctaText: "Subscribe — $3.99/month"
           }
         };
 
@@ -563,7 +649,7 @@
           var partnerKey = getSelectedPartner();
           var partner = partnerConfig[partnerKey];
           document.body.setAttribute("data-partner", partnerKey);
-          document.title = partner.name + " Access Flow";
+          document.title = partner.name + " Checkout";
           brandLabel.setAttribute("aria-label", partner.name);
           brandName.textContent = partner.name;
           brandIcon.className = partner.icon;
@@ -571,6 +657,9 @@
           eyebrowText.textContent = partner.eyebrow;
           heroTitle.textContent = partner.title;
           heroCopy.textContent = partner.copy;
+          subscriptionTitle.textContent = partner.subscriptionTitle;
+          subscriptionCopy.textContent = partner.subscriptionCopy;
+          subscriptionButton.textContent = partner.ctaText;
         }
 
         function syncUi() {
