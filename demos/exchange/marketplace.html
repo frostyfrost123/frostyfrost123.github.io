@@ -204,6 +204,36 @@
         padding: 15px 14px 12px;
       }
 
+      .reward-top-inner {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .reward-logo-col {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-top: 2px;
+      }
+
+      .reward-logo-col img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+      }
+
+      .reward-text-col {
+        flex: 1;
+        min-width: 0;
+      }
+
       .reward-card[data-color="pink"]   .reward-top { background: linear-gradient(160deg, rgba(236, 72, 153, 0.08), transparent 60%); }
       .reward-card[data-color="purple"] .reward-top { background: linear-gradient(160deg, rgba(139, 92, 246, 0.10), transparent 60%); }
       .reward-card[data-color="amber"]  .reward-top { background: linear-gradient(160deg, rgba(255, 174, 0, 0.10), transparent 60%); }
@@ -858,29 +888,31 @@
         var FLOW_KEY = "marketplaceUnlockFlow";
 
         var rewards = [
-          { id: "candy-12m",    title: "12 months Candy.ai",      desc: "Full premium AI companion access",         value: "€119 value", color: "pink",   badge: "12 months"  },
-          { id: "qkkie-1000",   title: "1,000 Qkkie tokens",      desc: "Chat credits for your Qkkie.com account",  value: "€30 value",  color: "purple", badge: "1,000 tokens" },
-          { id: "sxy-tube-12m", title: "12 months SXY TUBE",      desc: "Full premium access to SXY TUBE",          value: "€60 value",  color: "amber",  badge: "12 months"  },
-          { id: "flirtpal-3m",  title: "3 months FlirtPal Gold",   desc: "Premium AI dating companion experience",   value: "€45 value",  color: "rose",   badge: "3 months"   },
-          { id: "sxy-chat-500", title: "500 SXY Chat tokens",      desc: "Token pack for your SXY Chat account",     value: "€25 value",  color: "purple", badge: "500 tokens" },
-          { id: "sxy-vids",     title: "6 months SXY Vids",      desc: "Full premium access to SXY Vids",          value: "€45 value",  color: "green",  badge: "6 months" }
+          { id: "candy-12m",    title: "12 months Candy.ai",   desc: "Full premium AI companion access",          value: "€119 value", color: "pink",   badge: "12 months",    logoImg: "candy-logo.png"    },
+          { id: "bang-12m",     title: "12 months BANG!",      desc: "Unlimited HD adult video streaming",        value: "€108 value", color: "rose",   badge: "12 months",    logoImg: "bang-logo.png"     },
+          { id: "cam4-1000",    title: "1,000 CAM4 tokens",    desc: "Token credits for live cam shows on CAM4",  value: "€30 value",  color: "purple", badge: "1,000 tokens", logoImg: "cam4-logo.png"     },
+          { id: "qkkie-1000",   title: "1,000 Qkkie tokens",   desc: "Chat credits for your Qkkie.com account",   value: "€30 value",  color: "amber",  badge: "1,000 tokens", logoImg: "qkkie-logo.png"    },
+          { id: "secrets-3m",   title: "3 months Secrets",     desc: "Premium access to Secrets adult platform",  value: "€45 value",  color: "green",  badge: "3 months",     logoImg: "secrets-logo.png"  },
+          { id: "camsoda-500",  title: "500 CamSoda tokens",   desc: "Token pack for live shows on CamSoda",      value: "€20 value",  color: "rose",   badge: "500 tokens",   logoImg: "camsoda-logo.png"  },
         ];
 
         var offers = {
-          stake:  { id: "stake",  name: "Stake.com",      action: "Register and deposit €20",    detail: "~5 min", logoImg: "stake-logo.png" },
-          bc:     { id: "bc",     name: "BC.game",         action: "Register and deposit €15",    detail: "~5 min", logoImg: "bc-logo.png"    },
-          roo:    { id: "roo",    name: "Roo Casino",      action: "Register and deposit €10",    detail: "~5 min", logoImg: "roo-logo.png"   },
-          qkkie:  { id: "qkkie",  name: "Qkkie.com",       action: "Subscribe to a 1-month plan", detail: "~3 min", logoImg: "qkkie-logo.png" },
-          candy:  { id: "candy",  name: "Candy.ai",        action: "Subscribe to a 1-month plan", detail: "~3 min", logoImg: "candy-logo.png" },
+          stake:  { id: "stake",  name: "Stake.com",  action: "Register and deposit €20",    detail: "~5 min", logoImg: "stake-logo.png" },
+          bc:     { id: "bc",     name: "BC.game",    action: "Register and deposit €15",    detail: "~5 min", logoImg: "bc-logo.png"    },
+          roo:    { id: "roo",    name: "Roo Casino", action: "Register and deposit €10",    detail: "~5 min", logoImg: "roo-logo.png"   },
+          qkkie:  { id: "qkkie",  name: "Qkkie.com",  action: "Subscribe to a 1-month plan", detail: "~3 min", logoImg: "qkkie-logo.png" },
+          candy:  { id: "candy",  name: "Candy.ai",   action: "Subscribe to a 1-month plan", detail: "~3 min", logoImg: "candy-logo.png" },
+          cam4:   { id: "cam4",   name: "CAM4",       action: "Purchase 500 tokens",         detail: "~3 min", logoImg: "cam4-logo.png"  },
+          bang:   { id: "bang",   name: "BANG!",      action: "Subscribe to a 1-month plan", detail: "~3 min", logoImg: "bang-logo.png"  },
         };
 
         var rewardOffers = {
-          "candy-12m":    [ "qkkie", "bc", "roo"],
-          "qkkie-1000":   ["stake", "bc", "candy"],
-          "sxy-tube-12m": ["stake", "roo", "qkkie"],
-          "flirtpal-3m":  ["bc", "stake"],
-          "sxy-chat-500": ["roo", "qkkie"],
-          "sxy-vids":     ["stake", "candy", "qkkie"],
+          "candy-12m":   ["qkkie", "bc", "roo"],
+          "bang-12m":    ["stake", "bc", "cam4"],
+          "cam4-1000":   ["roo", "bang", "qkkie"],
+          "qkkie-1000":  ["bc", "candy", "cam4"],
+          "secrets-3m":  ["stake", "roo", "bc"],
+          "camsoda-500": ["qkkie", "candy", "bang"],
         };
 
         var selectedRewardId = null;
@@ -926,9 +958,14 @@
 
             card.innerHTML =
               "<div class=\"reward-top\">" +
-                "<span class=\"reward-badge badge-" + reward.color + "\">" + reward.badge + "</span>" +
-                "<span class=\"reward-title\">" + reward.title + "</span>" +
-                "<span class=\"reward-desc\">" + reward.desc + "</span>" +
+                "<div class=\"reward-top-inner\">" +
+                  (reward.logoImg ? "<div class=\"reward-logo-col\"><img src=\"../../assets/logos/" + reward.logoImg + "\" alt=\"\" aria-hidden=\"true\" /></div>" : "") +
+                  "<div class=\"reward-text-col\">" +
+                    "<span class=\"reward-badge badge-" + reward.color + "\">" + reward.badge + "</span>" +
+                    "<span class=\"reward-title\">" + reward.title + "</span>" +
+                    "<span class=\"reward-desc\">" + reward.desc + "</span>" +
+                  "</div>" +
+                "</div>" +
               "</div>" +
               "<div class=\"reward-bottom\">" +
                 "<span class=\"reward-value\">" + reward.value + "</span>" +
@@ -992,7 +1029,7 @@
               logoHtml +
               "<div class=\"offer-copy\">" +
                 "<strong>" + offer.name + "</strong>" +
-                "<span>" + offer.action + " &middot; " + offer.detail + "</span>" +
+                "<span>" + offer.action + "</span>" +
               "</div>" +
               "<span class=\"offer-arrow\" aria-hidden=\"true\"><i class=\"ri-arrow-right-line\"></i></span>";
 

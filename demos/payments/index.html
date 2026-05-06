@@ -569,6 +569,9 @@
         font-size: 0.85rem;
         color: var(--muted);
       }
+      .partner span.partner-subtext {
+        font-weight: 700;
+      }
 
       .partner-badge {
         min-width: 54px;
@@ -1029,7 +1032,7 @@
               </button>
               <button class="method widgy" type="button" data-method="widgy" role="tab" aria-selected="false">
                 <span>Get Free Access</span>
-                <span class="method-sub is-free">x4 times the value</span>
+                <span class="method-sub is-free">400% value</span>
               </button>
             </div>
 
@@ -1309,9 +1312,9 @@
             paypalButton: "Continue with PayPal",
             widgyTitle: "Choose a partner brand",
             widgyCopy: "Make a qualifying deposit through one of the partner casinos below and get 1 year free access.",
-            partnerOfferDesktop: "Deposit €20 → Get 1 Year Free",
-            partnerOfferMobile: "Deposit €20 → 1 Year Free",
+            partnerAction: "Deposit €20",
             partnerBenefit: "(+ €40 bonus)",
+            partnerReward: "Get 1 year free on SXY TUBE",
             openPartner: "Continue with Widgy",
             unlockedTitle: "Access unlocked",
             unlockedCopy: "Your premium access is active. Continue watching or explore more members-only content.",
@@ -1352,9 +1355,9 @@
             paypalButton: "Buy tokens with PayPal",
             widgyTitle: "Choose a partner brand",
             widgyCopy: "Make a qualifying deposit through one of the partner casinos below and get 100 AI girlfriend tokens.",
-            partnerOfferDesktop: "Deposit €20 → Get 100 Tokens",
-            partnerOfferMobile: "Deposit €20 → 100 Tokens",
-            partnerBenefit: "(+ 100 tokens)",
+            partnerAction: "Deposit €20",
+            partnerBenefit: "(+ €40 bonus)",
+            partnerReward: "Get 100 tokens on SXY CHAT",
             openPartner: "Get tokens with Widgy",
             unlockedTitle: "100 tokens unlocked",
             unlockedCopy: "Your chat balance is ready. Start messaging your AI girlfriend or save tokens for later.",
@@ -1430,17 +1433,19 @@
           unlockBadgeText.textContent = mode.unlockBadge;
           modalStepThreeTitle.textContent = mode.stepThreeTitle;
 
-          partnerOfferDesktop.forEach(function (node) {
-            node.textContent = mode.partnerOfferDesktop;
+          partnerOfferDesktop.forEach(function (node, index) {
+            var pKey = partners[index].getAttribute("data-partner");
+            node.textContent = mode.partnerAction + " on " + partnerConfig[pKey].name + " " + mode.partnerBenefit;
           });
 
-          partnerOfferMobile.forEach(function (node) {
-            node.textContent = mode.partnerOfferMobile;
+          partnerOfferMobile.forEach(function (node, index) {
+            var pKey = partners[index].getAttribute("data-partner");
+            node.textContent = mode.partnerAction + " on " + partnerConfig[pKey].name;
           });
 
           partnerSubtexts.forEach(function (node, index) {
             var partnerName = partners[index].getAttribute("data-partner");
-            node.textContent = "On " + partnerConfig[partnerName].name + " " + mode.partnerBenefit;
+            node.textContent = mode.partnerReward;
           });
 
           selectPartner(activePartner);
