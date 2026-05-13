@@ -496,6 +496,30 @@
             </div>
             <div class="field">
               <div class="field-label">
+                <label for="company-country">Company registered country</label>
+                <span class="field-badge required">Required</span>
+              </div>
+              <div class="field-hint">Share the country where the company is legally registered.</div>
+              <input id="company-country" name="company_country" type="text" placeholder="Germany" required />
+            </div>
+            <div class="field">
+              <div class="field-label">
+                <label for="payout-currency">Payout currency</label>
+                <span class="field-badge required">Required</span>
+              </div>
+              <div class="field-hint">Share the currency you want to use when Widgy pays out your revenue.</div>
+              <input id="payout-currency" name="payout_currency" type="text" placeholder="EUR" required />
+            </div>
+            <div class="field">
+              <div class="field-label">
+                <label for="brands">Brand(s) and country/countries</label>
+                <span class="field-badge required">Required</span>
+              </div>
+              <div class="field-hint">List each brand and the country connected to it. This can be different from the company registered country.</div>
+              <input id="brands" name="brands" type="text" placeholder="My Cam Site (Germany), My Other Site (France)" required />
+            </div>
+            <div class="field">
+              <div class="field-label">
                 <label for="contact-person">Primary contact person</label>
                 <span class="field-badge required">Required</span>
               </div>
@@ -563,7 +587,9 @@
           <h2>4. Let Widgy configure the experience</h2>
           <p>
             After you share the technical placement and commercial requirements, the Widgy team can
-            configure the final setup for your brand on the same platform.
+            configure the final setup for your brand on the same platform. When your company is
+            created in the admin UI, you will receive an email with Widgy Dashboard access so you
+            can log in right away.
           </p>
           </div>
 
@@ -578,8 +604,8 @@
           <div class="step">
           <h2>6. Get access and monitor performance</h2>
           <p>
-            Once live, you will receive login details to the Widgy Dashboard where you can find
-            analytics, monitor performance, and review your data and revenue.
+            Once live, use the Widgy Dashboard to find analytics, monitor performance, and review
+            your data and revenue.
           </p>
           <div class="list">
             <div class="item">
@@ -642,6 +668,9 @@
         function buildMailDraft() {
           var product = document.getElementById("product-name");
           var company = document.getElementById("company-name");
+          var companyCountry = document.getElementById("company-country");
+          var payoutCurrency = document.getElementById("payout-currency");
+          var brands = document.getElementById("brands");
           var contactPerson = document.getElementById("contact-person");
           var contactEmail = document.getElementById("contact-email");
           var domain = document.getElementById("website-domain");
@@ -650,7 +679,16 @@
           var userIdFormat = document.getElementById("user-id-format");
           var rules = document.getElementById("rules-restrictions");
 
-          if (!company || !contactPerson || !contactEmail || !domain || !postbackUrl) {
+          if (
+            !company ||
+            !companyCountry ||
+            !payoutCurrency ||
+            !brands ||
+            !contactPerson ||
+            !contactEmail ||
+            !domain ||
+            !postbackUrl
+          ) {
             return null;
           }
 
@@ -658,6 +696,12 @@
             "Product: " + (product && product.value ? product.value : "Widgy Payments"),
             "",
             "Company name: " + (company.value || "").trim(),
+            "",
+            "Company registered country: " + (companyCountry.value || "").trim(),
+            "",
+            "Payout currency: " + (payoutCurrency.value || "").trim(),
+            "",
+            "Brand(s) and country/countries: " + (brands.value || "").trim(),
             "",
             "Primary contact person: " + (contactPerson.value || "").trim(),
             "",
