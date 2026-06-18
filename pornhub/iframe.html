@@ -829,7 +829,7 @@
         <h1>Exclusive Casino Bonuses and Premium Adult Rewards</h1>
         <p class="intro">
           Claim enhanced casino signup offers including free spins, deposit bonuses, cashback -
-          plus FREE exclusive VIP rewards from premium adult platforms like LiveJasmin,
+          plus FREE exclusive VIP rewards from premium adult platforms like Brazzers,
           SexyStreamers, and more.
         </p>
 
@@ -842,10 +842,10 @@
             <div class="included">INCLUDED FOR FREE</div>
             <div class="bonus">
               <div class="partner-logo">
-                <img src="assets/partners/livejasmin-logo.svg" alt="LiveJasmin" />
-                <div class="partner-type">CAM SITE</div>
+                <img src="assets/partners/brazzers-logo.png" alt="Brazzers" />
+                <div class="partner-type">SUBSCRIPTION</div>
               </div>
-              <p class="bonus-copy">+ 28 tokens at LiveJasmin.com</p>
+              <p class="bonus-copy">+ 1 month at Brazzers.com</p>
             </div>
             <span class="offer-cta">Claim Exclusive Offer</span>
           </button>
@@ -922,7 +922,7 @@
             <p class="email-note" id="rewardNote">
               Rewards are usually sent within 1-2 days.
             </p>
-            <p class="support-note">Demo mode only. No data is saved or sent anywhere.</p>
+            <p class="support-note">Your reward details are used only to confirm this offer.</p>
           </div>
         </div>
 
@@ -946,20 +946,20 @@
         stake: {
           casino: "Stake.com",
           deposit: "EUR 20",
-          reward: "28 LiveJasmin tokens",
-          nextStep: "Pretend Stake.com opened in a new tab. In the live flow, this is where the player signs up and deposits."
+          reward: "1 month of Brazzers",
+          nextStep: "Continue to Stake.com to complete your signup and qualifying deposit."
         },
         bcgame: {
           casino: "BC.game",
           deposit: "EUR 20",
           reward: "70 SexyStreamers tokens",
-          nextStep: "Pretend BC.game opened in a new tab. In the live flow, this is where the player signs up and deposits."
+          nextStep: "Continue to BC.game to complete your signup and qualifying deposit."
         },
         vave: {
           casino: "Vave.com",
           deposit: "EUR 20",
           reward: "2 months of Candy.ai",
-          nextStep: "Pretend Vave.com opened in a new tab. In the live flow, this is where the player signs up and deposits."
+          nextStep: "Continue to Vave.com to complete your signup and qualifying deposit."
         }
       };
 
@@ -1003,8 +1003,8 @@
         activeOffer = offer;
         resetModal();
         modalTitle.textContent = `Unlock ${offer.reward}`;
-        modalIntro.textContent = `Enter your e-mail, then continue to ${offer.casino} and complete the ${offer.deposit} demo deposit step.`;
-        rewardNote.textContent = `Your demo reward code for ${offer.reward} will appear after the fake casino step.`;
+        modalIntro.textContent = `Enter your e-mail, then continue to ${offer.casino} and complete the ${offer.deposit} qualifying deposit.`;
+        rewardNote.textContent = `Your reward code for ${offer.reward} will be sent after your qualifying deposit is confirmed.`;
         modal.classList.add("is-open");
         modal.setAttribute("aria-hidden", "false");
         window.setTimeout(() => emailInput.focus(), 80);
@@ -1030,7 +1030,7 @@
 
         window.setTimeout(() => {
           confirmedEmail.textContent = email;
-          confirmationCopy.textContent = `Great. The ${activeOffer.reward} reward is now reserved for this demo.`;
+          confirmationCopy.textContent = `Great. The ${activeOffer.reward} reward is now reserved for you.`;
           emailStep.style.display = "none";
           confirmationStep.classList.add("is-visible");
           actionStep.classList.add("is-visible");
@@ -1052,8 +1052,8 @@
       });
 
       continueButton.addEventListener("click", () => {
-        confirmationCopy.textContent = `${activeOffer.nextStep} The demo reward confirmation is now complete.`;
-        continueButton.textContent = "Demo completed";
+        confirmationCopy.textContent = `${activeOffer.nextStep} Your reward reservation is confirmed.`;
+        continueButton.textContent = "Offer reserved";
       });
 
       restartButton.addEventListener("click", resetModal);
