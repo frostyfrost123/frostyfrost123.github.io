@@ -947,19 +947,22 @@
           casino: "Stake.com",
           deposit: "EUR 20",
           reward: "1 month of Brazzers",
-          nextStep: "Continue to Stake.com to complete your signup and qualifying deposit."
+          nextStep: "Continue to Stake.com to complete your signup and qualifying deposit.",
+          url: "https://stake.com/"
         },
         bcgame: {
           casino: "BC.game",
           deposit: "EUR 20",
           reward: "70 SexyStreamers tokens",
-          nextStep: "Continue to BC.game to complete your signup and qualifying deposit."
+          nextStep: "Continue to BC.game to complete your signup and qualifying deposit.",
+          url: "https://bc.game/"
         },
         vave: {
           casino: "Vave.com",
           deposit: "EUR 20",
           reward: "2 months of Candy.ai",
-          nextStep: "Continue to Vave.com to complete your signup and qualifying deposit."
+          nextStep: "Continue to Vave.com to complete your signup and qualifying deposit.",
+          url: "https://vave.com/"
         }
       };
 
@@ -1052,6 +1055,7 @@
       });
 
       continueButton.addEventListener("click", () => {
+        window.open(activeOffer.url, "_blank", "noopener,noreferrer");
         confirmationCopy.textContent = `${activeOffer.nextStep} Your reward reservation is confirmed.`;
         continueButton.textContent = "Offer reserved";
       });
